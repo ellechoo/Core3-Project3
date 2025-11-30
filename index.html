@@ -35,6 +35,9 @@
       <img src="images/mog.png" class="bg-img img1">
       <img src="images/hyunjin.png" class="bg-img img2">
       <img src="images/yoonchae.png" class="bg-img img3">
+      <img src="images/cheek.png" class="bg-img img4">
+      <img src="images/lipstick.png" class="bg-img img5">
+      <img src="images/mascara.png" class="bg-img img6">
     </div>
 
 
@@ -53,14 +56,14 @@
     <div class="title-container">
       <div class="makeup-title">
         <h2>M</h2>
-        <h3>AKEUP</h3>
+        <h3>akeup</h3>
       </div>
 
       <h1>for</h1>
 
       <div class="makeup-title">
         <h2>M</h2>
-        <h3>YSELF</h3>
+        <h3>yself</h3>
       </div>
     </div>
 
@@ -214,6 +217,15 @@
         `translateY(${scrolled * -0.25}px)`;    // medium
 
       document.querySelector(".img3").style.transform =
+        `translateY(${scrolled * -0.35}px)`;    // faster
+
+      document.querySelector(".img4").style.transform =
+        `translateY(${scrolled * -0.15}px)`;    // slow
+
+      document.querySelector(".img5").style.transform =
+        `translateY(${scrolled * -0.25}px)`;    // medium
+
+      document.querySelector(".img6").style.transform =
         `translateY(${scrolled * -0.35}px)`;    // faster
     });
   </script>

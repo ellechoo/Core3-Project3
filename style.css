@@ -45,7 +45,7 @@
 body {
   font-family: 'Inter', sans-serif;
   background-color: #ffffff; /* fallback color */
-  background-image: url('images/background.jpg'); /* path to your image */
+  background-image: url('images/radius.png'); /* path to your image */
   background-size: cover;    /* make it cover the whole screen */
   background-position: center; /* center the image */
   background-repeat: no-repeat; /* don’t tile it */
@@ -123,31 +123,52 @@ body {
 /* Default look for all background images */
 .bg-img {
   position: absolute;
-  opacity: 0.50;  /* optional aesthetic */
+  opacity: 0.5;  /* optional aesthetic */
   object-fit: contain;
 }
 
 /* ---- Custom coordinates + sizes ---- */
 
-/* Image 1 */
+/* Image 1 eyeliner*/
 .img1 {
-  top: 10%;
-  left: 5%;
-  width: 180px;
+  top: 6%;
+  left: 8%;
+  width: 200px;
 }
 
-/* Image 2 */
+/* Image 2 hyunjin */
 .img2 {
-  top: 40%;
+  top: 20%;
   right: 10%;
-  width: 220px;
+  width: 260px;
 }
 
-/* Image 3 */
+/* Image 3 yoonchae*/
 .img3 {
+  bottom: 16%;
+  left: 28%;
+  width: 230px;
+}
+
+/* Image 4 cheek*/
+.img4 {
+  top: 6%;
+  right: 36%;
+  width: 150px;
+}
+
+/* Image 5 lipstick*/
+.img5 {
+  bottom: 10%;
+  left: 5%;
+  width: 200px;
+}
+
+/* Image 6 mascara*/
+.img6 {
   bottom: 8%;
-  left: 30%;
-  width: 160px;
+  left: 58%;
+  width: 150px;
 }
 
 
