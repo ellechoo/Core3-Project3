@@ -32,13 +32,17 @@
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
   text-decoration: none;
-  color: #a5226d;
-  letter-spacing: 1px;
+  color: #c9398b;
+  letter-spacing: 0.5px;
   transition: opacity 0.3s ease;
 }
 
 .vertical-nav a:hover {
-  opacity: 0.5;
+  color:#e76eb3;
+}
+
+.vertical-nav a.active {
+  color: #ffffff;
 }
 
 
@@ -60,9 +64,10 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 15vh 5vh 5vh 5vh; /* top, right, bottom, left */
+  padding: 19vh 5vh 5vh 5vh; /* top, right, bottom, left */
   text-align: center;
 }
+
 
 
 /* Intro section */
@@ -131,9 +136,9 @@ body {
 
 /* Image 1 eyeliner*/
 .img1 {
-  top: 6%;
+  top: 8%;
   left: 8%;
-  width: 200px;
+  width: 190px;
 }
 
 /* Image 2 hyunjin */
@@ -153,28 +158,47 @@ body {
 /* Image 4 cheek*/
 .img4 {
   top: 6%;
-  right: 36%;
+  right: 38%;
   width: 150px;
 }
 
 /* Image 5 lipstick*/
 .img5 {
-  bottom: 10%;
+  bottom: 5%;
   left: 5%;
   width: 200px;
 }
 
 /* Image 6 mascara*/
 .img6 {
-  bottom: 8%;
+  bottom: -5%;
   left: 58%;
-  width: 150px;
+  width: 180px;
 }
 
 
 
+/* About Section */
+#about {
+  padding-top: 200px;
+  padding-bottom: 1200px;
+  min-height: 60vh;
+}
 
 
+#about h2 {
+  font-size: 2.5rem;
+  font-family: "RoleModel";
+  letter-spacing: 2px;
+}
+
+#about p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 20px auto 0 auto;
+  font-family: 'Inter', sans-serif;
+}
 
 
 

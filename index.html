@@ -43,10 +43,10 @@
 
   <!-- Vertical Navigation -->
   <nav class="vertical-nav">
-    <a href="#home">Home</a>
-    <a href="#object1">Objects</a>
-    <a href="#essays">Articles</a>
-    <a href="#about">About</a>
+    <a href="#home">HOME</a>
+    <a href="#about">ABOUT</a>
+    <a href="#object1">MAKEUP</a>
+    <a href="#essays">MORE</a>
   </nav>
 
 
@@ -67,9 +67,18 @@
       </div>
     </div>
 
-    <p>A simple guide to makeup for younger me.</p>
-
   </section>
+
+
+
+    <!-- About -->
+  <section class="section text" id="about">
+    
+    <h2>A simple guide to makeup for younger me.</h2>
+    <p>System of Beauty is a design study that examines the makeup routine as a framework for understanding beauty culture and its design histories. Presented through a physical accordion publication and a corresponding digital timeline, the project uses the familiar sequence of cosmetic application to organize research on the cultural and societal values embedded in each product. By tracing how everyday tools of self-presentation have evolved, both materially and ideologically, the work reframes a private ritual as a collective reflection on how design perpetuates ideals of beauty, identity, and transformation.</p>
+  
+  </section>
+
 
 
   <!-- Ten Object Sections -->
@@ -85,7 +94,7 @@
   </section>
 
 
-  <section class="section product">
+  <section class="section product" id="object1">
     <h2>Object 02</h2>
 
     <div id="model2" class="model-container"></div>
@@ -96,7 +105,7 @@
     </p>
     </section>
 
-  <section class="section product">
+  <section class="section product" id="object1">
     <h2>Object 03</h2>
 
     <div id="model3" class="model-container"></div>
@@ -114,25 +123,73 @@
     <p>Long form writing one.</p>
   </section>
 
-  <section class="section text">
+  <section class="section text" id="essays">
     <h2>Essay Two</h2>
     <p>Long form writing two.</p>
   </section>
 
 
-  <!-- About -->
-  <section class="section text" id="about">
-    <h2>About</h2>
-    <p>System of Beauty is a design study that examines the makeup routine as a framework for understanding beauty culture and its design histories. Presented through a physical accordion publication and a corresponding digital timeline, the project uses the familiar sequence of cosmetic application to organize research on the cultural and societal values embedded in each product. By tracing how everyday tools of self-presentation have evolved, both materially and ideologically, the work reframes a private ritual as a collective reflection on how design perpetuates ideals of beauty, identity, and transformation.</p>
-  </section>
 
-
-
+  <!-- Parallax Scrolling Script -->
   <script>
-    document.getElementById('backToTop').addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.addEventListener("scroll", () => {
+      const scrolled = window.scrollY;
+
+      // Each image gets its own movement strength
+      document.querySelector(".img1").style.transform =
+        `translateY(${scrolled * -0.15}px)`;    // slow
+
+      document.querySelector(".img2").style.transform =
+        `translateY(${scrolled * -0.25}px)`;    // medium
+
+      document.querySelector(".img3").style.transform =
+        `translateY(${scrolled * -0.35}px)`;    // faster
+
+      document.querySelector(".img4").style.transform =
+        `translateY(${scrolled * -0.15}px)`;    // slow
+
+      document.querySelector(".img5").style.transform =
+        `translateY(${scrolled * -0.25}px)`;    // medium
+
+      document.querySelector(".img6").style.transform =
+        `translateY(${scrolled * -0.35}px)`;    // faster
     });
   </script>
+
+
+
+<!-- Highlighting Active Nav Section -->
+
+  <script>
+  const sections = document.querySelectorAll("section");
+  const navLinks = document.querySelectorAll(".vertical-nav a");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          let id = entry.target.id;
+
+          navLinks.forEach((link) => {
+            link.classList.remove("active");
+
+            if (link.getAttribute("href") === `#${id}`) {
+              link.classList.add("active");
+            }
+          });
+        }
+      });
+    },
+    {
+      threshold: 0.15, // section must be at least 15% visible
+    }
+  );
+
+  sections.forEach((section) => {
+    observer.observe(section);
+  });
+</script>
+
 
 
   <!-- Three.js Scripts -->
@@ -205,30 +262,7 @@
   </script>
 
 
-  <script>
-    window.addEventListener("scroll", () => {
-      const scrolled = window.scrollY;
 
-      // Each image gets its own movement strength
-      document.querySelector(".img1").style.transform =
-        `translateY(${scrolled * -0.15}px)`;    // slow
-
-      document.querySelector(".img2").style.transform =
-        `translateY(${scrolled * -0.25}px)`;    // medium
-
-      document.querySelector(".img3").style.transform =
-        `translateY(${scrolled * -0.35}px)`;    // faster
-
-      document.querySelector(".img4").style.transform =
-        `translateY(${scrolled * -0.15}px)`;    // slow
-
-      document.querySelector(".img5").style.transform =
-        `translateY(${scrolled * -0.25}px)`;    // medium
-
-      document.querySelector(".img6").style.transform =
-        `translateY(${scrolled * -0.35}px)`;    // faster
-    });
-  </script>
 
 
 </body>
