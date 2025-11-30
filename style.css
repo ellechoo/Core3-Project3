@@ -106,6 +106,56 @@ body {
 
 
 
+/* Container that spans the whole page */
+.bg-images {
+  position: fixed; /* stays behind while scrolling */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* so it doesn't block clicks */
+  z-index: -1; /* behind all content */
+}
+
+/* Default look for all background images */
+.bg-img {
+  position: absolute;
+  opacity: 0.25;  /* optional aesthetic */
+  object-fit: contain;
+}
+
+/* ---- Custom coordinates + sizes ---- */
+
+/* Image 1 */
+.img1 {
+  top: 10%;
+  left: 5%;
+  width: 180px;
+}
+
+/* Image 2 */
+.img2 {
+  top: 40%;
+  right: 10%;
+  width: 220px;
+}
+
+/* Image 3 */
+.img3 {
+  bottom: 8%;
+  left: 30%;
+  width: 160px;
+}
+
+
+
+
+
+
+
+
+
+
 .makeup-title {
   display: flex;
   align-items: baseline; /* makes the text align nicely */
@@ -143,9 +193,9 @@ body {
 
 
 
-.product:nth-of-type(even) {
+/*.product:nth-of-type(even) {
   background-color: #ffffff; /* text background */
-}
+/*}*/
 
 .product h2 {
   font-size: 2rem;

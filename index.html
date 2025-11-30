@@ -29,6 +29,15 @@
 </head>
 
 <body>
+
+  <!-- Scattered Background Images -->
+    <div class="bg-images">
+      <img src="images/mog.png" class="bg-img img1">
+      <img src="images/hyunjin.png" class="bg-img img2">
+      <img src="images/yoonchae.png" class="bg-img img3">
+    </div>
+
+
   <!-- Vertical Navigation -->
   <nav class="vertical-nav">
     <a href="#home">Home</a>
@@ -191,5 +200,24 @@
     createModel("model9", "./models/kiko-milano-lip-gloss", 10);
     createModel("model10", "./models/micellar_water_garnier.glb", 10);
   </script>
+
+
+  <script>
+    window.addEventListener("scroll", () => {
+      const scrolled = window.scrollY;
+
+      // Each image gets its own movement strength
+      document.querySelector(".img1").style.transform =
+        `translateY(${scrolled * -0.15}px)`;    // slow
+
+      document.querySelector(".img2").style.transform =
+        `translateY(${scrolled * -0.25}px)`;    // medium
+
+      document.querySelector(".img3").style.transform =
+        `translateY(${scrolled * -0.35}px)`;    // faster
+    });
+  </script>
+
+
 </body>
 </html>
