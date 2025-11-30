@@ -32,7 +32,7 @@
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
   text-decoration: none;
-  color: #000000;
+  color: #a5226d;
   letter-spacing: 1px;
   transition: opacity 0.3s ease;
 }
@@ -44,13 +44,13 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #ffcae5; /* fallback color */
-  background-image: url('images/background.jpg'); /* path to your image */
+  background-color: #ffffff; /* fallback color */
+  background-image: url('images/evenlighterbackground.png'); /* path to your image */
   background-size: cover;    /* make it cover the whole screen */
   background-position: center; /* center the image */
   background-repeat: no-repeat; /* don’t tile it */
   background-attachment: fixed; /* keeps it fixed while scrolling */
-  color: #ffffff;
+  color: #a5226d;
   scroll-behavior: smooth;
 }
 
@@ -144,7 +144,7 @@ body {
 
 
 .product:nth-of-type(even) {
-  background-color: #e1b1c7; /* green */
+  background-color: #ffffff; /* text background */
 }
 
 .product h2 {
@@ -206,7 +206,6 @@ canvas {
   max-width: 600px;
   height: 400px;     /* adjust as needed */
   margin-bottom: 2rem;
-  transition: opacity 0.4s ease;
 }
 
 .product {
@@ -230,35 +229,9 @@ canvas {
   text-align: center;
   font-size: 25px;
   line-height: 1.6;
-  transition: opacity 0.5s ease;
 }
 
 .model-container {
   position: relative;
   z-index: 2; /* Model stays on top */
-}
-
-.hover-zone:hover ~ .model-container {
-  opacity: 0.2;
-}
-
-.hover-zone:hover ~ .text-body {
-  opacity: 1;
-}
-
-/*fake hover zone to trigger hover effect*/
-.hover-zone {
-  position: absolute;
-  width: 200px;        /* adjust hover radius */
-  height: 200px;
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
-
-  /* Optional: Set to 'red' temporarily for debugging */
-  /* background: rgba(255,0,0,0.2); */
-
-  pointer-events: auto;
 }
