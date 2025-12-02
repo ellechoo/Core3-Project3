@@ -184,12 +184,13 @@ body {
 
 
 /* About Section */
+
 #about {
+  background-color: transparent; /* or whatever you want */
+  color: white;
   padding-top: 200px;
   padding-bottom: 1200px;
-  min-height: 60vh;
 }
-
 
 #about h2 {
   font-size: 2.5rem;
@@ -274,6 +275,7 @@ body {
 }
 
 
+
 /* 3D Model Section */
 
 canvas {
@@ -284,7 +286,43 @@ canvas {
 
 
 
+/* Big gap after objects */
+.section.product + .section.text {
+  margin-top: 600px;
+  background-color: white;
+  color: #a5226d;
+  padding: 100px 140px;
+  max-width: 1100px;
+  margin: 60px auto 0 auto;
+  border-radius: 20px;
+}
+
+/* Small gap between essays */
+.section.text + .section.text {
+  margin-top: 60px;
+  background-color: white;
+  color: #a5226d;
+  padding: 100px 140px;
+  max-width: 1100px;
+  margin: 60px auto 0 auto;
+  border-radius: 20px;
+}
+
+.section.text p {
+  text-align: justify;
+  text-align-last: left;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+
+
 /* Text sections (long-form) */
+
+.essays {
+  background-color: #ffffff;
+}
+
 .text {
   max-width: 700px;
   margin: 0 auto;
@@ -293,15 +331,22 @@ canvas {
 }
 
 .text h2 {
-  font-size: 2rem;
+  font-size: 5rem;
   margin-bottom: 1.5rem;
   font-size: 2.5rem;
   font-family: "RoleModel", sans-serif;
   letter-spacing: 2px;
 }
 
+.text h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-family: 'Galvji', sans-serif;
+  font-weight: 400;
+}
+
 .text p {
-  font-size: 1.1rem;
+  font-size: 1rem;
   line-height: 1.8;
   font-family: 'Inter', sans-serif;
 }
