@@ -492,12 +492,12 @@ canvas {
 /* Make sure model stays visually in the back */
 .model-container {
   position: absolute;
-  top: 40%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: -1;
-  width: 600px;
-  height: 600px;
+  width: 800px;
+  height: 800px;
   pointer-events: none;
   margin: 0 auto;
 }
