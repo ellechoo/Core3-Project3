@@ -189,7 +189,7 @@ body {
   background-color: transparent; /* or whatever you want */
   color: white;
   padding-top: 200px;
-  padding-bottom: 1200px;
+  padding-bottom: 2000px;
 }
 
 #about h2 {
@@ -278,6 +278,11 @@ body {
 
 /* 3D Model Section */
 
+#canvas-wrapper {
+  width: 100%;
+  height: 100vh; /* <— ensures canvas has height */
+}
+
 canvas {
   width: 100% !important;
   height: 100% !important;
@@ -295,6 +300,7 @@ canvas {
   max-width: 1100px;
   margin: 60px auto 0 auto;
   border-radius: 20px;
+  min-height: 1280vh;
 }
 
 /* Small gap between essays */
@@ -354,12 +360,6 @@ canvas {
 
 
 /* Hover fade interaction for 3D models + body text */
-.model-container {
-  width: 80%;
-  max-width: 600px;
-  height: 400px;     /* adjust as needed */
-  margin-bottom: 2rem;
-}
 
 .product {
   position: relative;
@@ -368,14 +368,14 @@ canvas {
   align-items: center;
   justify-content: center;
   padding-top: 0;
-  padding-bottom: 0;
+  padding-bottom: 100px;
 }
 
 .text-body {
   position: absolute;
   top: 50%; /* moves text up behind model */
   transform: translateY(-50%); /* centers vertically */
-  z-index: 1; /* behind model */
+  z-index: 2; /* behind model */
   width: 100%;
   max-width: none;
   opacity: 0.3;
@@ -384,7 +384,145 @@ canvas {
   line-height: 1.6;
 }
 
-.model-container {
+
+
+/* --------------------------- */
+/* TYPOGRAPHIC GRID FOR OBJECTS */
+/* --------------------------- */
+
+.product-title {
+  font-family: "RoleModel", sans-serif;
+  font-weight: normal;
+  font-size: 6rem !important;
+  letter-spacing: 10px;
+  margin-bottom: 18rem !important;
+  text-align: center;
+}
+
+/* Grid wrapper */
+.object-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
   position: relative;
-  z-index: 2; /* Model stays on top */
+  z-index: 5; /* sits above the model */
+  margin-top: -8rem; /* pulls grid upward toward model */
+}
+
+/* Subheadings */
+.object-grid h3 {
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 1.2rem;
+  margin-bottom: 4rem;
+  color: #ffffff;
+}
+
+/* Body text */
+.object-grid p,
+.object-grid li {
+  
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ffffff;
+  font-weight: medium;
+}
+
+
+
+
+.tip {
+  margin-bottom: 60px;
+  font-family: 'Times New Roman', serif;
+}
+
+.tip-title {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  font-weight: semi-bold;
+  margin-bottom: 16px;
+  
+  letter-spacing: 0.2px;
+}
+
+.tip-text {
+  text-align: left;
+  font-size: 1rem;
+  line-height: 1.45;
+  max-width: 600px; /* optional, keeps lines readable */
+}
+
+
+
+/* Left column */
+
+.grid-left {
+  padding-top: 400px;
+}
+
+.grid-left p {
+  text-align: justify;
+  text-align-last: left;
+}
+
+.grid-left h3 {
+  text-align: center;
+}
+
+
+/* Right column */
+.grid-right {
+  text-align: left;
+  padding-top: 1200px;
+}
+
+.grid-right li::before {
+  content: "• ";
+  color: #ffffff;
+}
+
+
+
+/* Make sure model stays visually in the back */
+.model-container {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  width: 600px;
+  height: 600px;
+  pointer-events: none;
+  margin: 0 auto;
+}
+
+/* Responsive behavior */
+@media (max-width: 900px) {
+  .object-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+  }
+  .model-container {
+    width: 420px;
+    height: 420px;
+  }
+}
+/* --------------------------- */
+
+
+/* Sticky behavior for product title and model */
+.sticky-wrapper {
+  position: sticky;
+  top: 20px;               /* stays at top */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;          /* stays above background */
 }
