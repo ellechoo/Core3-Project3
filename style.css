@@ -1,15 +1,15 @@
-/* Performance Optimizations */
+/* 1. PERFORMANCE & RESET */
+/* ============================================== */
 html {
-  scroll-behavior: auto; /* Change from smooth to auto for better performance */
+  scroll-behavior: auto;
 }
 
 .bg-img, .model-container canvas {
-  will-change: transform; /* Hint to browser for GPU acceleration */
-  backface-visibility: hidden; /* Improve rendering performance */
-  transform: translateZ(0); /* Force GPU acceleration */
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
-/* Disable smooth scrolling during interactions if needed */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -18,8 +18,6 @@ html {
   }
 }
 
-
-
 @font-face {
   font-family: "RoleModel";
   src: url("fonts/RoleModelRegular.otf") format("opentype");
@@ -27,30 +25,47 @@ html {
   font-style: normal;
 }
 
-
-
-/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-
-
-/* Vertical Navigation */
-
+/* 2. GLOBAL STYLES & BODY */
+/* ============================================== */
 html {
   scroll-behavior: smooth;
 }
 
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #ffffff;
+  background-image: url('images/radius.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #ffffff;
+  scroll-behavior: smooth;
+}
+
+.section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 19vh 5vh 5vh 5vh;
+  text-align: center;
+}
+
+/* 3. NAVIGATION */
+/* ============================================== */
 .vertical-nav {
   position: fixed;
   top: 30px;
   right: 30px;
   display: flex;
   flex-direction: column;
-  gap: 20px; /* space between items */
+  gap: 20px;
   z-index: 1000;
   text-align: right;
 }
@@ -65,39 +80,15 @@ html {
 }
 
 .vertical-nav a:hover {
-  color:#e76eb3;
+  color: #e76eb3;
 }
 
 .vertical-nav a.active {
   color: #ffffff;
 }
 
-
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: #ffffff; /* fallback color */
-  background-image: url('images/radius.png'); /* path to your image */
-  background-size: cover;    /* make it cover the whole screen */
-  background-position: center; /* center the image */
-  background-repeat: no-repeat; /* don’t tile it */
-  background-attachment: fixed; /* keeps it fixed while scrolling */
-  color: #ffffff;
-  scroll-behavior: smooth;
-}
-
-
-/* Section layout */
-.section {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  padding: 19vh 5vh 5vh 5vh; /* top, right, bottom, left */
-  text-align: center;
-}
-
-
-
-/* Intro section */
+/* 4. INTRO SECTION */
+/* ============================================== */
 .intro h1 {
   font-size: 4rem;
   letter-spacing: 1px;
@@ -139,76 +130,90 @@ body {
   padding-top: 3rem;
 }
 
+.makeup-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  margin-top: 0;
+  align-self: center;
+}
 
+.makeup-title h2,
+.makeup-title h3 {
+  margin: 0;
+  padding: 0;
+  margin-left: -40px;
+}
 
-/* Container that spans the whole page */
+.title-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.intro h1 { line-height: 0.9; }
+.intro h2 { line-height: 0.9; }
+.intro h3 { line-height: 0.9; }
+.intro p  { line-height: 0.9; }
+
+/* 5. BACKGROUND IMAGES */
+/* ============================================== */
 .bg-images {
-  position: fixed; /* stays behind while scrolling */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none; /* so it doesn't block clicks */
-  z-index: -1; /* behind all content */
+  pointer-events: none;
+  z-index: -1;
 }
 
-/* Default look for all background images */
 .bg-img {
   position: absolute;
-  opacity: 0.5;  /* optional aesthetic */
+  opacity: 0.5;
   object-fit: contain;
 }
 
-/* ---- Custom coordinates + sizes ---- */
-
-/* Image 1 eyeliner*/
 .img1 {
   top: 8%;
   left: 8%;
   width: 190px;
 }
 
-/* Image 2 hyunjin */
 .img2 {
   top: 20%;
   right: 10%;
   width: 260px;
 }
 
-/* Image 3 yoonchae*/
 .img3 {
   bottom: 16%;
   left: 28%;
   width: 230px;
 }
 
-/* Image 4 cheek*/
 .img4 {
   top: 6%;
   right: 38%;
   width: 150px;
 }
 
-/* Image 5 lipstick*/
 .img5 {
   bottom: 5%;
   left: 5%;
   width: 200px;
 }
 
-/* Image 6 mascara*/
 .img6 {
   bottom: -5%;
   left: 58%;
   width: 180px;
 }
 
-
-
-/* About Section */
-
+/* 6. ABOUT SECTION */
+/* ============================================== */
 #about {
-  background-color: transparent; /* or whatever you want */
+  background-color: transparent;
   color: white;
   padding-top: 200px;
   padding-bottom: 2000px;
@@ -228,47 +233,8 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
-
-
-
-
-.makeup-title {
-  display: flex;
-  align-items: baseline; /* makes the text align nicely */
-  gap: 0; /* remove spacing if needed */
-  margin-top: 0;
-  align-self: center;
-}
-
-.makeup-title h2,
-.makeup-title h3 {
-  margin: 0; /* remove default spacing */
-  padding: 0;
-  margin-left: -40px;
-}
-
-.title-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  
-}
-
-
-
-
-/* Prevent huge gaps caused by oversized line boxes */
-.intro h1 { line-height: 0.9; }
-.intro h2 { line-height: 0.9; }
-.intro h3 { line-height: 0.9; }
-.intro p  { line-height: 0.9; }
-
-
-
-
-
-/* Product sections */
-/* Foundation Section Title Styling - HORIZONTAL */
+/* 7. FOUNDATION TITLE */
+/* ============================================== */
 .foundation-section-title {
   position: fixed;
   bottom: 40px;
@@ -280,7 +246,7 @@ body {
 }
 
 .foundation-section-title.visible {
-  opacity: 0.8; /* Subtle opacity for background effect */
+  opacity: 0.8;
 }
 
 .foundation-title-text {
@@ -288,7 +254,7 @@ body {
   font-size: 8rem;
   font-weight: normal;
   letter-spacing: 15px;
-  color: rgba(255, 255, 255, 1); /* Very subtle */
+  color: rgba(255, 255, 255, 1);
   text-transform: uppercase;
   margin: 0;
   line-height: 1;
@@ -296,13 +262,8 @@ body {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
-
-/* 3D Model Fade Effects */
+/* 8. 3D MODEL SECTION */
 /* ============================================== */
-/* PRODUCT SCROLL SECTION - NEW LAYOUT */
-/* ============================================== */
-
 .product-scroll-section {
   position: relative;
   min-height: 300vh;
@@ -311,17 +272,17 @@ body {
   background: transparent;
 }
 
-/* 3D Model Container (Stays Centered) - UPDATED */
+/* Model Container */
 .model-scroll-container {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 1000vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 5;
+  z-index: 5; /* Important: Higher than tips (10) but lower would be covered */
   pointer-events: none;
   opacity: 0;
   transition: opacity 1s ease-in-out;
@@ -336,41 +297,29 @@ body {
 }
 
 .model-scroll-view {
-  width: 2000px;  /* Increased size */
-  height: 4000px; /* Increased size */
+  width: 600px;
+  height: 600px;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-/* Ensure Three.js canvas is perfectly centered */
-.model-scroll-view canvas {
-  position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -80%) !important;
-}
-
-/* Responsive sizes - also increased */
 @media (max-width: 1024px) {
-  .model-scroll-view {
-    width: 600px;
-    height: 600px;
-  }
-}
-
-@media (max-width: 768px) {
   .model-scroll-view {
     width: 500px;
     height: 500px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .model-scroll-view {
     width: 400px;
     height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .model-scroll-view {
+    width: 300px;
+    height: 300px;
   }
 }
 
@@ -378,297 +327,30 @@ body {
 
 
 
-.product h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  font-size: 2.5rem;
-  font-family: "RoleModel", sans-serif;
-  letter-spacing: 2px;
-  margin-bottom: 10rem;
-}
-
-.placeholder {
-  width: 300px;
-  height: 300px;
-  background-color: #f3f3f3;
-  border: 2px solid #000;
-  margin-bottom: 1rem;
-}
-
-.product p {
-  max-width: 500px;
-  line-height: 1.5;
-  font-family: 'Inter', sans-serif;
-}
 
 
 
-/* 3D Model Section */
-
-#canvas-wrapper {
-  width: 100%;
-  height: 100vh; /* <— ensures canvas has height */
-}
-
-canvas {
-  width: 100% !important;
-  height: 100% !important;
-  display: block;
-}
 
 
 
-/* Big gap after objects */
-.section.product + .section.text {
-  margin-top: 600px;
-  background-color: white;
-  color: #a5226d;
-  padding: 100px 140px;
-  max-width: 1100px;
-  margin: 60px auto 0 auto;
-  border-radius: 20px;
-  min-height: 1280vh;
-}
-
-/* Small gap between essays */
-.section.text + .section.text {
-  margin-top: 60px;
-  background-color: white;
-  color: #a5226d;
-  padding: 100px 140px;
-  max-width: 1100px;
-  margin: 60px auto 0 auto;
-  border-radius: 20px;
-}
-
-.section.text p {
-  text-align: justify;
-  text-align-last: left;
-  font-size: 18px;
-  line-height: 1.8;
-}
-
-
-
-/* Text sections (long-form) */
-
-.essays {
-  background-color: #ffffff;
-}
-
-.text {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 150px 20px;
-  font-family: 'Inter', sans-serif;
-}
-
-.text h2 {
-  font-size: 5rem;
-  margin-bottom: 1.5rem;
-  font-size: 2.5rem;
-  font-family: "RoleModel", sans-serif;
-  letter-spacing: 2px;
-}
-
-.text h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-  font-family: 'Galvji', sans-serif;
-  font-weight: 400;
-}
-
-.text p {
-  font-size: 1rem;
-  line-height: 1.8;
-  font-family: 'Inter', sans-serif;
-}
-
-
-
-/* Hover fade interaction for 3D models + body text */
-
+/* 9. TIPS SECTION (Now appears first) */
 /* ============================================== */
-/* PRODUCT SCROLL SECTION - NEW LAYOUT */
-/* ============================================== */
-
-.product-scroll-section {
-  position: relative;
-  min-height: 300vh; /* Much taller to accommodate scroll animations */
-  padding: 0;
-  overflow: hidden;
-  background: transparent;
-}
-
-/* Sticky Title in Top Right Corner */
-.product-sticky-title {
-  position: fixed;
-  top: 80px;
-  right: 40px;
-  z-index: 100;
-  pointer-events: none;
-  text-align: right;
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-
-/* Hide title when tips section is in view */
-.tips-section.in-view ~ .product-sticky-title {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.product-main-title {
-  font-family: "RoleModel", sans-serif;
-  font-size: 8rem;
-  font-weight: normal;
-  letter-spacing: 15px;
-  color: rgba(255, 255, 255, 0.15);
-  text-transform: uppercase;
-  margin: 0;
-  line-height: 1;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* 3D Model Container (Stays Centered) */
-.model-scroll-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-  pointer-events: none;
-}
-
-.model-scroll-view {
-  width: 600px;
-  height: 600px;
-  position: relative;
-}
-
-/* Context Text Section */
-.context-scroll-section {
-  position: relative;
-  z-index: 10;
-  width: 100%;
-  padding-top: 100vh; /* Start after initial viewport */
-  padding-bottom: 100vh; /* Space before tips */
-  min-height: 100vh;
-}
-
-.context-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 40px;
-}
-
-.context-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 60px;
-  opacity: 0;
-  transform: translateX(100px);
-  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.context-header h3 {
-  font-family: "Inter", sans-serif;
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: 3px;
-  color: #ffffff;
-  text-transform: uppercase;
-}
-
-.scroll-indicator {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  color: rgba(255, 255, 255, 0.7);
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-}
-
-.scroll-indicator .arrow {
-  font-size: 1.5rem;
-  animation: bounceRight 2s infinite;
-}
-
-@keyframes bounceRight {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(10px); }
-}
-
-.context-columns {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 50px;
-  opacity: 0;
-  transform: translateX(100px);
-  transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
-}
-
-.context-column {
-  padding-right: 20px;
-}
-
-.context-column p {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.1rem;
-  line-height: 1.7;
-  color: #ffffff;
-  margin-bottom: 30px;
-  text-align: justify;
-  opacity: 0;
-  transform: translateX(50px);
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.context-column p:nth-child(1) { transition-delay: 0.3s; }
-.context-column p:nth-child(2) { transition-delay: 0.5s; }
-.context-column:nth-child(2) p:nth-child(1) { transition-delay: 0.4s; }
-.context-column:nth-child(2) p:nth-child(2) { transition-delay: 0.6s; }
-.context-column:nth-child(3) p:nth-child(1) { transition-delay: 0.5s; }
-.context-column:nth-child(3) p:nth-child(2) { transition-delay: 0.7s; }
-
-/* Active states for animations */
-.context-scroll-section.in-view .context-header {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.context-scroll-section.in-view .context-columns {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.context-scroll-section.in-view .context-column p {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* Tips Section */
 .tips-section {
   position: relative;
-  z-index: 15;
-  padding: 100px 40px;
-  background: rgba(255, 255, 255, 0.95);
+  z-index: 10; /* Lower than model (5) so model shows through */
+  width: 100%;
+  padding-top: 120vh; /* Start later to show model first */
+  padding-bottom: 50px;
   min-height: 100vh;
   display: flex;
   align-items: center;
-  border-radius: 40px 40px 0 0;
-  margin-top: -50px;
+  background: transparent;
 }
 
 .tips-container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 40px;
   width: 100%;
 }
 
@@ -677,18 +359,12 @@ canvas {
   font-size: 1.5rem;
   font-weight: 600;
   letter-spacing: 3px;
-  color: #a5226d;
+  color: #ffffff;
   text-transform: uppercase;
   text-align: center;
   margin-bottom: 80px;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease;
-}
-
-.tips-section.in-view .tips-container h3 {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 .tips-grid {
@@ -698,29 +374,27 @@ canvas {
 }
 
 .tip-card {
-  background: white;
+  background: rgba(255, 255, 255, 0.7); /* More transparent */
   border-radius: 20px;
   padding: 40px 30px;
-  box-shadow: 0 10px 30px rgba(169, 34, 109, 0.08);
-  border: 1px solid rgba(233, 110, 179, 0.1);
-  opacity: 0;
-  transform: translateY(50px);
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 1;
+  transform: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.tip-card:nth-child(1) { transition-delay: 0.2s; }
-.tip-card:nth-child(2) { transition-delay: 0.4s; }
-.tip-card:nth-child(3) { transition-delay: 0.6s; }
-
-.tips-section.in-view .tip-card {
-  opacity: 1;
-  transform: translateY(0);
+.tip-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 .tip-number {
   font-family: "RoleModel", sans-serif;
   font-size: 3rem;
-  color: rgba(169, 34, 109, 0.1);
+  color: rgba(169, 34, 109, 0.2);
   margin-bottom: 20px;
   line-height: 1;
 }
@@ -741,245 +415,127 @@ canvas {
   color: #333;
 }
 
-/* Responsive Design */
+/* 10. CONTEXT SECTION (Now appears after tips) */
+/* ============================================== */
+.context-scroll-section {
+  position: relative;
+  z-index: 15;
+  width: 100%;
+  padding-top: 500px; /* Increased from 50px */
+  padding-bottom: 500px; /* Increased from 100px */
+  min-height: 100vh;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 40px 40px 0 0;
+  margin-top: 100px; /* Add margin at the top */
+}
+
+.context-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.context-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 60px;
+  opacity: 1;
+  transform: none;
+}
+
+.context-header h3 {
+  font-family: "Inter", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: #a5226d;
+  text-transform: uppercase;
+}
+
+.scroll-indicator {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: rgba(169, 34, 109, 0.7);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.context-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  opacity: 1;
+  transform: none;
+}
+
+.context-column p {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #333;
+  margin-bottom: 30px;
+  text-align: justify;
+  opacity: 1;
+  transform: none;
+}
+
+
+
+
+/* 11. RESPONSIVE DESIGN */
+/* ============================================== */
 @media (max-width: 1024px) {
-  .product-main-title {
-    font-size: 6rem;
-    right: 30px;
-  }
-  
+  .tips-grid,
   .context-columns {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
-  }
-  
-  .tips-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
   }
   
-  .model-scroll-view {
-    width: 500px;
-    height: 500px;
+  .tips-container,
+  .context-container {
+    padding: 0 30px;
   }
 }
 
 @media (max-width: 768px) {
-  .product-main-title {
-    font-size: 4rem;
-    right: 20px;
-    top: 60px;
-  }
-  
+  .tips-grid,
   .context-columns {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-  
-  .tips-grid {
     grid-template-columns: 1fr;
     gap: 25px;
   }
   
-  .context-container,
-  .tips-container {
+  .tips-container,
+  .context-container {
     padding: 0 20px;
-  }
-  
-  .model-scroll-view {
-    width: 400px;
-    height: 400px;
-  }
-  
-  .context-scroll-section {
-    padding-top: 80vh;
-    padding-bottom: 80vh;
-  }
-}
-
-@media (max-width: 480px) {
-  .product-main-title {
-    font-size: 3rem;
-    letter-spacing: 8px;
-  }
-  
-  .model-scroll-view {
-    width: 300px;
-    height: 300px;
   }
   
   .tip-card {
     padding: 30px 20px;
   }
-}
-
-
-
-.text-body {
-  position: absolute;
-  top: 50%; /* moves text up behind model */
-  transform: translateY(-50%); /* centers vertically */
-  z-index: 10;
-  width: 100%;
-  max-width: none;
-  opacity: 0.3;
-  text-align: center;
-  font-size: 25px;
-  line-height: 1.6;
-}
-
-
-
-/* --------------------------- */
-/* TYPOGRAPHIC GRID FOR OBJECTS */
-/* --------------------------- */
-
-.product-title {
-  font-family: "RoleModel", sans-serif;
-  font-weight: normal;
-  font-size: 6rem !important;
-  letter-spacing: 10px;
-  margin-bottom: 18rem !important;
-  text-align: center;
-}
-
-/* Grid wrapper */
-.object-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6rem;
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 5; /* sits above the model */
-  margin-top: -8rem; /* pulls grid upward toward model */
-}
-
-/* Subheadings */
-.object-grid h3 {
-  text-align: center;
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  letter-spacing: 1px;
-  font-size: 1.2rem;
-  margin-bottom: 4rem;
-  color: #ffffff;
-}
-
-/* Body text */
-.object-grid p,
-.object-grid li {
   
-  font-family: "Inter", sans-serif;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #ffffff;
-  font-weight: medium;
-}
-
-
-
-
-.tip {
-  margin-bottom: 60px;
-  font-family: 'Times New Roman', serif;
-}
-
-.tip-title {
-  font-family: "Inter", sans-serif;
-  font-size: 1rem;
-  font-weight: semi-bold;
-  margin-bottom: 16px;
-  
-  letter-spacing: 0.2px;
-}
-
-.tip-text {
-  text-align: left;
-  font-size: 1rem;
-  line-height: 1.45;
-  max-width: 600px; /* optional, keeps lines readable */
-}
-
-
-
-/* Left column */
-
-.grid-left {
-  padding-top: 400px;
-}
-
-.grid-left p {
-  text-align: justify;
-  text-align-last: left;
-}
-
-.grid-left h3 {
-  text-align: center;
-}
-
-
-/* Right column */
-.grid-right {
-  text-align: left;
-  padding-top: 1200px;
-}
-
-.grid-right li::before {
-  content: "• ";
-  color: #ffffff;
-}
-
-
-
-/* Make sure model stays visually in the back */
-.model-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: -100;
-  width: 800px;
-  height: 800px;
-  pointer-events: none;
-  margin: 0 auto;
-  transition: transform 0.1s ease-out; /* Smooth parallax movement */
-}
-
-/* Responsive behavior */
-@media (max-width: 900px) {
-  .object-grid {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    margin-top: 2rem;
-  }
-  .model-container {
-    width: 420px;
-    height: 420px;
+  .context-scroll-section {
+    padding-top: 30px;
+    padding-bottom: 50px;
   }
 }
-/* --------------------------- */
 
-
-/* Sticky behavior for product title and model */
-.sticky-wrapper {
-  position: sticky;
-  top: 20px;               /* stays at top */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 10;          /* stays above background */
+@media (max-width: 480px) {
+  .tip-card {
+    padding: 25px 15px;
+  }
+  
+  .tips-container h3,
+  .context-header h3 {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+  }
 }
 
-
-
-
-
-/* --------------------------- */
-/* ARTICLES SECTION */
-/* --------------------------- */
-
+/* 12. ARTICLES SECTION */
+/* ============================================== */
 .articles-section {
   background-color: none;
   color: #a5226d;
@@ -1018,10 +574,9 @@ canvas {
   max-width: 1000px;
 }
 
-/* Article Card */
 .article-card {
   background: white;
-  border-radius: 20px;
+  border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(169, 34, 109, 0.1);
   border: 2px solid rgba(233, 110, 179, 0.2);
@@ -1039,7 +594,6 @@ canvas {
   border-color: rgba(233, 110, 179, 0.4);
 }
 
-/* Card Header */
 .article-card-header {
   background: linear-gradient(135deg, #a5226d, #c9398b);
   color: white;
@@ -1096,7 +650,6 @@ canvas {
   transition: transform 0.3s ease;
 }
 
-/* Card Content */
 .article-card-content {
   padding: 0;
   flex: 1;
@@ -1136,7 +689,6 @@ canvas {
   transition: transform 0.3s ease;
 }
 
-/* Full Article Content (hidden by default) */
 .article-full {
   padding: 0 30px;
   max-height: 0;
@@ -1154,7 +706,6 @@ canvas {
   text-align: justify;
 }
 
-/* Expanded State */
 .article-card.expanded {
   max-height: none;
 }
@@ -1182,7 +733,6 @@ canvas {
   color: #a5226d;
 }
 
-/* Responsive Design */
 @media (max-width: 900px) {
   .articles-grid {
     grid-template-columns: 1fr;
@@ -1223,4 +773,258 @@ canvas {
     align-self: flex-end;
     margin-top: 10px;
   }
+}
+
+/* 13. LEGACY/UNUSED STYLES (Clean up later) */
+/* ============================================== */
+.product h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  font-family: "RoleModel", sans-serif;
+  letter-spacing: 2px;
+  margin-bottom: 10rem;
+}
+
+.placeholder {
+  width: 300px;
+  height: 300px;
+  background-color: #f3f3f3;
+  border: 2px solid #000;
+  margin-bottom: 1rem;
+}
+
+.product p {
+  max-width: 500px;
+  line-height: 1.5;
+  font-family: 'Inter', sans-serif;
+}
+
+#canvas-wrapper {
+  width: 100%;
+  height: 100vh;
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.section.product + .section.text {
+  margin-top: 600px;
+  background-color: white;
+  color: #a5226d;
+  padding: 100px 140px;
+  max-width: 1100px;
+  margin: 60px auto 0 auto;
+  border-radius: 20px;
+  min-height: 1280vh;
+}
+
+.section.text + .section.text {
+  margin-top: 60px;
+  background-color: white;
+  color: #a5226d;
+  padding: 100px 140px;
+  max-width: 1100px;
+  margin: 60px auto 0 auto;
+  border-radius: 20px;
+}
+
+.section.text p {
+  text-align: justify;
+  text-align-last: left;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.essays {
+  background-color: #ffffff;
+}
+
+.text {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 150px 20px;
+  font-family: 'Inter', sans-serif;
+}
+
+.text h2 {
+  font-size: 5rem;
+  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+  font-family: "RoleModel", sans-serif;
+  letter-spacing: 2px;
+}
+
+.text h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-family: 'Galvji', sans-serif;
+  font-weight: 400;
+}
+
+.text p {
+  font-size: 1rem;
+  line-height: 1.8;
+  font-family: 'Inter', sans-serif;
+}
+
+.product-sticky-title {
+  position: fixed;
+  top: 80px;
+  right: 40px;
+  z-index: 100;
+  pointer-events: none;
+  text-align: right;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.tips-section.in-view ~ .product-sticky-title {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.product-main-title {
+  font-family: "RoleModel", sans-serif;
+  font-size: 8rem;
+  font-weight: normal;
+  letter-spacing: 15px;
+  color: rgba(255, 255, 255, 0.15);
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.text-body {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 100%;
+  max-width: none;
+  opacity: 0.3;
+  text-align: center;
+  font-size: 25px;
+  line-height: 1.6;
+}
+
+.product-title {
+  font-family: "RoleModel", sans-serif;
+  font-weight: normal;
+  font-size: 6rem !important;
+  letter-spacing: 10px;
+  margin-bottom: 18rem !important;
+  text-align: center;
+}
+
+.object-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 5;
+  margin-top: -8rem;
+}
+
+.object-grid h3 {
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 1.2rem;
+  margin-bottom: 4rem;
+  color: #ffffff;
+}
+
+.object-grid p,
+.object-grid li {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ffffff;
+  font-weight: medium;
+}
+
+.tip {
+  margin-bottom: 60px;
+  font-family: 'Times New Roman', serif;
+}
+
+.tip-title {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  font-weight: semi-bold;
+  margin-bottom: 16px;
+  letter-spacing: 0.2px;
+}
+
+.tip-text {
+  text-align: left;
+  font-size: 1rem;
+  line-height: 1.45;
+  max-width: 600px;
+}
+
+.grid-left {
+  padding-top: 400px;
+}
+
+.grid-left p {
+  text-align: justify;
+  text-align-last: left;
+}
+
+.grid-left h3 {
+  text-align: center;
+}
+
+.grid-right {
+  text-align: left;
+  padding-top: 1200px;
+}
+
+.grid-right li::before {
+  content: "• ";
+  color: #ffffff;
+}
+
+.model-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -100;
+  width: 800px;
+  height: 800px;
+  pointer-events: none;
+  margin: 0 auto;
+  transition: transform 0.1s ease-out;
+}
+
+@media (max-width: 900px) {
+  .object-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+  }
+  .model-container {
+    width: 420px;
+    height: 420px;
+  }
+}
+
+.sticky-wrapper {
+  position: sticky;
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
 }
