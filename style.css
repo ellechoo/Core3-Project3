@@ -1,3 +1,25 @@
+/* Performance Optimizations */
+html {
+  scroll-behavior: auto; /* Change from smooth to auto for better performance */
+}
+
+.bg-img, .model-container canvas {
+  will-change: transform; /* Hint to browser for GPU acceleration */
+  backface-visibility: hidden; /* Improve rendering performance */
+  transform: translateZ(0); /* Force GPU acceleration */
+}
+
+/* Disable smooth scrolling during interactions if needed */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+
 @font-face {
   font-family: "RoleModel";
   src: url("fonts/RoleModelRegular.otf") format("opentype");
@@ -243,13 +265,118 @@ body {
 
 
 
+
+
 /* Product sections */
+/* Foundation Section Title Styling - HORIZONTAL */
+.foundation-section-title {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.foundation-section-title.visible {
+  opacity: 0.8; /* Subtle opacity for background effect */
+}
+
+.foundation-title-text {
+  font-family: "RoleModel", sans-serif;
+  font-size: 8rem;
+  font-weight: normal;
+  letter-spacing: 15px;
+  color: rgba(255, 255, 255, 1); /* Very subtle */
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1;
+  text-align: right;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
 
 
 
-/*.product:nth-of-type(even) {
-  background-color: #ffffff; /* text background */
-/*}*/
+/* 3D Model Fade Effects */
+/* ============================================== */
+/* PRODUCT SCROLL SECTION - NEW LAYOUT */
+/* ============================================== */
+
+.product-scroll-section {
+  position: relative;
+  min-height: 300vh;
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* 3D Model Container (Stays Centered) - UPDATED */
+.model-scroll-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1000vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.model-scroll-container.fade-in {
+  opacity: 1;
+}
+
+.model-scroll-container.fade-out {
+  opacity: 0;
+}
+
+.model-scroll-view {
+  width: 2000px;  /* Increased size */
+  height: 4000px; /* Increased size */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ensure Three.js canvas is perfectly centered */
+.model-scroll-view canvas {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -80%) !important;
+}
+
+/* Responsive sizes - also increased */
+@media (max-width: 1024px) {
+  .model-scroll-view {
+    width: 600px;
+    height: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .model-scroll-view {
+    width: 500px;
+    height: 500px;
+  }
+}
+
+@media (max-width: 480px) {
+  .model-scroll-view {
+    width: 400px;
+    height: 400px;
+  }
+}
+
+
+
+
 
 .product h2 {
   font-size: 2rem;
@@ -361,21 +488,338 @@ canvas {
 
 /* Hover fade interaction for 3D models + body text */
 
-.product {
+/* ============================================== */
+/* PRODUCT SCROLL SECTION - NEW LAYOUT */
+/* ============================================== */
+
+.product-scroll-section {
   position: relative;
+  min-height: 300vh; /* Much taller to accommodate scroll animations */
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* Sticky Title in Top Right Corner */
+.product-sticky-title {
+  position: fixed;
+  top: 80px;
+  right: 40px;
+  z-index: 100;
+  pointer-events: none;
+  text-align: right;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Hide title when tips section is in view */
+.tips-section.in-view ~ .product-sticky-title {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.product-main-title {
+  font-family: "RoleModel", sans-serif;
+  font-size: 8rem;
+  font-weight: normal;
+  letter-spacing: 15px;
+  color: rgba(255, 255, 255, 0.15);
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 3D Model Container (Stays Centered) */
+.model-scroll-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 0;
-  padding-bottom: 100px;
+  z-index: 5;
+  pointer-events: none;
 }
+
+.model-scroll-view {
+  width: 600px;
+  height: 600px;
+  position: relative;
+}
+
+/* Context Text Section */
+.context-scroll-section {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding-top: 100vh; /* Start after initial viewport */
+  padding-bottom: 100vh; /* Space before tips */
+  min-height: 100vh;
+}
+
+.context-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.context-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 60px;
+  opacity: 0;
+  transform: translateX(100px);
+  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.context-header h3 {
+  font-family: "Inter", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.scroll-indicator {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.scroll-indicator .arrow {
+  font-size: 1.5rem;
+  animation: bounceRight 2s infinite;
+}
+
+@keyframes bounceRight {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(10px); }
+}
+
+.context-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  opacity: 0;
+  transform: translateX(100px);
+  transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+}
+
+.context-column {
+  padding-right: 20px;
+}
+
+.context-column p {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #ffffff;
+  margin-bottom: 30px;
+  text-align: justify;
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.context-column p:nth-child(1) { transition-delay: 0.3s; }
+.context-column p:nth-child(2) { transition-delay: 0.5s; }
+.context-column:nth-child(2) p:nth-child(1) { transition-delay: 0.4s; }
+.context-column:nth-child(2) p:nth-child(2) { transition-delay: 0.6s; }
+.context-column:nth-child(3) p:nth-child(1) { transition-delay: 0.5s; }
+.context-column:nth-child(3) p:nth-child(2) { transition-delay: 0.7s; }
+
+/* Active states for animations */
+.context-scroll-section.in-view .context-header {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.context-scroll-section.in-view .context-columns {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.context-scroll-section.in-view .context-column p {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Tips Section */
+.tips-section {
+  position: relative;
+  z-index: 15;
+  padding: 100px 40px;
+  background: rgba(255, 255, 255, 0.95);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  border-radius: 40px 40px 0 0;
+  margin-top: -50px;
+}
+
+.tips-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.tips-container h3 {
+  font-family: "Inter", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: #a5226d;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 80px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.tips-section.in-view .tips-container h3 {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.tip-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px 30px;
+  box-shadow: 0 10px 30px rgba(169, 34, 109, 0.08);
+  border: 1px solid rgba(233, 110, 179, 0.1);
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tip-card:nth-child(1) { transition-delay: 0.2s; }
+.tip-card:nth-child(2) { transition-delay: 0.4s; }
+.tip-card:nth-child(3) { transition-delay: 0.6s; }
+
+.tips-section.in-view .tip-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tip-number {
+  font-family: "RoleModel", sans-serif;
+  font-size: 3rem;
+  color: rgba(169, 34, 109, 0.1);
+  margin-bottom: 20px;
+  line-height: 1;
+}
+
+.tip-title {
+  font-family: "Inter", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #a5226d;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.tip-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .product-main-title {
+    font-size: 6rem;
+    right: 30px;
+  }
+  
+  .context-columns {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+  
+  .tips-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+  
+  .model-scroll-view {
+    width: 500px;
+    height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-main-title {
+    font-size: 4rem;
+    right: 20px;
+    top: 60px;
+  }
+  
+  .context-columns {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .tips-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  
+  .context-container,
+  .tips-container {
+    padding: 0 20px;
+  }
+  
+  .model-scroll-view {
+    width: 400px;
+    height: 400px;
+  }
+  
+  .context-scroll-section {
+    padding-top: 80vh;
+    padding-bottom: 80vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-main-title {
+    font-size: 3rem;
+    letter-spacing: 8px;
+  }
+  
+  .model-scroll-view {
+    width: 300px;
+    height: 300px;
+  }
+  
+  .tip-card {
+    padding: 30px 20px;
+  }
+}
+
+
 
 .text-body {
   position: absolute;
   top: 50%; /* moves text up behind model */
   transform: translateY(-50%); /* centers vertically */
-  z-index: 2; /* behind model */
+  z-index: 10;
   width: 100%;
   max-width: none;
   opacity: 0.3;
@@ -495,7 +939,7 @@ canvas {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: -1;
+  z-index: -100;
   width: 800px;
   height: 800px;
   pointer-events: none;
@@ -537,7 +981,7 @@ canvas {
 /* --------------------------- */
 
 .articles-section {
-  background-color: white;
+  background-color: none;
   color: #a5226d;
   padding: 100px 40px;
   min-height: auto;

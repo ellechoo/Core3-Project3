@@ -45,7 +45,7 @@
   <nav class="vertical-nav">
     <a href="#home">HOME</a>
     <a href="#about">ABOUT</a>
-    <a href="#object1">MAKEUP</a>
+    <a href="#model-anchor">MAKEUP</a>
     <a href="#articles">ARTICLES</a>
   </nav>
 
@@ -81,70 +81,97 @@
 
 
 
-  <!-- Ten Object Sections -->
-  <section class="section product" id="object1">
-
-    <div class="sticky-wrapper">
-      <h2 class="product-title">Foundation</h2>
-
-      <!-- 3D Model in the center / behind -->
-      <div id="model1" class="model-container"></div>
+<!-- Foundation Section Title -->
+    <div class="foundation-section-title">
+      <h2 class="foundation-title-text">Foundation</h2>
     </div>
 
-    <!-- TYPOGRAPHIC GRID -->
-      <div class="object-grid">
+  <!-- Product Section with Scroll Animation -->
+  <section class="section product-scroll-section" id="object1">
 
-      <div class="grid-left">
-        <h3>CONTEXT</h3>
-        <p>
-          Foundation in relation to the Asian American experience reflects a larger story about racialized beauty standards and the struggle for visibility within Western culture. For most of the 20th century, American cosmetics were created with white consumers in mind, shaped by Eurocentric ideals that celebrated fair skin and narrow, angular features. Scholars such as Thuy Linh Nguyen Tu (The Beautiful Generation, 2011) and Minh Ha T Pham (Asians Wear Clothes on the Internet, 2015) note that this beauty culture marginalized Asian faces and complexions, offering few shades or techniques suited to the undertones and features common among Asian communities.
+    <a id="model-anchor" style="position: absolute; top: 50vh; left: 0; visibility: hidden;"></a>
 
-          Before the early 2000s, foundation lines rarely included colors that matched Asian skin. Many brands offered only pink based ivory shades or a limited set of deeper tones, without considering yellow, olive, or neutral undertones. As a result, many Asian American youth learned makeup through trial and error, often adapting products that were never designed for them. Tutorials in mainstream media did not address monolids, flatter nose bridges, or wider cheekbones, reinforcing the sense that Asian features existed outside the standard of beauty (Schlund Vials, Asian American cultural criticism).
+    <!-- 3D Model Container (Stays Centered) -->
+    <div class="model-scroll-container">
+      <div id="model1" class="model-scroll-view"></div>
+    </div>
 
-          The arrival of Asian American beauty creators in the 2010s brought meaningful change. Influencers such as Michelle Phan introduced techniques tailored to Asian features and opened space for new forms of representation (Pham, 2015). At the same time, the rise of K beauty introduced dewy bases, lighter textures, and expanded shade ranges that influenced the American market (Tu, 2011). For many Asian Americans, choosing foundation became an act of self recognition within a culture that once overlooked them.
-        </p>
+    <!-- Context Text Section (Scrolls in from right) -->
+    <div class="context-scroll-section">
+      <div class="context-container">
+        <div class="context-header">
+          <h3>CONTEXT</h3>
+          <div class="scroll-indicator">
+            <span>Scroll to read</span>
+            <div class="arrow">→</div>
+          </div>
+        </div>
+        
+        <div class="context-columns">
+          <div class="context-column">
+            <p>
+              Foundation in relation to the Asian American experience reflects a larger story about racialized beauty standards and the struggle for visibility within Western culture. For most of the 20th century, American cosmetics were created with white consumers in mind, shaped by Eurocentric ideals that celebrated fair skin and narrow, angular features.
+            </p>
+            <p>
+              Scholars such as Thuy Linh Nguyen Tu (The Beautiful Generation, 2011) and Minh Ha T Pham (Asians Wear Clothes on the Internet, 2015) note that this beauty culture marginalized Asian faces and complexions, offering few shades or techniques suited to the undertones and features common among Asian communities.
+            </p>
+          </div>
+          
+          <div class="context-column">
+            <p>
+              Before the early 2000s, foundation lines rarely included colors that matched Asian skin. Many brands offered only pink based ivory shades or a limited set of deeper tones, without considering yellow, olive, or neutral undertones.
+            </p>
+            <p>
+              As a result, many Asian American youth learned makeup through trial and error, often adapting products that were never designed for them. Tutorials in mainstream media did not address monolids, flatter nose bridges, or wider cheekbones, reinforcing the sense that Asian features existed outside the standard of beauty (Schlund Vials, Asian American cultural criticism).
+            </p>
+          </div>
+          
+          <div class="context-column">
+            <p>
+              The arrival of Asian American beauty creators in the 2010s brought meaningful change. Influencers such as Michelle Phan introduced techniques tailored to Asian features and opened space for new forms of representation (Pham, 2015).
+            </p>
+            <p>
+              At the same time, the rise of K beauty introduced dewy bases, lighter textures, and expanded shade ranges that influenced the American market (Tu, 2011). For many Asian Americans, choosing foundation became an act of self recognition within a culture that once overlooked them.
+            </p>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <div class="grid-right">
+    <!-- Tips Section (Appears after context) -->
+    <div class="tips-section">
+      <div class="tips-container">
         <h3>TIPS</h3>
-        <div class="tip">
-          <h4 class="tip-title">Choose the Right Undertone</h4>
-          <p class="tip-text">
-            Many western foundation brands can lean very orange when you are neutral, olive, or cool toned. Test shades along the jawline for the best match.
-          </p>
-        </div>
+        
+        <div class="tips-grid">
+          <div class="tip-card">
+            <div class="tip-number">01</div>
+            <h4 class="tip-title">Choose the Right Undertone</h4>
+            <p class="tip-text">
+              Many western foundation brands can lean very orange when you are neutral, olive, or cool toned. Test shades along the jawline for the best match.
+            </p>
+          </div>
 
-        <div class="tip">
-          <h4 class="tip-title">Start Light, Build Gradually</h4>
-          <p class="tip-text">
-            Apply a thin layer first and build coverage where needed to avoid masking natural contours.
-          </p>
-        </div>
+          <div class="tip-card">
+            <div class="tip-number">02</div>
+            <h4 class="tip-title">Start Light, Build Gradually</h4>
+            <p class="tip-text">
+              Apply a thin layer first and build coverage where needed to avoid masking natural contours.
+            </p>
+          </div>
 
-        <div class="tip">
-          <h4 class="tip-title">Consider Lightweight Formulas</h4>
-          <p class="tip-text">
-            Western foundation formulas can be high coverage and sometimes too cakey. Consider aiming for light coverage, especially for an everyday student routine. BB creams, tinted moisturizers, or lightweight foundations provide coverage without feeling heavy on softer features.
-          </p>
+          <div class="tip-card">
+            <div class="tip-number">03</div>
+            <h4 class="tip-title">Consider Lightweight Formulas</h4>
+            <p class="tip-text">
+              Western foundation formulas can be high coverage and sometimes too cakey. Consider aiming for light coverage, especially for an everyday student routine. BB creams, tinted moisturizers, or lightweight foundations provide coverage without feeling heavy on softer features.
+            </p>
+          </div>
         </div>
-
-        <div class="tip">
-          <h4 class="tip-title">Focus on Natural Finish</h4>
-          <p class="tip-text">
-            Depending on your skin, dewy or satin finishes can complement East Asian features better than overly matte foundations, keeping the skin looking fresh and alive, especially for dry skin.
-          </p>
-        </div>
-
       </div>
-
     </div>
-  </section>
-
-
 
   </section>
-
-
 
 
 
@@ -264,6 +291,62 @@
 
 
 
+  <!-- Optimized Parallax Scrolling Script -->
+  <script>
+    // Debounce function for performance
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    // Throttle function for performance
+    function throttle(func, limit) {
+      let inThrottle;
+      return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+          func.apply(context, args);
+          inThrottle = true;
+          setTimeout(() => inThrottle = false, limit);
+        }
+      }
+    }
+
+    // Optimized parallax function
+    const updateParallax = throttle(() => {
+      const scrolled = window.scrollY;
+      const images = document.querySelectorAll('.bg-img');
+      
+      // Use transform3d for hardware acceleration
+      images.forEach((img, index) => {
+        let speed;
+        switch(index) {
+          case 0: case 3: speed = 0.15; break;
+          case 1: case 4: speed = 0.25; break;
+          case 2: case 5: speed = 0.35; break;
+          default: speed = 0.2;
+        }
+        img.style.transform = `translate3d(0, ${scrolled * -speed}px, 0)`;
+      });
+    }, 16); // ~60fps
+
+    // Use passive scroll listener for better performance
+    window.addEventListener('scroll', updateParallax, { passive: true });
+
+    // Initial call
+    updateParallax();
+  </script>
+
+
+
 <!-- Highlighting Active Nav Section -->
 
   <script>
@@ -300,36 +383,203 @@
 
 
 
-  <!-- Three.js Scripts -->
+  <!-- Foundation Section Fade Effects -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const foundationTitle = document.querySelector('.foundation-section-title');
+    const modelContainer = document.querySelector('.model-scroll-container');
+    const foundationSection = document.getElementById('object1');
+    const contextSection = document.querySelector('.context-scroll-section');
+    const tipsSection = document.querySelector('.tips-section');
+    
+    console.log('Foundation fade elements:', {
+      title: !!foundationTitle,
+      model: !!modelContainer,
+      section: !!foundationSection,
+      context: !!contextSection,
+      tips: !!tipsSection
+    });
+    
+    if (!foundationTitle || !modelContainer || !foundationSection) return;
+    
+    // Calculate section boundaries
+    function calculateBoundaries() {
+      const sectionRect = foundationSection.getBoundingClientRect();
+      const sectionTop = sectionRect.top + window.scrollY;
+      const sectionHeight = sectionRect.height;
+      const sectionBottom = sectionTop + sectionHeight;
+      
+      // Get context section position if it exists
+      let contextTop = sectionTop;
+      let contextHeight = 0;
+      if (contextSection) {
+        const contextRect = contextSection.getBoundingClientRect();
+        contextTop = contextRect.top + window.scrollY;
+        contextHeight = contextRect.height;
+      }
+      
+      // Get tips section position if it exists
+      let tipsTop = sectionBottom;
+      if (tipsSection) {
+        const tipsRect = tipsSection.getBoundingClientRect();
+        tipsTop = tipsRect.top + window.scrollY;
+      }
+      
+      return {
+        sectionTop,
+        sectionBottom,
+        contextTop,
+        contextHeight,
+        tipsTop,
+        windowHeight: window.innerHeight
+      };
+    }
+    
+    let boundaries = calculateBoundaries();
+    window.addEventListener('resize', () => {
+      boundaries = calculateBoundaries();
+    });
+    
+    // Update visibility on scroll
+    let ticking = false;
+    
+    function updateVisibility() {
+      const scrollY = window.scrollY;
+      const windowHeight = boundaries.windowHeight;
+      
+      // When does the foundation title start appearing?
+      // When we reach about 20% into the foundation section
+      const fadeInStart = boundaries.sectionTop + (windowHeight * 0.2);
+      
+      // When does it start fading out?
+      // When we reach the tips section (or end of context section)
+      const fadeOutStart = boundaries.tipsTop - (windowHeight * 0.3);
+      
+      // Check if we're in the visible range
+      const isInVisibleRange = scrollY >= fadeInStart && scrollY <= fadeOutStart;
+      
+      console.log('Visibility check:', {
+        scrollY,
+        fadeInStart,
+        fadeOutStart,
+        isInVisibleRange,
+        sectionTop: boundaries.sectionTop,
+        tipsTop: boundaries.tipsTop
+      });
+      
+      if (isInVisibleRange) {
+        // Calculate fade progress (0 to 1)
+        let fadeProgress = 0;
+        const visibleRange = fadeOutStart - fadeInStart;
+        
+        if (visibleRange > 0) {
+          fadeProgress = (scrollY - fadeInStart) / visibleRange;
+          fadeProgress = Math.max(0, Math.min(1, fadeProgress));
+        }
+        
+        // Fade in quickly at start, stay visible, fade out at end
+        let opacity = 0;
+        if (fadeProgress < 0.1) {
+          opacity = fadeProgress * 10; // Quick fade in
+        } else if (fadeProgress > 0.9) {
+          opacity = (1 - fadeProgress) * 10; // Quick fade out
+        } else {
+          opacity = 0.15; // Stay visible in middle
+        }
+        
+        // Apply visibility
+        foundationTitle.classList.add('visible');
+        foundationTitle.style.opacity = opacity;
+        
+        // Also fade in/out the 3D model
+        modelContainer.classList.add('fade-in');
+        modelContainer.classList.remove('fade-out');
+      } else {
+        // Outside visible range - hide
+        foundationTitle.classList.remove('visible');
+        foundationTitle.style.opacity = 0;
+        
+        modelContainer.classList.remove('fade-in');
+        modelContainer.classList.add('fade-out');
+      }
+      
+      ticking = false;
+    }
+    
+    // Listen to scroll with throttling
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateVisibility();
+        });
+        ticking = true;
+      }
+    });
+    
+    // Initial update
+    updateVisibility();
+    
+    // Debug: Log when section enters/exits viewport
+    const debugObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        console.log('Foundation section visibility:', {
+          ratio: entry.intersectionRatio.toFixed(2),
+          top: entry.boundingClientRect.top,
+          inView: entry.isIntersecting
+        });
+      });
+    }, { threshold: [0, 0.1, 0.5, 1] });
+    
+    debugObserver.observe(foundationSection);
+  });
+  </script>
+
+
+
+
+  <!-- Three.js Scripts - UPDATED FOR NEW STRUCTURE -->
   <script type="module">
     import * as THREE from "three";
     import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
-    // Store model references globally for scroll control
-    let models = [];
-    let isModelSectionInView = false;
-    let modelSectionStart = 0;
-    let modelSectionEnd = 0;
+    // Performance optimized variables
+    let currentModel = null;
+    let animationFrameId = null;
+    let scrollProgress = 0;
+    let isScrolling = false;
+    let scrollTimeout = null;
 
-    function createModel(containerId, modelPath, scale = 10) {
+    function createModel(containerId, modelPath, scale = 6) {
       const container = document.getElementById(containerId);
       if (!container) return;
 
+      // Clear existing model if any
+      if (currentModel && currentModel.renderer) {
+        currentModel.renderer.dispose();
+        container.innerHTML = '';
+      }
+
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      const renderer = new THREE.WebGLRenderer({ 
+        antialias: true, 
+        alpha: true,
+        powerPreference: "high-performance",
+        precision: "mediump"
+      });
       
       renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       camera.aspect = container.clientWidth / container.clientHeight;
       camera.updateProjectionMatrix();
 
       container.appendChild(renderer.domElement);
 
       // Lighting
-      const light = new THREE.DirectionalLight(0xffffff, 1);
+      const light = new THREE.DirectionalLight(0xffffff, 0.8);
       light.position.set(1, 1, 5);
       scene.add(light);
-      scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+      scene.add(new THREE.AmbientLight(0xffffff, 0.5));
 
       // Load Model
       const loader = new GLTFLoader();
@@ -337,136 +587,231 @@
         const model = gltf.scene;
         scene.add(model);
         model.position.y = -0.5;
-        model.scale.set(scale, scale, scale);
+        model.scale.set(8, 8, 8); //size of model, not container
         camera.position.z = 2;
 
-        // Store model reference for scroll control
-        models.push({
+        // Optimize model if possible
+        model.traverse((child) => {
+          if (child.isMesh) {
+            child.castShadow = false;
+            child.receiveShadow = false;
+            child.material.side = THREE.FrontSide;
+          }
+        });
+
+        // Store model reference
+        currentModel = {
           model: model,
           scene: scene,
           camera: camera,
           renderer: renderer,
-          container: container,
-          initialRotation: { x: 0, y: 0, z: 0 }
-        });
+          container: container
+        };
 
-        // Render initial frame
-        renderer.render(scene, camera);
+        // Initial render
+        renderFrame();
       });
 
-      // Handle window resize
+      // Handle window resize with debounce
+      let resizeTimeout;
       window.addEventListener("resize", () => {
-        camera.aspect = container.clientWidth / container.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          camera.aspect = container.clientWidth / container.clientHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(container.clientWidth, container.clientHeight);
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+          
+          if (currentModel) {
+            renderFrame();
+          }
+        }, 250);
+      });
+    }
+
+    // Optimized render function
+    function renderFrame() {
+      if (!currentModel || !currentModel.model) return;
+      
+      currentModel.renderer.render(currentModel.scene, currentModel.camera);
+    }
+
+    // Calculate scroll progress based on context section
+    function calculateScrollProgress() {
+      const contextSection = document.querySelector('.context-scroll-section');
+      const productSection = document.querySelector('.product-scroll-section');
+      
+      if (!contextSection || !productSection || !currentModel) return 0;
+      
+      const productRect = productSection.getBoundingClientRect();
+      const contextRect = contextSection.getBoundingClientRect();
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      
+      // Calculate when context section enters and exits viewport
+      const contextStart = contextRect.top + scrollY;
+      const contextEnd = contextStart + contextRect.height;
+      const scrollBottom = scrollY + windowHeight;
+      
+      // Calculate progress through context section (0 to 1)
+      let progress = 0;
+      
+      // Only calculate when we're in or near the context section
+      if (scrollY >= contextStart - windowHeight && scrollY <= contextEnd) {
+        // Map scroll position to 0-1 range within context section
+        progress = (scrollY - (contextStart - windowHeight)) / (contextRect.height + windowHeight);
+        progress = Math.max(0, Math.min(1, progress));
+      }
+      
+      return progress;
+    }
+
+    // Update model rotation (called on scroll)
+    function updateModelRotation() {
+      if (!currentModel || !currentModel.model) return;
+      
+      const newProgress = calculateScrollProgress();
+      
+      // Only update if progress changed significantly
+      if (Math.abs(scrollProgress - newProgress) > 0.001) {
+        scrollProgress = newProgress;
         
-        // Re-render on resize
-        if (models[0]) {
-          models[0].renderer.render(models[0].scene, models[0].camera);
+        // Apply rotation based on scroll progress
+        // Full rotation as you scroll through context section
+        const rotationAngle = scrollProgress * Math.PI * 2; // 1 full rotation
+        currentModel.model.rotation.y = rotationAngle;
+        currentModel.model.rotation.x = rotationAngle * 0.3;
+        
+        // Request animation frame for rendering
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
         }
-      });
-    }
-
-    // Calculate model section scroll range
-    function calculateModelSectionRange() {
-      const modelSection = document.querySelector('.section.product');
-      if (!modelSection) return;
-      
-      const rect = modelSection.getBoundingClientRect();
-      modelSectionStart = window.scrollY + rect.top;
-      modelSectionEnd = modelSectionStart + rect.height;
-      
-      // Check if we're currently in the section
-      const currentScroll = window.scrollY;
-      isModelSectionInView = currentScroll >= modelSectionStart && currentScroll <= modelSectionEnd;
-    }
-
-    // Scroll-based rotation function
-    function updateModelRotationBasedOnScroll() {
-      if (models.length === 0) return;
-      
-      const currentScroll = window.scrollY;
-      const modelSection = document.querySelector('.section.product');
-      
-      if (!modelSection) return;
-      
-      // Get section bounds
-      const rect = modelSection.getBoundingClientRect();
-      const sectionTop = window.scrollY + rect.top;
-      const sectionHeight = rect.height;
-      
-      // Calculate scroll progress within the section (0 to 1)
-      let scrollProgress = (currentScroll - sectionTop) / sectionHeight;
-      scrollProgress = Math.max(0, Math.min(1, scrollProgress)); // Clamp between 0 and 1
-      
-      // Apply rotation based on scroll progress
-      // One full rotation (360 degrees = Math.PI * 2 radians) as you scroll through the section
-      const rotationAngle = scrollProgress * Math.PI * 4; // Two full rotations
-      
-      models.forEach(modelData => {
-        if (modelData.model) {
-          // Rotate the model based on scroll
-          modelData.model.rotation.y = rotationAngle;
-          
-          // Add a slight vertical rotation for visual interest
-          modelData.model.rotation.x = rotationAngle * 0.3;
-          
-          // Render the scene
-          modelData.renderer.render(modelData.scene, modelData.camera);
-        }
-      });
-      
-      // Also apply parallax effect to the model container
-      const modelContainer = document.getElementById('model1');
-      if (modelContainer) {
-        // Parallax effect: move slightly as we scroll
-        const parallaxOffset = scrollProgress * 100; // Adjust this value for stronger/weaker parallax
-        modelContainer.style.transform = `translate(-50%, calc(-50% + ${parallaxOffset * 0.5}px))`;
+        animationFrameId = requestAnimationFrame(renderFrame);
       }
     }
 
-    // Initial setup
-    window.addEventListener('load', () => {
-      calculateModelSectionRange();
-      updateModelRotationBasedOnScroll();
-    });
-
-    // Scroll event listener
-    let scrollTimeout;
-    window.addEventListener('scroll', () => {
-      // Throttle scroll events for performance
-      clearTimeout(scrollTimeout);
+    // Optimized scroll handler with RAF throttling
+    function handleScroll() {
+      if (!isScrolling) {
+        isScrolling = true;
+        requestAnimationFrame(() => {
+          updateModelRotation();
+          isScrolling = false;
+        });
+      }
+      
+      // Clear any existing timeout
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+      
+      // Set a timeout to handle scroll end
       scrollTimeout = setTimeout(() => {
-        calculateModelSectionRange();
-        updateModelRotationBasedOnScroll();
-      }, 16); // ~60fps
-    });
+        updateModelRotation();
+      }, 100);
+    }
 
-    // Initial calculation after a short delay to ensure DOM is ready
+    // Initialize with debounce
     setTimeout(() => {
-      calculateModelSectionRange();
-      updateModelRotationBasedOnScroll();
-    }, 500);
+      // Create model with adjusted scale for new container
+      createModel("model1", "./models/chanel_cushion_foundation.glb", 5);
+      
+      // Set up scroll listener
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      
+      // Initial calculation
+      updateModelRotation();
+    }, 1000);
 
-    // === Create model ===
-    createModel("model1", "./models/chanel_cushion_foundation.glb", 6);
-    // Note: Other model calls removed since only model1 exists in HTML
-  
-
-
-    // === Call models ===
-    createModel("model2", "./models/maybelline_hydrating_foundation.glb", 10);
-    createModel("model3", "./models/makeup_box.glb", 5);
-    createModel("model4", "./models/blush_on.glb", 5);
-    createModel("model5", "./models/eyeshadow", 10);
-    createModel("model6", "./models/eyeliner.glb", 0);
-    createModel("model7", "./models/maybelline_mascara.glb", 10);
-    createModel("model8", "./models/lipstick.glb", 0.9);
-    createModel("model9", "./models/kiko-milano-lip-gloss", 10);
-    createModel("model10", "./models/micellar_water_garnier.glb", 10);
+    // Clean up on page unload
+    window.addEventListener('beforeunload', () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+      if (currentModel && currentModel.renderer) {
+        currentModel.renderer.dispose();
+      }
+    });
   </script>
 
 
+
+  <script>
+  // Scroll Animation for Product Section
+  document.addEventListener('DOMContentLoaded', function() {
+    const contextSection = document.querySelector('.context-scroll-section');
+    const tipsSection = document.querySelector('.tips-section');
+    const modelContainer = document.querySelector('.model-scroll-view');
+    
+    // Update Three.js to use new container
+    const threeScript = document.querySelector('script[type="module"]');
+    if (threeScript && threeScript.textContent.includes('createModel("model1"')) {
+      // Update the script to use the new container
+      threeScript.textContent = threeScript.textContent.replace(
+        'createModel("model1"',
+        'createModel("model1"'
+      );
+    }
+    
+    // Scroll animation observer
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+    
+    const contextObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        } else {
+          entry.target.classList.remove('in-view');
+        }
+      });
+    }, observerOptions);
+    
+    const tipsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, observerOptions);
+    
+    if (contextSection) contextObserver.observe(contextSection);
+    if (tipsSection) tipsObserver.observe(tipsSection);
+    
+    // Parallax effect for model as context scrolls
+    let lastScrollY = 0;
+    let ticking = false;
+    
+    function updateModelParallax() {
+      const scrollY = window.scrollY;
+      const contextRect = contextSection.getBoundingClientRect();
+      const contextTop = contextRect.top + scrollY;
+      const windowHeight = window.innerHeight;
+      
+      // Calculate progress through context section
+      let progress = (scrollY - contextTop + windowHeight) / (contextRect.height + windowHeight);
+      progress = Math.max(0, Math.min(1, progress));
+      
+      // Apply subtle parallax to model
+      if (modelContainer) {
+        const parallaxY = progress * 100; // Moves down 100px max
+        modelContainer.style.transform = `translateY(${parallaxY}px)`;
+      }
+      
+      lastScrollY = scrollY;
+      ticking = false;
+    }
+    
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(updateModelParallax);
+      }
+    });
+  });
+  </script>
 
 
 
