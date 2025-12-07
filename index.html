@@ -101,7 +101,6 @@
   <!-- TIPS SECTION (Moved up - now appears where context was) -->
   <div class="tips-section">
     <div class="tips-container">
-      <h3>TIPS</h3>
       
       <div class="tips-grid">
         <div class="tip-card">
@@ -555,6 +554,109 @@
 
 
 
+  <!-- Section Tracking for Tips Visibility -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sections = [
+      { id: 'home', element: document.getElementById('home') },
+      { id: 'about', element: document.getElementById('about') },
+      { id: 'object1', element: document.getElementById('object1') },
+      { id: 'articles', element: document.getElementById('articles') }
+    ];
+    
+    const tipsSection = document.querySelector('.tips-section');
+    const contextSection = document.querySelector('.context-scroll-section');
+    
+    if (!tipsSection) return;
+    
+    // Track current active section
+    let currentActiveSection = '';
+    
+    function updateActiveSection() {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      
+      let newActiveSection = '';
+      let maxVisibility = 0;
+      
+      // Find which section is most visible
+      sections.forEach(section => {
+        if (section.element) {
+          const rect = section.element.getBoundingClientRect();
+          const sectionTop = rect.top + scrollY;
+          const sectionBottom = sectionTop + rect.height;
+          
+          // Calculate how much of the section is visible
+          const visibleTop = Math.max(scrollY, sectionTop);
+          const visibleBottom = Math.min(scrollY + windowHeight, sectionBottom);
+          const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+          const visibilityRatio = visibleHeight / Math.min(windowHeight, sectionBottom - sectionTop);
+          
+          // If this section is more visible than previous max, update
+          if (visibilityRatio > maxVisibility) {
+            maxVisibility = visibilityRatio;
+            newActiveSection = section.id;
+          }
+        }
+      });
+      
+      // Only update if section changed
+      if (newActiveSection !== currentActiveSection) {
+        currentActiveSection = newActiveSection;
+        
+        console.log('Active section changed to:', currentActiveSection);
+        
+        // Show/hide tips based on active section
+        if (currentActiveSection === 'object1') {
+          // In Foundation section - show tips
+          tipsSection.classList.add('visible');
+          
+          // Hide context section if it's showing
+          if (contextSection) {
+            contextSection.classList.remove('visible');
+          }
+        } else {
+          // In any other section - hide tips
+          tipsSection.classList.remove('visible');
+          
+          // Only show context section when we're in its specific area
+          if (currentActiveSection !== 'object1' && contextSection) {
+            // Check if context section is in view
+            const contextRect = contextSection.getBoundingClientRect();
+            const contextVisibility = contextRect.top < windowHeight && contextRect.bottom > 0;
+            
+            if (contextVisibility && window.scrollY > contextSection.offsetTop - 100) {
+              contextSection.classList.add('visible');
+            } else {
+              contextSection.classList.remove('visible');
+            }
+          }
+        }
+      }
+    }
+    
+    // Optimized scroll handler
+    let ticking = false;
+    function handleScroll() {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateActiveSection();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+    
+    // Set up scroll listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Initial check
+    updateActiveSection();
+  });
+  </script>
+
+
+
 
   <!-- Three.js Scripts - UPDATED FOR NEW STRUCTURE -->
   <script type="module">
@@ -764,38 +866,57 @@
 
 
 
+  <!-- Tips Scroll-Driven Horizontal Animation - UPDATED -->
   <script>
-  // Tips Scroll-Driven Horizontal Animation
   document.addEventListener('DOMContentLoaded', function() {
     const tipsSection = document.querySelector('.tips-section');
     const tipsGrid = document.querySelector('.tips-grid');
-    const tipsTitle = document.querySelector('.tips-container h3');
     const modelContainer = document.querySelector('.model-scroll-container');
+    const foundationSection = document.getElementById('object1');
     
-    if (!tipsSection || !tipsGrid) return;
+    if (!tipsSection || !tipsGrid || !foundationSection) return;
     
     let isAnimating = false;
-    let lastScrollY = 0;
     
     // Initial position - off screen right
     tipsGrid.style.transform = 'translateX(100vw)';
     
-    // Calculate animation progress based on scroll
-    function calculateAnimationProgress() {
-      const sectionRect = tipsSection.getBoundingClientRect();
+    // Check if we should animate (only when in Foundation section)
+    function shouldAnimateTips() {
+      const rect = foundationSection.getBoundingClientRect();
       const windowHeight = window.innerHeight;
-      const windowWidth = window.innerWidth;
+      
+      // Check if Foundation section is significantly in view (at least 30%)
+      const isFoundationInView = (
+        rect.top <= windowHeight * 0.7 &&
+        rect.bottom >= windowHeight * 0.3
+      );
+      
+      return isFoundationInView;
+    }
+    
+    // Calculate animation progress within Foundation section
+    function calculateAnimationProgress() {
+      if (!shouldAnimateTips()) {
+        return {
+          progress: 0,
+          isInRange: false
+        };
+      }
+      
+      const sectionRect = foundationSection.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
       const scrollY = window.scrollY;
       
-      // Section position
+      // Use Foundation section bounds
       const sectionTop = sectionRect.top + scrollY;
       const sectionHeight = sectionRect.height;
       
-      // Define animation range (when section enters/exits viewport)
-      // Animation starts when section top is at 50% of viewport
-      // Animation ends when section bottom is at 50% of viewport
-      const animationStart = sectionTop - (windowHeight * 0.5);
-      const animationEnd = sectionTop + (windowHeight * 0.5);
+      // Define animation range within Foundation section
+      // Start animation when Foundation section is 40% in view
+      // End animation when we're 60% through the section
+      const animationStart = sectionTop - (windowHeight * 0.6);
+      const animationEnd = sectionTop + (sectionHeight * 0.4);
       
       // Calculate progress (0 to 1)
       let progress = 0;
@@ -811,61 +932,64 @@
       return {
         progress: easeProgress,
         rawProgress: progress,
-        isInRange: scrollY >= animationStart && scrollY <= animationEnd,
-        sectionTop,
-        sectionHeight
+        isInRange: scrollY >= animationStart && scrollY <= animationEnd
       };
     }
     
-    // Easing function for smooth animation
+    // Easing function
     function easeInOutCubic(t) {
       return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     }
     
     // Update horizontal position based on scroll
     function updateHorizontalPosition() {
+      const shouldAnimate = shouldAnimateTips();
       const { progress, isInRange } = calculateAnimationProgress();
       
-      if (isInRange) {
-        if (!isAnimating) {
-          isAnimating = true;
-          // Show title when animation starts
-          if (tipsTitle) tipsTitle.classList.add('visible');
-        }
-        
-        // Calculate horizontal position
-        // Start at 100vw (off-screen right), end at 0 (in position)
-        const startX = window.innerWidth;
-        const currentX = startX - (progress * startX);
-        
-        // Apply horizontal translation
-        tipsGrid.style.transform = `translateX(${currentX}px)`;
-        
-        // Make sure model stays visible
-        if (modelContainer) {
-          modelContainer.classList.add('fade-in');
-          modelContainer.classList.remove('fade-out');
-          modelContainer.style.opacity = 1;
+      if (shouldAnimate) {
+        // Only animate when Foundation section is active
+        if (isInRange) {
+          if (!isAnimating) {
+            isAnimating = true;
+          }
+          
+          // Calculate horizontal position
+          const startX = window.innerWidth;
+          const currentX = startX - (progress * startX);
+          
+          // Apply horizontal translation
+          tipsGrid.style.transform = `translateX(${currentX}px)`;
+          
+          // Keep model visible during animation
+          if (modelContainer) {
+            modelContainer.classList.add('fade-in');
+            modelContainer.classList.remove('fade-out');
+            modelContainer.style.opacity = Math.min(1, progress * 2);
+          }
+          
+        } else if (scrollY > foundationSection.offsetTop + foundationSection.offsetHeight * 0.5) {
+          // Scrolled past animation range but still in section - keep tips visible
+          tipsGrid.style.transform = 'translateX(0)';
+          if (modelContainer) {
+            modelContainer.classList.add('fade-in');
+            modelContainer.style.opacity = 1;
+          }
+        } else {
+          // Before animation range - keep tips hidden
+          tipsGrid.style.transform = 'translateX(100vw)';
         }
         
       } else {
-        if (isAnimating) {
-          isAnimating = false;
-          
-          // If we scrolled past the section, keep tips in place
-          if (window.scrollY > tipsSection.offsetTop + tipsSection.offsetHeight) {
-            tipsGrid.style.transform = 'translateX(0)';
-            if (tipsTitle) tipsTitle.classList.add('visible');
-          } 
-          // If we scrolled before the section, reset
-          else if (window.scrollY < tipsSection.offsetTop) {
-            tipsGrid.style.transform = 'translateX(100vw)';
-            if (tipsTitle) tipsTitle.classList.remove('visible');
-          }
+        // Not in Foundation section - reset
+        tipsGrid.style.transform = 'translateX(100vw)';
+        isAnimating = false;
+        
+        if (modelContainer) {
+          modelContainer.classList.remove('fade-in');
+          modelContainer.classList.add('fade-out');
+          modelContainer.style.opacity = 0;
         }
       }
-      
-      lastScrollY = window.scrollY;
     }
     
     // Optimized scroll handler
@@ -882,22 +1006,11 @@
     
     // Initial setup
     window.addEventListener('load', function() {
-      // Start listening to scroll
       window.addEventListener('scroll', handleScroll, { passive: true });
-      
-      // Initial update
       updateHorizontalPosition();
     });
     
-    // Handle resize
-    window.addEventListener('resize', function() {
-      updateHorizontalPosition();
-    });
-    
-    // Clean up
-    window.addEventListener('beforeunload', function() {
-      window.removeEventListener('scroll', handleScroll);
-    });
+    window.addEventListener('resize', updateHorizontalPosition);
   });
   </script>
 

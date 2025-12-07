@@ -340,23 +340,37 @@ body {
   position: relative;
   z-index: 10;
   width: 100%;
-  min-height: 200vh; /* Extra height for scrolling animation */
-  display: flex;
-  align-items: center;
+  min-height: 200vh;
   background: transparent;
   overflow: visible;
 }
 
 .tips-container {
+  position: fixed; /* Fixed to viewport */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 40px;
   width: 100%;
-  position: relative;
-  height: 100%;
+  padding: 0 40px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  pointer-events: none; /* Allow clicking through when off-screen */
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  
+  /* Start off-screen to the right of viewport center */
+  transform: translateX(calc(50vw + 100%));
+  will-change: transform;
+  pointer-events: auto; /* Re-enable clicking on cards */
 }
 
 .tips-container h3 {
@@ -369,8 +383,18 @@ body {
   text-align: center;
   margin-bottom: 80px;
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateX(50px);
   transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* When active, slide into center */
+.tips-grid.active {
+  transform: translateX(0);
+}
+
+.tips-container h3.visible {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .tips-container h3.visible {
@@ -432,6 +456,47 @@ body {
   font-size: 1rem;
   line-height: 1.6;
   color: #333;
+}
+
+
+
+/* ============================================== */
+/* TIPS SECTION VISIBILITY CONTROL */
+/* ============================================== */
+
+/* Hide tips by default */
+.tips-section {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  visibility: hidden;
+}
+
+/* Show tips when visible class is added */
+.tips-section.visible {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+/* Keep tips container fixed for animation */
+.tips-container {
+  position: fixed; /* Fixed to viewport */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 1400px;
+  width: 100%;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none; /* Allow clicking through when off-screen */
+}
+
+/* Re-enable pointer events for grid when visible */
+.tips-section.visible .tips-container {
+  pointer-events: auto;
 }
 
 
@@ -793,6 +858,8 @@ body {
     margin-bottom: 40px;
   }
 }
+
+
 
 
 
