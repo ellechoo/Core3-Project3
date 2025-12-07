@@ -383,146 +383,109 @@
 
 
 
-
-
-  <!-- Foundation Section Fade Effects -->
+  
+<!-- Simplified Tips & Context Visibility Control -->
   <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const foundationTitle = document.querySelector('.foundation-section-title');
-    const modelContainer = document.querySelector('.model-scroll-container');
     const foundationSection = document.getElementById('object1');
     const contextSection = document.querySelector('.context-scroll-section');
     const tipsSection = document.querySelector('.tips-section');
+    const foundationTitle = document.querySelector('.foundation-section-title');
+    const modelContainer = document.querySelector('.model-scroll-container');
     
-    console.log('Foundation fade elements:', {
-      title: !!foundationTitle,
-      model: !!modelContainer,
-      section: !!foundationSection,
-      context: !!contextSection,
-      tips: !!tipsSection
-    });
+    if (!foundationSection || !tipsSection) return;
     
-    if (!foundationTitle || !modelContainer || !foundationSection) return;
-    
-    // Calculate section boundaries
-    function calculateBoundaries() {
-      const sectionRect = foundationSection.getBoundingClientRect();
-      const sectionTop = sectionRect.top + window.scrollY;
-      const sectionHeight = sectionRect.height;
-      const sectionBottom = sectionTop + sectionHeight;
-      
-      // Get context section position if it exists
-      let contextTop = sectionTop;
-      let contextHeight = 0;
-      if (contextSection) {
-        const contextRect = contextSection.getBoundingClientRect();
-        contextTop = contextRect.top + window.scrollY;
-        contextHeight = contextRect.height;
-      }
-
-
-      // Get tips section position
-            let tipsTop = sectionBottom;
-            let tipsHeight = 0;
-            if (tipsSection) {
-              const tipsRect = tipsSection.getBoundingClientRect();
-              tipsTop = tipsRect.top + window.scrollY;
-              tipsHeight = tipsRect.height;
-            }
-
-
-      return {
-      sectionTop,
-      sectionBottom,
-      contextTop,
-      contextHeight,
-      tipsTop,        // Add this
-      tipsHeight,     // Add this
-      windowHeight: window.innerHeight
-    };
-
-    }
-    
-
-
-    let boundaries = calculateBoundaries();
-    window.addEventListener('resize', () => {
-      boundaries = calculateBoundaries();
-    });
-    
-    // Update visibility on scroll
     let ticking = false;
     
-
-
     function updateVisibility() {
       const scrollY = window.scrollY;
-      const windowHeight = boundaries.windowHeight;
+      const windowHeight = window.innerHeight;
       
-      // FIXED: Make model visible when TIPS section enters view
-      const tipsRect = tipsSection.getBoundingClientRect();
-      const tipsTop = tipsRect.top + window.scrollY;
+      // Get positions
+      const foundationRect = foundationSection.getBoundingClientRect();
+      const foundationTop = foundationRect.top + scrollY;
+      const foundationBottom = foundationTop + foundationRect.height;
       
-      // Model should start fading in when tips section is about to enter viewport
-      const fadeInStart = tipsTop - (windowHeight * 0.3);
+      const contextRect = contextSection ? contextSection.getBoundingClientRect() : null;
+      const contextTop = contextRect ? contextRect.top + scrollY : foundationBottom;
+      const contextHeight = contextRect ? contextRect.height : 0;
+      const contextBottom = contextTop + contextHeight;
       
-      // Model should fade out when context section starts
-      const fadeOutStart = boundaries.contextTop - (windowHeight * 0.2);
+      // Calculate context visibility
+      let contextVisibility = 0;
+      if (contextRect) {
+        const contextVisibleTop = Math.max(scrollY, contextTop);
+        const contextVisibleBottom = Math.min(scrollY + windowHeight, contextBottom);
+        const contextVisibleHeight = Math.max(0, contextVisibleBottom - contextVisibleTop);
+        contextVisibility = contextVisibleHeight / windowHeight; // 0 to 1
+      }
       
-      // Check if we're in the visible range
-      const isInVisibleRange = scrollY >= fadeInStart && scrollY <= fadeOutStart;
+      // Determine if tips should be visible
+      let showTips = false;
+      let tipsOpacity = 1;
       
-      console.log('Model visibility:', {
-        scrollY,
-        fadeInStart,
-        fadeOutStart,
-        isInVisibleRange,
-        tipsTop: tipsTop,
-        contextTop: boundaries.contextTop
-      });
+      // Check if we're in Foundation section
+      const isInFoundation = scrollY >= foundationTop && scrollY < foundationBottom;
       
-      if (isInVisibleRange) {
-        // Calculate fade progress (0 to 1)
-        let fadeProgress = 0;
-        const visibleRange = fadeOutStart - fadeInStart;
-        
-        if (visibleRange > 0) {
-          fadeProgress = (scrollY - fadeInStart) / visibleRange;
-          fadeProgress = Math.max(0, Math.min(1, fadeProgress));
-        }
-        
-        // Fade in quickly at start, stay visible, fade out at end
-        let opacity = 0;
-        if (fadeProgress < 0.1) {
-          opacity = fadeProgress * 10; // Quick fade in
-        } else if (fadeProgress > 0.9) {
-          opacity = (1 - fadeProgress) * 10; // Quick fade out
+      if (isInFoundation) {
+        // In Foundation section
+        if (contextVisibility < 0.5) {
+          // Context is NOT taking over (less than 50% visible) - show tips
+          showTips = true;
+          tipsOpacity = 1 - (contextVisibility * 2); // Fade out as context becomes more visible
         } else {
-          opacity = 1; // Stay fully visible in middle (changed from 0.15 to 1)
+          // Context IS taking over (more than 50% visible) - hide tips
+          showTips = false;
+          tipsOpacity = 0;
         }
-        
-        // Apply visibility
-        foundationTitle.classList.add('visible');
-        foundationTitle.style.opacity = opacity;
-        
-        // Also fade in/out the 3D model
-        modelContainer.classList.add('fade-in');
-        modelContainer.classList.remove('fade-out');
-        modelContainer.style.opacity = opacity; // Sync with title
       } else {
-        // Outside visible range - hide
+        // Not in Foundation section at all
+        showTips = false;
+        tipsOpacity = 0;
+      }
+      
+      // Apply tips visibility
+      if (showTips) {
+        tipsSection.classList.add('visible');
+        tipsSection.style.opacity = Math.max(0.1, tipsOpacity);
+      } else {
+        tipsSection.classList.remove('visible');
+        tipsSection.style.opacity = 0;
+      }
+      
+      // Handle Foundation title and model
+      if (showTips && tipsOpacity > 0.1) {
+        foundationTitle.classList.add('visible');
+        foundationTitle.style.opacity = tipsOpacity;
+        
+        modelContainer.classList.remove('fade-out');
+        modelContainer.classList.add('fade-in');
+      } else {
         foundationTitle.classList.remove('visible');
         foundationTitle.style.opacity = 0;
         
         modelContainer.classList.remove('fade-in');
         modelContainer.classList.add('fade-out');
-        modelContainer.style.opacity = 0;
+      }
+      
+      // Handle context section - FIXED: Always 100% opacity when visible
+      if (contextSection) {
+        const isContextInView = contextRect && 
+                                contextRect.top < windowHeight && 
+                                contextRect.bottom > 0;
+        
+        // Show context when it's in view AND we're in or past the Foundation section
+        if (isContextInView && scrollY >= foundationTop) {
+          contextSection.classList.add('visible');
+          contextSection.style.opacity = 1; // ALWAYS 100% opacity
+        } else {
+          contextSection.classList.remove('visible');
+          contextSection.style.opacity = 0;
+        }
       }
       
       ticking = false;
     }
-
-
     
     // Listen to scroll with throttling
     window.addEventListener('scroll', () => {
@@ -536,122 +499,6 @@
     
     // Initial update
     updateVisibility();
-    
-    // Debug: Log when section enters/exits viewport
-    const debugObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        console.log('Foundation section visibility:', {
-          ratio: entry.intersectionRatio.toFixed(2),
-          top: entry.boundingClientRect.top,
-          inView: entry.isIntersecting
-        });
-      });
-    }, { threshold: [0, 0.1, 0.5, 1] });
-    
-    debugObserver.observe(foundationSection);
-  });
-  </script>
-
-
-
-  <!-- Section Tracking for Tips Visibility -->
-  <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const sections = [
-      { id: 'home', element: document.getElementById('home') },
-      { id: 'about', element: document.getElementById('about') },
-      { id: 'object1', element: document.getElementById('object1') },
-      { id: 'articles', element: document.getElementById('articles') }
-    ];
-    
-    const tipsSection = document.querySelector('.tips-section');
-    const contextSection = document.querySelector('.context-scroll-section');
-    
-    if (!tipsSection) return;
-    
-    // Track current active section
-    let currentActiveSection = '';
-    
-    function updateActiveSection() {
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      
-      let newActiveSection = '';
-      let maxVisibility = 0;
-      
-      // Find which section is most visible
-      sections.forEach(section => {
-        if (section.element) {
-          const rect = section.element.getBoundingClientRect();
-          const sectionTop = rect.top + scrollY;
-          const sectionBottom = sectionTop + rect.height;
-          
-          // Calculate how much of the section is visible
-          const visibleTop = Math.max(scrollY, sectionTop);
-          const visibleBottom = Math.min(scrollY + windowHeight, sectionBottom);
-          const visibleHeight = Math.max(0, visibleBottom - visibleTop);
-          const visibilityRatio = visibleHeight / Math.min(windowHeight, sectionBottom - sectionTop);
-          
-          // If this section is more visible than previous max, update
-          if (visibilityRatio > maxVisibility) {
-            maxVisibility = visibilityRatio;
-            newActiveSection = section.id;
-          }
-        }
-      });
-      
-      // Only update if section changed
-      if (newActiveSection !== currentActiveSection) {
-        currentActiveSection = newActiveSection;
-        
-        console.log('Active section changed to:', currentActiveSection);
-        
-        // Show/hide tips based on active section
-        if (currentActiveSection === 'object1') {
-          // In Foundation section - show tips
-          tipsSection.classList.add('visible');
-          
-          // Hide context section if it's showing
-          if (contextSection) {
-            contextSection.classList.remove('visible');
-          }
-        } else {
-          // In any other section - hide tips
-          tipsSection.classList.remove('visible');
-          
-          // Only show context section when we're in its specific area
-          if (currentActiveSection !== 'object1' && contextSection) {
-            // Check if context section is in view
-            const contextRect = contextSection.getBoundingClientRect();
-            const contextVisibility = contextRect.top < windowHeight && contextRect.bottom > 0;
-            
-            if (contextVisibility && window.scrollY > contextSection.offsetTop - 100) {
-              contextSection.classList.add('visible');
-            } else {
-              contextSection.classList.remove('visible');
-            }
-          }
-        }
-      }
-    }
-    
-    // Optimized scroll handler
-    let ticking = false;
-    function handleScroll() {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          updateActiveSection();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }
-    
-    // Set up scroll listener
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    // Initial check
-    updateActiveSection();
   });
   </script>
 
@@ -757,44 +604,47 @@
     currentModel.renderer.render(currentModel.scene, currentModel.camera);
   }
 
-  // FIXED: Calculate scroll progress based on TIPS section, not CONTEXT
+
+
+  // Update this function in your Three.js script
   function calculateScrollProgress() {
-    const tipsSection = document.querySelector('.tips-section');
-    const productSection = document.querySelector('.product-scroll-section');
+    const foundationSection = document.getElementById('object1');
+    const contextSection = document.querySelector('.context-scroll-section');
     
-    if (!tipsSection || !productSection || !currentModel) return 0;
+    if (!foundationSection || !currentModel) return 0;
     
-    const productRect = productSection.getBoundingClientRect();
-    const tipsRect = tipsSection.getBoundingClientRect();
+    const foundationRect = foundationSection.getBoundingClientRect();
+    const contextRect = contextSection ? contextSection.getBoundingClientRect() : null;
+    
     const scrollY = window.scrollY;
     const windowHeight = window.innerHeight;
     
-    // Calculate when TIPS section enters and exits viewport
-    const tipsStart = tipsRect.top + scrollY;
-    const tipsEnd = tipsStart + tipsRect.height;
+    const foundationTop = foundationRect.top + scrollY;
+    const foundationHeight = foundationRect.height;
+    const contextTop = contextRect ? contextRect.top + scrollY : foundationTop + foundationHeight;
     
-    // Calculate progress through TIPS section (0 to 1)
+    // Define animation range - MODEL STARTS EARLIER
+    // Model starts fading in when Foundation section is 40% in view
+    // Tips will start 1 second later (via offset in tips script)
+    const animationStart = foundationTop - (windowHeight * 0.6); // 40% earlier start
+    const animationEnd = contextTop;
+    
+    // Calculate progress (0 to 1)
     let progress = 0;
     
-    // Only calculate when we're in or near the TIPS section
-    // Start when tips section is about to enter viewport (100px above)
-    const startOffset = windowHeight * 0.2; // Start a bit before it's fully in view
-    if (scrollY >= tipsStart - startOffset && scrollY <= tipsEnd) {
-      // Map scroll position to 0-1 range within TIPS section
-      progress = (scrollY - (tipsStart - startOffset)) / (tipsRect.height + startOffset);
+    if (scrollY >= animationStart && scrollY <= animationEnd) {
+      progress = (scrollY - animationStart) / (animationEnd - animationStart);
       progress = Math.max(0, Math.min(1, progress));
+    } else if (scrollY > animationEnd) {
+      progress = 1;
     }
     
-    console.log('Scroll progress:', {
-      scrollY,
-      tipsStart,
-      tipsEnd,
-      progress,
-      inTipsSection: scrollY >= tipsStart - startOffset && scrollY <= tipsEnd
-    });
-    
-    return progress;
+    // Add a slight boost to make model appear faster
+    // This makes the model fade in quicker than tips
+    return Math.min(1, progress * 1.2);
   }
+
+
 
   // Update model rotation (called on scroll)
   function updateModelRotation() {
