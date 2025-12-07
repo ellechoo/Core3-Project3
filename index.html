@@ -131,47 +131,48 @@
     </div>
   </div>
 
-  <!-- CONTEXT TEXT SECTION (Moved down - now appears where tips were) -->
-  <div class="context-scroll-section">
-    <div class="context-container">
-      <div class="context-header">
-        <h3>CONTEXT</h3>
-        <div class="scroll-indicator">
-          <span>Scroll to read</span>
-          <div class="arrow">→</div>
+
+
+
+
+  <!-- CONTEXT TEXT SECTION (Restyled with single photo on right) -->
+<div class="context-scroll-section">
+  <div class="context-container">
+    <div class="context-header">
+      <h3>CONTEXT</h3>
+      <div class="scroll-indicator">
+      </div>
+    </div>
+    
+    <div class="context-layout">
+      <!-- Left Column: Text Content -->
+      <div class="context-text-column">
+        <div class="context-text-content">
+          <p>
+            Foundation in relation to the Asian American experience reflects a larger story about racialized beauty standards and the struggle for visibility within Western culture. For most of the 20th century, American cosmetics were created with white consumers in mind, shaped by Eurocentric ideals that celebrated fair skin and narrow, angular features. Scholars such as Thuy Linh Nguyen Tu (The Beautiful Generation, 2011) and Minh Ha T Pham (Asians Wear Clothes on the Internet, 2015) note that this beauty culture marginalized Asian faces and complexions, offering few shades or techniques suited to the undertones and features common among Asian communities.
+          </p>
+          <p>
+            Before the early 2000s, foundation lines rarely included colors that matched Asian skin. Many brands offered only pink based ivory shades or a limited set of deeper tones, without considering yellow, olive, or neutral undertones. As a result, many Asian American youth learned makeup through trial and error, often adapting products that were never designed for them. Tutorials in mainstream media did not address monolids, flatter nose bridges, or wider cheekbones, reinforcing the sense that Asian features existed outside the standard of beauty (Schlund Vials, Asian American cultural criticism).
+          </p>
+          <p>
+            The arrival of Asian American beauty creators in the 2010s brought meaningful change. Influencers such as Michelle Phan introduced techniques tailored to Asian features and opened space for new forms of representation (Pham, 2015). At the same time, the rise of K beauty introduced dewy bases, lighter textures, and expanded shade ranges that influenced the American market (Tu, 2011). For many Asian Americans, choosing foundation became an act of self recognition within a culture that once overlooked them.
+          </p>
         </div>
       </div>
       
-      <div class="context-columns">
-        <div class="context-column">
-          <p>
-            Foundation in relation to the Asian American experience reflects a larger story about racialized beauty standards and the struggle for visibility within Western culture. For most of the 20th century, American cosmetics were created with white consumers in mind, shaped by Eurocentric ideals that celebrated fair skin and narrow, angular features.
-          </p>
-          <p>
-            Scholars such as Thuy Linh Nguyen Tu (The Beautiful Generation, 2011) and Minh Ha T Pham (Asians Wear Clothes on the Internet, 2015) note that this beauty culture marginalized Asian faces and complexions, offering few shades or techniques suited to the undertones and features common among Asian communities.
-          </p>
-        </div>
-        
-        <div class="context-column">
-          <p>
-            Before the early 2000s, foundation lines rarely included colors that matched Asian skin. Many brands offered only pink based ivory shades or a limited set of deeper tones, without considering yellow, olive, or neutral undertones.
-          </p>
-          <p>
-            As a result, many Asian American youth learned makeup through trial and error, often adapting products that were never designed for them. Tutorials in mainstream media did not address monolids, flatter nose bridges, or wider cheekbones, reinforcing the sense that Asian features existed outside the standard of beauty (Schlund Vials, Asian American cultural criticism).
-          </p>
-        </div>
-        
-        <div class="context-column">
-          <p>
-            The arrival of Asian American beauty creators in the 2010s brought meaningful change. Influencers such as Michelle Phan introduced techniques tailored to Asian features and opened space for new forms of representation (Pham, 2015).
-          </p>
-          <p>
-            At the same time, the rise of K beauty introduced dewy bases, lighter textures, and expanded shade ranges that influenced the American market (Tu, 2011). For many Asian Americans, choosing foundation became an act of self recognition within a culture that once overlooked them.
-          </p>
+      <!-- Right Column: Single Large Photo -->
+      <div class="context-photos-column">
+        <div class="context-photo-container">
+          <div class="context-photo-card">
+            <img src="images/cushion.png" 
+                 alt="Historical cosmetics and beauty products" 
+                 class="context-photo">
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
 </section>
 
@@ -265,7 +266,7 @@
 
 
 
-  <!-- Parallax Scrolling Script -->
+  <!-- Parallax Scrolling Script for background imgs-->
   <script>
     window.addEventListener("scroll", () => {
       const scrolled = window.scrollY;
@@ -420,7 +421,7 @@
         contextHeight = contextRect.height;
       }
 
-      
+
       // Get tips section position
             let tipsTop = sectionBottom;
             let tipsHeight = 0;
@@ -604,7 +605,7 @@
     loader.load(modelPath, (gltf) => {
       const model = gltf.scene;
       scene.add(model);
-      model.position.y = -0.5;
+      model.position.y = 0.1;
       model.scale.set(8, 8, 8);
       camera.position.z = 2;
 
@@ -764,62 +765,223 @@
 
 
   <script>
-  // Scroll Animation for Product Section
+  // Tips Horizontal Scroll Animation WITH RESUME
   document.addEventListener('DOMContentLoaded', function() {
-    const contextSection = document.querySelector('.context-scroll-section');
     const tipsSection = document.querySelector('.tips-section');
-    const modelContainer = document.querySelector('.model-scroll-view');
+    const tipsGrid = document.querySelector('.tips-grid');
+    const modelContainer = document.querySelector('.model-scroll-container');
     
-    // Update Three.js to use new container
-    const threeScript = document.querySelector('script[type="module"]');
-    if (threeScript && threeScript.textContent.includes('createModel("model1"')) {
-      // Update the script to use the new container
-      threeScript.textContent = threeScript.textContent.replace(
-        'createModel("model1"',
-        'createModel("model1"'
-      );
-    }
+    if (!tipsSection || !tipsGrid) return;
     
-    // Scroll animation observer
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px'
-    };
-    
-   
-    
-    // Parallax effect for model as context scrolls
+    let isAnimating = false;
+    let animationCompleted = false;
     let lastScrollY = 0;
-    let ticking = false;
     
-    function updateModelParallax() {
-      const scrollY = window.scrollY;
-      const contextRect = contextSection.getBoundingClientRect();
-      const contextTop = contextRect.top + scrollY;
+    // Calculate when tips section is in view
+    function calculateScrollProgress() {
+      const sectionRect = tipsSection.getBoundingClientRect();
       const windowHeight = window.innerHeight;
+      const scrollY = window.scrollY;
       
-      // Calculate progress through context section
-      let progress = (scrollY - contextTop + windowHeight) / (contextRect.height + windowHeight);
-      progress = Math.max(0, Math.min(1, progress));
+      // Section position
+      const sectionTop = sectionRect.top + scrollY;
+      const sectionBottom = sectionTop + sectionRect.height;
       
-      // Apply subtle parallax to model
-      if (modelContainer) {
-        const parallaxY = progress * 100; // Moves down 100px max
-        modelContainer.style.transform = `translateY(${parallaxY}px)`;
+      // When does animation start? When section is 30% in view
+      const animationStart = sectionTop - (windowHeight * 0.3);
+      const animationEnd = sectionTop + (windowHeight * 0.7);
+      
+      // Calculate progress (0 to 1)
+      let progress = 0;
+      let isInRange = false;
+      
+      if (scrollY >= animationStart && scrollY <= animationEnd) {
+        progress = (scrollY - animationStart) / (animationEnd - animationStart);
+        progress = Math.max(0, Math.min(1, progress));
+        isInRange = true;
       }
       
-      lastScrollY = scrollY;
-      ticking = false;
+      return {
+        progress,
+        isInRange,
+        sectionTop,
+        sectionBottom,
+        animationStart,
+        animationEnd
+      };
     }
     
-    window.addEventListener('scroll', () => {
+    // Update horizontal animation based on scroll
+    function updateHorizontalAnimation() {
+      const { progress, isInRange, animationStart, animationEnd } = calculateScrollProgress();
+      const currentScrollY = window.scrollY;
+      
+      // Check if we're entering the animation zone
+      if (isInRange && !animationCompleted) {
+        if (!isAnimating) {
+          isAnimating = true;
+          tipsGrid.classList.add('active');
+          
+          // Make sure model stays visible
+          if (modelContainer) {
+            modelContainer.classList.add('fade-in');
+            modelContainer.classList.remove('fade-out');
+            modelContainer.style.opacity = 1;
+          }
+        }
+        
+        // Calculate horizontal position
+        // Start at 100vw (off-screen right), end at 0 (in position)
+        const startX = window.innerWidth;
+        const currentX = startX - (progress * startX);
+        
+        // Apply horizontal translation
+        tipsGrid.style.transform = `translateX(${currentX}px)`;
+        
+        // Check if animation is complete (progress >= 1)
+        if (progress >= 1) {
+          animationCompleted = true;
+          isAnimating = false;
+          tipsGrid.style.transform = 'translateX(0)';
+          
+          // Allow vertical scrolling to continue
+          // Don't lock the scroll position anymore
+        } else if (progress > 0) {
+          // Only prevent vertical scrolling while animating
+          // by maintaining position within animation range
+          const targetScroll = animationStart + (progress * (animationEnd - animationStart));
+          
+          // Small buffer to prevent jitter
+          if (Math.abs(currentScrollY - targetScroll) > 5) {
+            window.scrollTo({
+              top: targetScroll,
+              behavior: 'auto'
+            });
+          }
+        }
+        
+      } else if (!isInRange && isAnimating) {
+        // We scrolled out of animation range
+        isAnimating = false;
+        
+        // If we scrolled past the section, complete animation
+        if (currentScrollY > animationEnd) {
+          animationCompleted = true;
+          tipsGrid.classList.add('active');
+          tipsGrid.style.transform = 'translateX(0)';
+        } 
+        // If we scrolled before the section, reset
+        else if (currentScrollY < animationStart) {
+          animationCompleted = false;
+          tipsGrid.classList.remove('active');
+          tipsGrid.style.transform = 'translateX(100vw)';
+        }
+      }
+      
+      lastScrollY = currentScrollY;
+    }
+    
+    // Handle mouse wheel to allow some vertical movement
+    function handleWheel(e) {
+      if (isAnimating && !animationCompleted) {
+        // Allow some vertical scroll but dampen it
+        e.preventDefault();
+        
+        const { animationStart, animationEnd } = calculateScrollProgress();
+        const delta = e.deltaY * 0.3; // Dampen scroll speed
+        const newScroll = Math.max(animationStart, Math.min(animationEnd, window.scrollY + delta));
+        
+        window.scrollTo({
+          top: newScroll,
+          behavior: 'auto'
+        });
+        
+        updateHorizontalAnimation();
+      }
+    }
+    
+    // Optimized scroll handler
+    let ticking = false;
+    function handleScroll() {
       if (!ticking) {
         ticking = true;
-        requestAnimationFrame(updateModelParallax);
+        requestAnimationFrame(() => {
+          updateHorizontalAnimation();
+          ticking = false;
+        });
       }
+    }
+    
+    // Initial setup
+    window.addEventListener('load', function() {
+      // Start with tips off-screen to the right
+      tipsGrid.style.transform = 'translateX(100vw)';
+      tipsGrid.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      
+      // Start listening to events
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      window.addEventListener('wheel', handleWheel, { passive: false });
+      
+      // Initial update
+      updateHorizontalAnimation();
+    });
+    
+    // Handle resize
+    window.addEventListener('resize', function() {
+      updateHorizontalAnimation();
+    });
+    
+    // Clean up
+    window.addEventListener('beforeunload', function() {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('wheel', handleWheel);
     });
   });
   </script>
+
+
+
+
+  <script>
+  // SIMPLEST - Trigger on scroll, no scroll locking
+  document.addEventListener('DOMContentLoaded', function() {
+    const tipsSection = document.querySelector('.tips-section');
+    const tipsGrid = document.querySelector('.tips-grid');
+    const modelContainer = document.querySelector('.model-scroll-container');
+    
+    if (!tipsSection || !tipsGrid) return;
+    
+    let hasAnimated = false;
+    
+    // Initial position - off screen right
+    tipsGrid.style.transform = 'translateX(100vw)';
+    tipsGrid.style.transition = 'transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !hasAnimated) {
+          hasAnimated = true;
+          
+          // Animate tips in from right
+          tipsGrid.style.transform = 'translateX(0)';
+          
+          // Ensure model stays visible
+          if (modelContainer) {
+            modelContainer.classList.add('fade-in');
+            modelContainer.classList.remove('fade-out');
+            modelContainer.style.opacity = 1;
+          }
+        }
+      });
+    }, {
+      threshold: 0.3, // Trigger when 30% visible
+      rootMargin: '0px 0px -100px 0px'
+    });
+    
+    observer.observe(tipsSection);
+  });
+  </script>
+
 
 
 
@@ -872,8 +1034,6 @@
       });
     });
   </script>
-
-
 
 
 
