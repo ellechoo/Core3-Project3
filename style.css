@@ -266,7 +266,7 @@ body {
 /* ============================================== */
 .product-scroll-section {
   position: relative;
-  min-height: 300vh;
+  min-height: 400vh; /* Adjust as needed for your content */
   padding: 0;
   overflow: hidden;
   background: transparent;
@@ -334,18 +334,17 @@ body {
 
 
 /* ============================================== */
-/* TIPS SECTION - FIXED VERSION */
+/* TIPS SECTION - SCROLL-DRIVEN HORIZONTAL ANIMATION */
 /* ============================================== */
 .tips-section {
   position: relative;
   z-index: 10;
   width: 100%;
-  padding-top: 50vh; /* Reduced so we can see them */
-  padding-bottom: 50px;
-  min-height: 150vh; /* Enough space for animation */
+  min-height: 200vh; /* Extra height for scrolling animation */
   display: flex;
   align-items: center;
   background: transparent;
+  overflow: visible;
 }
 
 .tips-container {
@@ -354,6 +353,10 @@ body {
   padding: 0 40px;
   width: 100%;
   position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .tips-container h3 {
@@ -375,14 +378,20 @@ body {
   transform: translateY(0);
 }
 
+/* Tips Grid - will be controlled by scroll */
 .tips-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 40px;
   position: relative;
+  width: 100%;
+  
+  /* Start off-screen to the right */
+  transform: translateX(100vw);
+  will-change: transform; /* Performance optimization */
 }
 
-/* Tip cards start visible but will be animated */
+/* Tip cards */
 .tip-card {
   background: rgba(255, 255, 255, 0.85);
   border-radius: 20px;
@@ -391,11 +400,9 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  
-  /* Start visible but will be animated */
   opacity: 1;
   transform: translateX(0);
-  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .tip-card:hover {

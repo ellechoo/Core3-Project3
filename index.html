@@ -765,69 +765,72 @@
 
 
   <script>
-  // Tips Horizontal Scroll Animation WITH RESUME
+  // Tips Scroll-Driven Horizontal Animation
   document.addEventListener('DOMContentLoaded', function() {
     const tipsSection = document.querySelector('.tips-section');
     const tipsGrid = document.querySelector('.tips-grid');
+    const tipsTitle = document.querySelector('.tips-container h3');
     const modelContainer = document.querySelector('.model-scroll-container');
     
     if (!tipsSection || !tipsGrid) return;
     
     let isAnimating = false;
-    let animationCompleted = false;
     let lastScrollY = 0;
     
-    // Calculate when tips section is in view
-    function calculateScrollProgress() {
+    // Initial position - off screen right
+    tipsGrid.style.transform = 'translateX(100vw)';
+    
+    // Calculate animation progress based on scroll
+    function calculateAnimationProgress() {
       const sectionRect = tipsSection.getBoundingClientRect();
       const windowHeight = window.innerHeight;
+      const windowWidth = window.innerWidth;
       const scrollY = window.scrollY;
       
       // Section position
       const sectionTop = sectionRect.top + scrollY;
-      const sectionBottom = sectionTop + sectionRect.height;
+      const sectionHeight = sectionRect.height;
       
-      // When does animation start? When section is 30% in view
-      const animationStart = sectionTop - (windowHeight * 0.3);
-      const animationEnd = sectionTop + (windowHeight * 0.7);
+      // Define animation range (when section enters/exits viewport)
+      // Animation starts when section top is at 50% of viewport
+      // Animation ends when section bottom is at 50% of viewport
+      const animationStart = sectionTop - (windowHeight * 0.5);
+      const animationEnd = sectionTop + (windowHeight * 0.5);
       
       // Calculate progress (0 to 1)
       let progress = 0;
-      let isInRange = false;
       
       if (scrollY >= animationStart && scrollY <= animationEnd) {
         progress = (scrollY - animationStart) / (animationEnd - animationStart);
         progress = Math.max(0, Math.min(1, progress));
-        isInRange = true;
       }
       
+      // Easing function for smoother animation
+      const easeProgress = easeInOutCubic(progress);
+      
       return {
-        progress,
-        isInRange,
+        progress: easeProgress,
+        rawProgress: progress,
+        isInRange: scrollY >= animationStart && scrollY <= animationEnd,
         sectionTop,
-        sectionBottom,
-        animationStart,
-        animationEnd
+        sectionHeight
       };
     }
     
-    // Update horizontal animation based on scroll
-    function updateHorizontalAnimation() {
-      const { progress, isInRange, animationStart, animationEnd } = calculateScrollProgress();
-      const currentScrollY = window.scrollY;
+    // Easing function for smooth animation
+    function easeInOutCubic(t) {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+    
+    // Update horizontal position based on scroll
+    function updateHorizontalPosition() {
+      const { progress, isInRange } = calculateAnimationProgress();
       
-      // Check if we're entering the animation zone
-      if (isInRange && !animationCompleted) {
+      if (isInRange) {
         if (!isAnimating) {
           isAnimating = true;
-          tipsGrid.classList.add('active');
-          
-          // Make sure model stays visible
-          if (modelContainer) {
-            modelContainer.classList.add('fade-in');
-            modelContainer.classList.remove('fade-out');
-            modelContainer.style.opacity = 1;
-          }
+          // Show title when animation starts
+          if (tipsTitle) tipsTitle.classList.add('visible');
         }
         
         // Calculate horizontal position
@@ -838,66 +841,31 @@
         // Apply horizontal translation
         tipsGrid.style.transform = `translateX(${currentX}px)`;
         
-        // Check if animation is complete (progress >= 1)
-        if (progress >= 1) {
-          animationCompleted = true;
-          isAnimating = false;
-          tipsGrid.style.transform = 'translateX(0)';
-          
-          // Allow vertical scrolling to continue
-          // Don't lock the scroll position anymore
-        } else if (progress > 0) {
-          // Only prevent vertical scrolling while animating
-          // by maintaining position within animation range
-          const targetScroll = animationStart + (progress * (animationEnd - animationStart));
-          
-          // Small buffer to prevent jitter
-          if (Math.abs(currentScrollY - targetScroll) > 5) {
-            window.scrollTo({
-              top: targetScroll,
-              behavior: 'auto'
-            });
-          }
+        // Make sure model stays visible
+        if (modelContainer) {
+          modelContainer.classList.add('fade-in');
+          modelContainer.classList.remove('fade-out');
+          modelContainer.style.opacity = 1;
         }
         
-      } else if (!isInRange && isAnimating) {
-        // We scrolled out of animation range
-        isAnimating = false;
-        
-        // If we scrolled past the section, complete animation
-        if (currentScrollY > animationEnd) {
-          animationCompleted = true;
-          tipsGrid.classList.add('active');
-          tipsGrid.style.transform = 'translateX(0)';
-        } 
-        // If we scrolled before the section, reset
-        else if (currentScrollY < animationStart) {
-          animationCompleted = false;
-          tipsGrid.classList.remove('active');
-          tipsGrid.style.transform = 'translateX(100vw)';
+      } else {
+        if (isAnimating) {
+          isAnimating = false;
+          
+          // If we scrolled past the section, keep tips in place
+          if (window.scrollY > tipsSection.offsetTop + tipsSection.offsetHeight) {
+            tipsGrid.style.transform = 'translateX(0)';
+            if (tipsTitle) tipsTitle.classList.add('visible');
+          } 
+          // If we scrolled before the section, reset
+          else if (window.scrollY < tipsSection.offsetTop) {
+            tipsGrid.style.transform = 'translateX(100vw)';
+            if (tipsTitle) tipsTitle.classList.remove('visible');
+          }
         }
       }
       
-      lastScrollY = currentScrollY;
-    }
-    
-    // Handle mouse wheel to allow some vertical movement
-    function handleWheel(e) {
-      if (isAnimating && !animationCompleted) {
-        // Allow some vertical scroll but dampen it
-        e.preventDefault();
-        
-        const { animationStart, animationEnd } = calculateScrollProgress();
-        const delta = e.deltaY * 0.3; // Dampen scroll speed
-        const newScroll = Math.max(animationStart, Math.min(animationEnd, window.scrollY + delta));
-        
-        window.scrollTo({
-          top: newScroll,
-          behavior: 'auto'
-        });
-        
-        updateHorizontalAnimation();
-      }
+      lastScrollY = window.scrollY;
     }
     
     // Optimized scroll handler
@@ -906,7 +874,7 @@
       if (!ticking) {
         ticking = true;
         requestAnimationFrame(() => {
-          updateHorizontalAnimation();
+          updateHorizontalPosition();
           ticking = false;
         });
       }
@@ -914,71 +882,22 @@
     
     // Initial setup
     window.addEventListener('load', function() {
-      // Start with tips off-screen to the right
-      tipsGrid.style.transform = 'translateX(100vw)';
-      tipsGrid.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-      
-      // Start listening to events
+      // Start listening to scroll
       window.addEventListener('scroll', handleScroll, { passive: true });
-      window.addEventListener('wheel', handleWheel, { passive: false });
       
       // Initial update
-      updateHorizontalAnimation();
+      updateHorizontalPosition();
     });
     
     // Handle resize
     window.addEventListener('resize', function() {
-      updateHorizontalAnimation();
+      updateHorizontalPosition();
     });
     
     // Clean up
     window.addEventListener('beforeunload', function() {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('wheel', handleWheel);
     });
-  });
-  </script>
-
-
-
-
-  <script>
-  // SIMPLEST - Trigger on scroll, no scroll locking
-  document.addEventListener('DOMContentLoaded', function() {
-    const tipsSection = document.querySelector('.tips-section');
-    const tipsGrid = document.querySelector('.tips-grid');
-    const modelContainer = document.querySelector('.model-scroll-container');
-    
-    if (!tipsSection || !tipsGrid) return;
-    
-    let hasAnimated = false;
-    
-    // Initial position - off screen right
-    tipsGrid.style.transform = 'translateX(100vw)';
-    tipsGrid.style.transition = 'transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !hasAnimated) {
-          hasAnimated = true;
-          
-          // Animate tips in from right
-          tipsGrid.style.transform = 'translateX(0)';
-          
-          // Ensure model stays visible
-          if (modelContainer) {
-            modelContainer.classList.add('fade-in');
-            modelContainer.classList.remove('fade-out');
-            modelContainer.style.opacity = 1;
-          }
-        }
-      });
-    }, {
-      threshold: 0.3, // Trigger when 30% visible
-      rootMargin: '0px 0px -100px 0px'
-    });
-    
-    observer.observe(tipsSection);
   });
   </script>
 
