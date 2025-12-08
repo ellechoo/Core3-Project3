@@ -57,35 +57,262 @@ body {
   text-align: center;
 }
 
-/* 3. NAVIGATION */
+
+
+
+
 /* ============================================== */
+/* NAVIGATION */
+/* ============================================== */
+
 .vertical-nav {
   position: fixed;
   top: 30px;
   right: 30px;
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   gap: 20px;
   z-index: 1000;
-  text-align: right;
 }
 
+/* Base styles for ALL nav links */
 .vertical-nav a {
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
   text-decoration: none;
-  color: #c9398b;
+  color: #c9398b; /* Magenta color */
   letter-spacing: 0.5px;
-  transition: opacity 0.3s ease;
+  transition: color 0.3s ease;
+  position: relative; /* Needed for dot positioning */
+}
+
+/* ACTIVE STATE - LIGHT PINK instead of white */
+.vertical-nav a.active {
+  color: #e76eb3; /* Light pink color */
+}
+
+/* Active dot for REGULAR nav links (HOME, ABOUT, ARTICLES) - BASED ON TEXT LENGTH */
+.vertical-nav > a.active::before {
+  content: "";
+  position: absolute;
+  left: -10px; /* Closer to text, adjusts based on text width */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 5px;
+  background: #e76eb3; /* Light pink dot */
+  border-radius: 50%;
+  animation: fadeInDot 0.3s ease;
+}
+
+@keyframes fadeInDot {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
 }
 
 .vertical-nav a:hover {
-  color: #e76eb3;
+  color: #e76eb3; /* Light pink on hover */
 }
 
-.vertical-nav a.active {
-  color: #ffffff;
+/* ============================================== */
+/* DROPDOWN SPECIFIC STYLES */
+/* ============================================== */
+
+.nav-dropdown {
+  position: relative;
+  display: block;
+  text-align: right;
+  margin-bottom: 0;
 }
+
+.nav-dropdown-toggle {
+  cursor: pointer;
+  display: block;
+  position: relative;
+}
+
+/* MAKEUP ACTIVE STATE - Light pink */
+.nav-dropdown-toggle.active {
+  color: #e76eb3; /* Light pink */
+}
+
+/* Active dot for MAKEUP (dropdown toggle) - SAME POSITION AS OTHER NAV ITEMS */
+.nav-dropdown-toggle.active::before {
+  content: "";
+  position: absolute;
+  left: -10px; /* Same as other nav items */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 5px;
+  background: #e76eb3; /* Light pink dot */
+  border-radius: 50%;
+  animation: fadeInDot 0.3s ease;
+}
+
+/* NARROWER DROPDOWN BOX WITH SHEER BACKGROUND */
+.nav-dropdown-content {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: auto; /* Auto width based on content */
+  width: max-content; /* Width matches longest item */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 1001;
+  padding: 10px 0; /* Less padding for narrower look */
+  margin: 6px 0 0 0;
+  white-space: nowrap;
+  pointer-events: none;
+  
+  /* SHEER BACKGROUND - NARROWER */
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border-radius: 8px; /* Slightly smaller radius */
+  box-shadow: 
+    0 6px 20px rgba(169, 34, 109, 0.08),
+    0 2px 6px rgba(169, 34, 109, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Show dropdown ONLY on hover */
+.nav-dropdown:hover .nav-dropdown-content {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Dropdown item - NARROWER, DOTS CLOSER TO TEXT */
+.dropdown-item {
+  display: block;
+  padding: 8px 20px 8px 25px; /* Left padding for dot, right padding for text */
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: #a5226d; /* Darker magenta for better contrast */
+  text-decoration: none;
+  text-align: right;
+  letter-spacing: 0.3px;
+  transition: all 0.25s ease;
+  background: transparent;
+  position: relative;
+  margin: 0;
+}
+
+/* Dropdown items active state */
+.dropdown-item.active {
+  color: #c9398b; /* Brighter magenta when active */
+}
+
+/* Active dot for dropdown items - POSITIONED BASED ON TEXT LENGTH */
+.dropdown-item.active::before {
+  content: "";
+  position: absolute;
+  right: calc(100% + 5px); /* 5px from the end of the text */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px; /* Same size as other dots */
+  height: 5px;
+  background: #e76eb3; /* Light pink dot */
+  border-radius: 50%;
+  animation: fadeInDot 0.3s ease;
+}
+
+.dropdown-item:hover {
+  color: #e76eb3; /* Light pink on hover */
+  background: rgba(169, 34, 109, 0.05); /* Very subtle hover background */
+  padding-right: 22px; /* Slight shift on hover */
+}
+
+/* Add subtle separation between dropdown items */
+.dropdown-item + .dropdown-item {
+  border-top: 1px solid rgba(169, 34, 109, 0.05);
+}
+
+/* ============================================== */
+/* DOTS POSITIONED BY TEXT LENGTH - ALTERNATIVE APPROACH */
+/* ============================================== */
+
+/* For main nav items, we can't easily position by text length with CSS alone */
+/* But we can make them consistent */
+
+/* Make all main nav dots consistent distance */
+.vertical-nav > a[href="#home"].active::before,
+.vertical-nav > a[href="#about"].active::before,
+.vertical-nav > a[href="#articles"].active::before {
+  left: -8px; /* Consistent for all main nav */
+}
+
+/* MAKEUP gets same distance */
+.nav-dropdown-toggle.active::before {
+  left: -8px;
+}
+
+/* For dropdown items, we can use JavaScript to position dots based on text length */
+/* Add this data attribute via JavaScript */
+.dropdown-item[data-text-length="short"].active::before {
+  right: calc(100% + 3px); /* Closer for short text */
+}
+
+.dropdown-item[data-text-length="medium"].active::before {
+  right: calc(100% + 5px); /* Medium distance */
+}
+
+.dropdown-item[data-text-length="long"].active::before {
+  right: calc(100% + 7px); /* Further for long text */
+}
+
+/* ============================================== */
+/* RESPONSIVE STYLES */
+/* ============================================== */
+
+@media (max-width: 768px) {
+  .vertical-nav {
+    right: 20px;
+    top: 20px;
+  }
+  
+  .nav-dropdown-content {
+    border-radius: 6px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 8px 0;
+  }
+  
+  .dropdown-item {
+    padding: 6px 16px 6px 20px;
+    font-size: 0.85rem;
+  }
+  
+  /* Adjust dot positions for mobile */
+  .vertical-nav > a.active::before,
+  .nav-dropdown-toggle.active::before {
+    left: -6px; /* Closer on mobile */
+    width: 4px;
+    height: 4px;
+  }
+  
+  .dropdown-item.active::before {
+    right: calc(100% + 3px); /* Closer on mobile */
+    width: 4px;
+    height: 4px;
+  }
+}
+
+
+
+
 
 /* 4. INTRO SECTION */
 /* ============================================== */
@@ -826,243 +1053,291 @@ body {
 
 
 
-/* 12. ARTICLES SECTION */
 /* ============================================== */
-.articles-section {
+/* FEATURED ARTICLES SECTION - MODERN IMAGE DESIGN */
+/* ============================================== */
+
+.featured-articles-section {
   background-color: none;
   color: #a5226d;
-  padding: 100px 40px;
+  padding: 120px 60px;
   min-height: auto;
-  margin-top: 60px;
-  border-radius: 20px;
-  max-width: 1200px;
+  margin-top: 100px;
+  max-width: 1600px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.articles-section h2 {
+.featured-articles-section h2 {
   font-family: "RoleModel", sans-serif;
-  font-size: 3.5rem;
-  letter-spacing: 2px;
+  font-size: 4rem;
+  letter-spacing: 3px;
   margin-bottom: 20px;
-  color: #a5226d;
+  color: #ffffff;
   text-align: center;
 }
 
-.articles-subtitle {
+.featured-articles-section .articles-subtitle {
   font-family: 'Inter', sans-serif;
-  font-size: 1.1rem;
-  color: #e76eb3;
+  font-size: 1.2rem;
+  color: #ffffff;
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 80px;
   font-style: italic;
+  font-weight: 400;
 }
 
-.articles-grid {
+/* Featured Articles Grid - Two large cards */
+.featured-articles-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 60px;
   margin: 0 auto;
-  max-width: 1000px;
+  max-width: 1400px;
 }
 
-.article-card {
+/* Article Links */
+.featured-article-link {
+  text-decoration: none;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.featured-article-link:hover {
+  transform: translateY(-15px);
+}
+
+.featured-article-link:hover .featured-article-card {
+  box-shadow: 0 40px 80px rgba(169, 34, 109, 0.25);
+}
+
+/* Featured Article Cards */
+.featured-article-card {
   background: white;
-  border-radius: 10px;
+  border-radius: 25px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(169, 34, 109, 0.1);
-  border: 2px solid rgba(233, 110, 179, 0.2);
+  box-shadow: 0 25px 60px rgba(169, 34, 109, 0.15);
+  border: 1px solid rgba(169, 34, 109, 0.1);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   cursor: pointer;
-  height: fit-content;
-  max-height: 600px;
-  display: flex;
-  flex-direction: column;
-}
-
-.article-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(169, 34, 109, 0.15);
-  border-color: rgba(233, 110, 179, 0.4);
-}
-
-.article-card-header {
-  background: linear-gradient(135deg, #a5226d, #c9398b);
-  color: white;
-  padding: 30px;
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
+  height: 600px; /* Tall cards */
   position: relative;
-  min-height: 180px;
 }
 
-.article-icon {
-  font-size: 2.5rem;
-  margin-top: 5px;
-  flex-shrink: 0;
+.featured-article-card:hover {
+  border-color: rgba(169, 34, 109, 0.3);
 }
 
-.article-header-content {
-  flex: 1;
+/* Article Image Container */
+.featured-article-image {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
-.article-title {
-  font-family: "RoleModel", sans-serif;
-  font-size: 1.8rem;
-  letter-spacing: 1px;
-  line-height: 1.3;
-  margin-bottom: 10px;
+.featured-article-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
-.article-author {
+.featured-article-link:hover .featured-article-img {
+  transform: scale(1.05);
+}
+
+/* Overlay with gradient and content */
+.featured-article-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.3) 40%,
+    rgba(165, 34, 109, 0.85) 100%
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: 50px;
+}
+
+.featured-article-content {
+  color: white;
+  width: 100%;
+}
+
+/* Article Category */
+.article-category {
   font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  opacity: 0.9;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 20px;
+  display: inline-block;
+  padding: 6px 15px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+}
+
+/* Article Title */
+.featured-article-title {
+  font-family: "RoleModel", sans-serif;
+  font-size: 2.5rem;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  margin-bottom: 15px;
+  color: white;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Article Author */
+.featured-article-author {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 30px;
   font-style: italic;
 }
 
-.article-toggle {
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  width: 40px;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.toggle-icon {
-  font-size: 1.5rem;
-  font-weight: 300;
-  transition: transform 0.3s ease;
-}
-
-.article-card-content {
-  padding: 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.article-excerpt {
-  padding: 30px;
-  flex: 1;
-}
-
-.article-excerpt p {
+/* Call to Action */
+.featured-article-cta {
   font-family: 'Inter', sans-serif;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: #333;
-  margin-bottom: 20px;
-  text-align: justify;
-}
-
-.read-more {
-  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
   font-weight: 600;
-  color: #c9398b;
-  font-size: 0.9rem;
-  text-transform: uppercase;
   letter-spacing: 1px;
+  color: white;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  opacity: 0.9;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.read-more::after {
-  content: "↓";
+.featured-article-link:hover .featured-article-cta {
+  opacity: 1;
+  transform: translateX(5px);
+}
+
+.featured-article-cta span::after {
+  content: "→";
+  margin-left: 8px;
   font-size: 1.2rem;
   transition: transform 0.3s ease;
 }
 
-.article-full {
-  padding: 0 30px;
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: all 0.5s ease;
+.featured-article-link:hover .featured-article-cta span::after {
+  transform: translateX(5px);
 }
 
-.article-full p {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: #333;
-  margin-bottom: 25px;
-  text-align: justify;
-}
-
-.article-card.expanded {
-  max-height: none;
-}
-
-.article-card.expanded .article-full {
-  padding: 0 30px 30px 30px;
-  max-height: 2000px;
-  opacity: 1;
-  overflow-y: auto;
-}
-
-.article-card.expanded .article-excerpt {
-  padding-bottom: 20px;
-}
-
-.article-card.expanded .toggle-icon {
-  transform: rotate(45deg);
-}
-
-.article-card.expanded .read-more::after {
-  transform: rotate(180deg);
-}
-
-.article-card.expanded .read-more {
-  color: #a5226d;
-}
-
-@media (max-width: 900px) {
-  .articles-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
+/* Responsive Design for Featured Articles */
+@media (max-width: 1200px) {
+  .featured-articles-grid {
+    gap: 40px;
+    max-width: 1200px;
   }
   
-  .articles-section {
+  .featured-article-card {
+    height: 600px;
+  }
+  
+  .featured-article-overlay {
+    padding: 40px;
+  }
+  
+  .featured-article-title {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .featured-articles-section {
+    padding: 100px 40px;
+  }
+  
+  .featured-articles-grid {
+    grid-template-columns: 1fr;
+    gap: 50px;
+    max-width: 800px;
+  }
+  
+  .featured-article-card {
+    height: 550px;
+  }
+  
+  .featured-articles-section h2 {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .featured-articles-section {
+    padding: 80px 30px;
+    margin-top: 60px;
+  }
+  
+  .featured-articles-section h2 {
+    font-size: 3rem;
+    letter-spacing: 2px;
+  }
+  
+  .featured-articles-section .articles-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 60px;
+  }
+  
+  .featured-article-card {
+    height: 500px;
+    border-radius: 20px;
+  }
+  
+  .featured-article-overlay {
+    padding: 35px;
+  }
+  
+  .featured-article-title {
+    font-size: 2rem;
+  }
+  
+  .featured-article-author {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .featured-articles-section {
     padding: 60px 20px;
   }
   
-  .articles-section h2 {
+  .featured-articles-section h2 {
     font-size: 2.5rem;
   }
   
-  .article-card-header {
-    padding: 25px;
-    min-height: 160px;
+  .featured-article-card {
+    height: 450px;
   }
   
-  .article-title {
-    font-size: 1.5rem;
-  }
-}
-
-@media (max-width: 600px) {
-  .article-card-header {
-    flex-direction: column;
-    gap: 15px;
-    padding: 25px 20px;
+  .featured-article-overlay {
+    padding: 30px;
   }
   
-  .article-title {
-    font-size: 1.3rem;
+  .featured-article-title {
+    font-size: 1.8rem;
   }
   
-  .article-toggle {
-    position: static;
-    align-self: flex-end;
-    margin-top: 10px;
+  .article-category {
+    font-size: 0.8rem;
+    padding: 5px 12px;
+  }
+  
+  .featured-article-cta {
+    font-size: 0.9rem;
   }
 }

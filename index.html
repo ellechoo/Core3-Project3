@@ -41,13 +41,23 @@
     </div>
 
 
+
   <!-- Vertical Navigation -->
   <nav class="vertical-nav">
     <a href="#home">HOME</a>
     <a href="#about">ABOUT</a>
-    <a href="#model-anchor">MAKEUP</a>
+    <div class="nav-dropdown">
+      <a href="#model-anchor" class="nav-dropdown-toggle">MAKEUP</a>
+      <div class="nav-dropdown-content">
+        <a href="#model-anchor" class="dropdown-item" data-section="foundation">Foundation</a>
+        <a href="#section2" class="dropdown-item" data-section="blush">Blush</a>
+        <a href="#section3" class="dropdown-item" data-section="mascara">Mascara</a>
+        <a href="#section4" class="dropdown-item" data-section="lipstick">Lipstick</a>
+      </div>
+    </div>
     <a href="#articles">ARTICLES</a>
   </nav>
+
 
 
   <!-- Intro Section -->
@@ -179,89 +189,61 @@
 
 
 
-  <!-- Collapsible Articles Section -->
-<section class="section articles-section" id="articles">
+  <!-- Featured Articles Section - Modern Image-Focused Design -->
+<section class="section featured-articles-section" id="articles">
   <h2>Featured Articles</h2>
-  <p class="articles-subtitle">Click on each card to read the full article</p>
+  <p class="articles-subtitle">Explore in-depth research on beauty culture</p>
   
-  <div class="articles-grid">
+  <div class="featured-articles-grid">
     
-    <!-- Article 1 -->
-    <div class="article-card" id="article1">
-      <div class="article-card-header">
-        <div class="article-icon">01</div>
-        <div class="article-header-content">
-          <h3 class="article-title">Beauty Practices Among Asian American College Students</h3>
-          <p class="article-author">Itsuka Takamune</p>
-        </div>
-        <div class="article-toggle">
-          <span class="toggle-icon">+</span>
-        </div>
-      </div>
-      
-      <div class="article-card-content">
-        <div class="article-excerpt">
-          <p>The beauty industry is one of the most profitable industries in the United States. At over $382 billion per year, it is also an important component of the global economy...</p>
-          <div class="read-more">Click to read more</div>
-        </div>
-        
-        <div class="article-full">
-          <p>The beauty industry is one of the most profitable industries in the United States. At over $382 billion per year, it is also an important component of the global economy. Although many of the successful beauty brands are either from Paris or New York, global sales of beauty products are prominent in East Asian countries like China and Japan. However, the global beauty industry has been criticized for its role in reproducing inequalities, including those related to race, class, and gender. Wolf argues beauty advertisements lower women’s self-confidence about their faces and bodies by using "beautiful" models or actresses. According to Frith, Cheng and Shaw, more white models are used in both U.S. and Asian fashion or beauty magazines. This underrepresentation of Asian models in media does not only make Asian women think that they are "social outsider[s]," but also makes them compare themselves unfavorably to the white group. This indicates racial inequality between whites and Asians and homogenization of beauty standards as western beauty industries expanded their business to East Asia).</p>
-          
-          <p>The homogenization of western beauty standards recalls Bourdieu's "habitus," a production of a system or a norm which determines practices or actions of certain groups. It is "the product of the work of inculcation" to perpetuate similar characteristics or conventions within individuals' in-groups. In other words, individuals' habitual practices decide their values of society, and the individuals take that for granted. Habitus, "systems of classification, … make their specific contribution to the reproduction of the power relations" and exist through relation and interaction with others. Since the dominant group, who has a certain privilege, decides what is valuable in society, inequality between the dominant group and subordinated groups are created. In the case of beauty standards, western beauty standards interact with non-western countries when they expand the beauty industry worldwide. By encouraging using western models in beauty advertisements, western beauty standards, as a qualifying social value, perpetuate the notion of "ugliness" among people of color and reproduce inequality that people of color should be "beautiful" to be accepted in society. Although there are some Asians who are considered "beautiful" in the media, most have lighter skin, bigger eyes, and ostensibly refined noses—the "right kind of Asian," in that these features are reminiscent of white physical features. The reason why western beauty standards are perpetuated is because of the globalization of the beauty industry. Ashcroft suggests that the terms globalization and western hegemony are synonymous because the diffusion of globalism pressures local identities of non-western nations.</p>
-          
-          <p>The same holds for globalization of beauty standards because minority groups are usually exposed to western facial and physical features through media, which might influence their favor of beautification practices. East Asian countries are one of the most important beauty markets among non-western countries, because Japan, Korea, and China are ranked among the highest retail sales of beauty products. Despite the fact that the beauty industry stimulates the world economy, as western beauty companies succeed in East Asian countries, it also contributes to suppressing local identities of East Asian cosmetic industries by imposing western standards of beauty through media advertisements and promotion of mega brands. Though some East Asian cosmetic companies offer diversity in beauty ideals by selling cosmetic products which fit Asians, like skin lightener, western beauty standards in many East Asian countries encourage using western models on fashion advertisements or favoring cosmetic products that conceal mono-lid eyes, eyes without folds. As Jones suggests, beauty standards of East Asian countries are quite complex. East Asian countries support western beauty standards because of the expansion of the western beauty industry on one hand, but they perpetuate their local identities on the other. Japan exemplifies this complexity.</p>
+    <!-- Article 1 - Large image card -->
+    <a href="article1.html" class="featured-article-link">
+      <div class="featured-article-card" id="featured-article1">
+        <div class="featured-article-image">
+          <img src="images/mog.png" 
+               alt="Asian American beauty practices research" 
+               class="featured-article-img">
+          <div class="featured-article-overlay">
+            <div class="featured-article-content">
+              <div class="article-category">RESEARCH STUDY</div>
+              <h3 class="featured-article-title">Beauty Practices Among Asian American College Students</h3>
+              <p class="featured-article-author">by Itsuka Takamune</p>
+              <div class="featured-article-cta">
+                <span>Read Full Article →</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </a>
     
-    <!-- Article 2 -->
-    <div class="article-card" id="article2">
-      <div class="article-card-header">
-        <div class="article-icon">02</div>
-        <div class="article-header-content">
-          <h3 class="article-title">Battling Western beauty standards as an Asian American</h3>
-          <p class="article-author">Lea Yeo</p>
-        </div>
-        <div class="article-toggle">
-          <span class="toggle-icon">+</span>
-        </div>
-      </div>
-      
-      <div class="article-card-content">
-        <div class="article-excerpt">
-          <p>After European colonization of Africa and North and South America began in the 15th century, everything of white, European origins held supreme...</p>
-          <div class="read-more">Click to read more</div>
-        </div>
-        
-        <div class="article-full">
-          <p>After European colonization of Africa and North and South America began in the 15th century, everything of white, European origins held supreme — from light eyes to blonde hair to pale skin, straight hair, and long, thin noses. As a result, Eurocentric features are what Western nations, including the United States, have considered "conventionally beautiful" for over 500 years.</p>
-
-          <p>Western beauty standards dominate mainstream culture. White people are the pinnacle of beauty. Features that primarily exist in people of color, such as larger bodies, broad noses, and small eyes, are often deemed unattractive. As we know it, beauty is a white supremacist ideal that favors people of European descent — an expectation that most individuals have unconsciously accepted.</p>
-
-          <p>As a first-generation Korean-American teenager, I struggle to accept my non-Eurocentric features. When all the people I see in movies, magazines, and on billboards are slender and white, I often find myself in a hole of self-pity and having expectations beyond what is truly achievable.</p>
-
-          <p>As a child, I desperately wanted my eyes to be a lighter color other than brown. I used to browse the web to find subliminal messages that could supposedly lighten my eye color.</p>
-
-          <p>I also recall searching for remedies to make my nose appear slimmer — bookmarking all the YouTube videos I could find that demonstrated specific exercises that could lift the tip of my nose.</p>
-
-          <p>After these attempts failed, I searched for rhinoplasty prices in my area. I frequently wondered if the money and months of pain would be worth having the perfectly sloped nose one saw on supermodels. The thought of cosmetic procedures continuously ran through my head as a preteen. In South Korea, where my family is from, plastic surgery is a common topic of conversation for people of all ages and genders.</p>
-
-          <p>One example of this is double-eyelid surgery, an invasive cosmetic procedure that makes eyes appear bigger, brighter, and whiter. My mother gave into cultural pressure and underwent this surgery to gain self-confidence. At only 13 years old, my younger sister is contemplating the same surgery.</p>
-
-          <p>In countries like Mali, Nigeria, Malaysia, and the Philippines, where citizens often have darker complexions, many people buy skin-whitening cream or carry umbrellas to preserve skin lightness. Due to the hot, sunny weather in these regions, individuals must go to such measures to maintain pale skin, which is considered more respectable and reflects a higher socioeconomic status.</p>
-
-          <p>As my white friends boast their Summer tans, I find myself avoiding the sun with a hat. Similarly, many of my Asian friends and family members buy makeup much lighter than their skin tone and dye their hair blonde regularly to appear white.</p>
-
-          <p>I've learned that race and ethnicity shouldn't be allowed to negatively dictate how we view our physical appearance. Beauty should be a celebration. Each ethnicity has its own special, unique features. Embracing these characteristics is critical.</p>
-
-          <p>There is beauty in diversity.</p>
+    <!-- Article 2 - Large image card -->
+    <a href="article2.html" class="featured-article-link">
+      <div class="featured-article-card" id="featured-article2">
+        <div class="featured-article-image">
+          <img src="images/mog.png" 
+               alt="Asian American battling beauty standards" 
+               class="featured-article-img">
+          <div class="featured-article-overlay">
+            <div class="featured-article-content">
+              <div class="article-category">PERSONAL ESSAY</div>
+              <h3 class="featured-article-title">Battling Western Beauty Standards as an Asian American</h3>
+              <p class="featured-article-author">by Lea Yeo</p>
+              <div class="featured-article-cta">
+                <span>Read Full Article →</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </a>
     
   </div>
 </section>
+
+
+
+
 
 
 
@@ -349,7 +331,7 @@
 
 
 
-<!-- Highlighting Active Nav Section -->
+<!-- Highlighting Active Nav Section and other nav stuff-->
 
   <script>
   const sections = document.querySelectorAll("section");
@@ -379,6 +361,178 @@
   sections.forEach((section) => {
     observer.observe(section);
   });
+
+
+
+// Update your existing JavaScript to remove auto-open functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const sections = {
+    'home': document.getElementById('home'),
+    'about': document.getElementById('about'),
+    'object1': document.getElementById('object1'), // Foundation section
+    'articles': document.getElementById('articles')
+  };
+  
+  const navLinks = {
+    'home': document.querySelector('a[href="#home"]'),
+    'about': document.querySelector('a[href="#about"]'),
+    'makeup': document.querySelector('.nav-dropdown-toggle'),
+    'foundation': document.querySelector('.dropdown-item[data-section="foundation"]'),
+    'articles': document.querySelector('a[href="#articles"]')
+  };
+  
+  // Function to check if section is in view
+  function isSectionInView(section) {
+    if (!section) return false;
+    
+    const rect = section.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    
+    // Check if section is in view (at least 30% visible)
+    const isInView = (
+      rect.top <= windowHeight * 0.7 &&
+      rect.bottom >= windowHeight * 0.3
+    );
+    
+    return isInView;
+  }
+  
+  // Function to update all active states
+  function updateActiveStates() {
+    // Remove active class from all nav items
+    Object.values(navLinks).forEach(link => {
+      if (link) link.classList.remove('active');
+    });
+    
+    // Check which section is active
+    let activeSection = null;
+    
+    // Check each section
+    if (isSectionInView(sections.home)) {
+      activeSection = 'home';
+    } else if (isSectionInView(sections.about)) {
+      activeSection = 'about';
+    } else if (isSectionInView(sections.object1)) {
+      activeSection = 'makeup';
+      
+      // When in makeup section, mark MAKEUP as active
+      if (navLinks.makeup) {
+        navLinks.makeup.classList.add('active');
+      }
+      
+      // ALSO mark foundation as active if we're in foundation section
+      // You can expand this logic for other makeup products
+      if (navLinks.foundation) {
+        navLinks.foundation.classList.add('active');
+      }
+      
+      // NO LONGER auto-open the dropdown when in makeup section
+      // Dropdown only opens on hover
+    } else if (isSectionInView(sections.articles)) {
+      activeSection = 'articles';
+    }
+    
+    // Add active class to corresponding nav item
+    if (activeSection && navLinks[activeSection]) {
+      navLinks[activeSection].classList.add('active');
+    }
+  }
+  
+  // Smooth scroll to foundation section
+  function scrollToFoundation() {
+    const modelAnchor = document.getElementById('model-anchor');
+    if (modelAnchor) {
+      modelAnchor.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  }
+  
+  // Event listeners for dropdown items
+  const dropdownItems = document.querySelectorAll('.dropdown-item');
+  dropdownItems.forEach(item => {
+    item.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetSection = this.getAttribute('data-section');
+      
+      // Scroll to appropriate section based on data-section
+      if (targetSection === 'foundation') {
+        scrollToFoundation();
+      }
+      // Add more conditions here for other makeup products
+      // Example: if (targetSection === 'blush') { scrollToBlush(); }
+    });
+  });
+  
+  // Update active states on scroll
+  let scrollTimeout;
+  function handleScroll() {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(updateActiveStates, 100);
+  }
+  
+  // For makeup products: You'll need to add more sections
+  // Example: When you add blush, add it to the sections object
+  // and update the isSectionInView check
+  
+  // Initial setup
+  updateActiveStates();
+  
+  // Add scroll listener
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  
+  // Update on resize
+  window.addEventListener('resize', updateActiveStates);
+  
+  // If you add more makeup sections, you'll need to:
+  // 1. Add them to the HTML with proper href or data-section
+  // 2. Add them to the sections object above
+  // 3. Update the isSectionInView logic to check for them
+  // 4. Add corresponding scroll functions
+});
+
+// Keep your dropdown spacing JavaScript if you still need it
+// But remove any references to .in-section or force-open
+
+// Add this to your existing JavaScript
+function positionDropdownDotsByTextLength() {
+  const dropdownItems = document.querySelectorAll('.dropdown-item');
+  
+  dropdownItems.forEach(item => {
+    const text = item.textContent.trim();
+    const length = text.length;
+    
+    // Classify text length
+    if (length <= 6) {
+      item.setAttribute('data-text-length', 'short');
+    } else if (length <= 10) {
+      item.setAttribute('data-text-length', 'medium');
+    } else {
+      item.setAttribute('data-text-length', 'long');
+    }
+  });
+}
+
+// Call this after DOM loads
+document.addEventListener('DOMContentLoaded', function() {
+  positionDropdownDotsByTextLength();
+  
+  // Also update when dropdown content changes
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.type === 'childList') {
+        positionDropdownDotsByTextLength();
+      }
+    });
+  });
+  
+  const dropdownContent = document.querySelector('.nav-dropdown-content');
+  if (dropdownContent) {
+    observer.observe(dropdownContent, { childList: true });
+  }
+});
+
 </script>
 
 
@@ -387,214 +541,256 @@
 
 
 
-  <!-- Three.js Scripts - UPDATED FOR NEW STRUCTURE -->
-  <script type="module">
-  import * as THREE from "three";
-  import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+  <!-- Three.js Scripts - UPDATED FOR SPINNING/FADING TIMING -->
+<script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
-  // Performance optimized variables
-  let currentModel = null;
-  let animationFrameId = null;
-  let scrollProgress = 0;
-  let isScrolling = false;
-  let scrollTimeout = null;
+// Performance optimized variables
+let currentModel = null;
+let animationFrameId = null;
+let scrollProgress = 0;
+let isScrolling = false;
+let scrollTimeout = null;
 
-  function createModel(containerId, modelPath, scale = 6) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
+function createModel(containerId, modelPath, scale = 6) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
 
-    // Clear existing model if any
-    if (currentModel && currentModel.renderer) {
-      currentModel.renderer.dispose();
-      container.innerHTML = '';
-    }
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ 
-      antialias: true, 
-      alpha: true,
-      powerPreference: "high-performance",
-      precision: "mediump"
-    });
-    
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    camera.aspect = container.clientWidth / container.clientHeight;
-    camera.updateProjectionMatrix();
-
-    container.appendChild(renderer.domElement);
-
-    // Lighting
-    const light = new THREE.DirectionalLight(0xffffff, 0.8);
-    light.position.set(1, 1, 5);
-    scene.add(light);
-    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-
-    // Load Model
-    const loader = new GLTFLoader();
-    loader.load(modelPath, (gltf) => {
-      const model = gltf.scene;
-      scene.add(model);
-      model.position.y = 0.1;
-      model.scale.set(8, 8, 8);
-      camera.position.z = 2;
-
-      // Optimize model if possible
-      model.traverse((child) => {
-        if (child.isMesh) {
-          child.castShadow = false;
-          child.receiveShadow = false;
-          child.material.side = THREE.FrontSide;
-        }
-      });
-
-      // Store model reference
-      currentModel = {
-        model: model,
-        scene: scene,
-        camera: camera,
-        renderer: renderer,
-        container: container
-      };
-
-      // Initial render
-      renderFrame();
-    });
-
-    // Handle window resize with debounce
-    let resizeTimeout;
-    window.addEventListener("resize", () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        camera.aspect = container.clientWidth / container.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        
-        if (currentModel) {
-          renderFrame();
-        }
-      }, 250);
-    });
+  // Clear existing model if any
+  if (currentModel && currentModel.renderer) {
+    currentModel.renderer.dispose();
+    container.innerHTML = '';
   }
 
-  // Optimized render function
-  function renderFrame() {
-    if (!currentModel || !currentModel.model) return;
-    
-    currentModel.renderer.render(currentModel.scene, currentModel.camera);
-  }
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ 
+    antialias: true, 
+    alpha: true,
+    powerPreference: "high-performance",
+    precision: "mediump"
+  });
+  
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  camera.aspect = container.clientWidth / container.clientHeight;
+  camera.updateProjectionMatrix();
 
+  container.appendChild(renderer.domElement);
 
+  // Lighting
+  const light = new THREE.DirectionalLight(0xffffff, 0.8);
+  light.position.set(1, 1, 5);
+  scene.add(light);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
 
-  // Update this function in your Three.js script
-  function calculateScrollProgress() {
-    const foundationSection = document.getElementById('object1');
-    const contextSection = document.querySelector('.context-scroll-section');
-    
-    if (!foundationSection || !currentModel) return 0;
-    
-    const foundationRect = foundationSection.getBoundingClientRect();
-    const contextRect = contextSection ? contextSection.getBoundingClientRect() : null;
-    
-    const scrollY = window.scrollY;
-    const windowHeight = window.innerHeight;
-    
-    const foundationTop = foundationRect.top + scrollY;
-    const foundationHeight = foundationRect.height;
-    const contextTop = contextRect ? contextRect.top + scrollY : foundationTop + foundationHeight;
-    
-    // Define animation range - MODEL STARTS EARLIER
-    // Model starts fading in when Foundation section is 40% in view
-    // Tips will start 1 second later (via offset in tips script)
-    const animationStart = foundationTop - (windowHeight * 0.6); // 40% earlier start
-    const animationEnd = contextTop;
-    
-    // Calculate progress (0 to 1)
-    let progress = 0;
-    
-    if (scrollY >= animationStart && scrollY <= animationEnd) {
-      progress = (scrollY - animationStart) / (animationEnd - animationStart);
-      progress = Math.max(0, Math.min(1, progress));
-    } else if (scrollY > animationEnd) {
-      progress = 1;
-    }
-    
-    // Add a slight boost to make model appear faster
-    // This makes the model fade in quicker than tips
-    return Math.min(1, progress * 1.2);
-  }
+  // Load Model
+  const loader = new GLTFLoader();
+  loader.load(modelPath, (gltf) => {
+    const model = gltf.scene;
+    scene.add(model);
+    model.position.y = 0.1;
+    model.scale.set(8, 8, 8);
+    camera.position.z = 2;
 
-
-
-  // Update model rotation (called on scroll)
-  function updateModelRotation() {
-    if (!currentModel || !currentModel.model) return;
-    
-    const newProgress = calculateScrollProgress();
-    
-    // Only update if progress changed significantly
-    if (Math.abs(scrollProgress - newProgress) > 0.001) {
-      scrollProgress = newProgress;
-      
-      // Apply rotation based on scroll progress
-      // Full rotation as you scroll through TIPS section
-      const rotationAngle = scrollProgress * Math.PI * 2; // 1 full rotation
-      currentModel.model.rotation.y = rotationAngle;
-      currentModel.model.rotation.x = rotationAngle * 0.3;
-      
-      // Request animation frame for rendering
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
+    // Optimize model if possible
+    model.traverse((child) => {
+      if (child.isMesh) {
+        child.castShadow = false;
+        child.receiveShadow = false;
+        child.material.side = THREE.FrontSide;
       }
-      animationFrameId = requestAnimationFrame(renderFrame);
-    }
+    });
+
+    // Store model reference
+    currentModel = {
+      model: model,
+      scene: scene,
+      camera: camera,
+      renderer: renderer,
+      container: container
+    };
+
+    // Initial render
+    renderFrame();
+  });
+
+  // Handle window resize with debounce
+  let resizeTimeout;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      
+      if (currentModel) {
+        renderFrame();
+      }
+    }, 250);
+  });
+}
+
+// Optimized render function
+function renderFrame() {
+  if (!currentModel || !currentModel.model) return;
+  
+  currentModel.renderer.render(currentModel.scene, currentModel.camera);
+}
+
+// Update this function for better spin/fade timing
+function calculateScrollProgress() {
+  const foundationSection = document.getElementById('object1');
+  const contextSection = document.querySelector('.context-scroll-section');
+  
+  if (!foundationSection || !currentModel) return 0;
+  
+  const foundationRect = foundationSection.getBoundingClientRect();
+  const contextRect = contextSection ? contextSection.getBoundingClientRect() : null;
+  
+  const scrollY = window.scrollY;
+  const windowHeight = window.innerHeight;
+  
+  const foundationTop = foundationRect.top + scrollY;
+  const foundationHeight = foundationRect.height;
+  const contextTop = contextRect ? contextRect.top + scrollY : foundationTop + foundationHeight;
+  
+  // Define SEPARATE ranges for spinning and fading
+  const spinStart = foundationTop - (windowHeight * 0.7);  // Start spinning EARLIER
+  const fadeInStart = foundationTop - (windowHeight * 0.6); // Start fading in LATER
+  const fadeOutStart = contextTop - (windowHeight * 0.3);  // Start fading out EARLIER
+  const spinEnd = contextTop;                             // Stop spinning LATER
+  
+  // Calculate spin progress (0 to 1)
+  let spinProgress = 0;
+  if (scrollY >= spinStart && scrollY <= spinEnd) {
+    spinProgress = (scrollY - spinStart) / (spinEnd - spinStart);
+    spinProgress = Math.max(0, Math.min(1, spinProgress));
+  } else if (scrollY > spinEnd) {
+    spinProgress = 1;
   }
-
-  // Optimized scroll handler with RAF throttling
-  function handleScroll() {
-    if (!isScrolling) {
-      isScrolling = true;
-      requestAnimationFrame(() => {
-        updateModelRotation();
-        isScrolling = false;
-      });
-    }
-    
-    // Clear any existing timeout
-    if (scrollTimeout) {
-      clearTimeout(scrollTimeout);
-    }
-    
-    // Set a timeout to handle scroll end
-    scrollTimeout = setTimeout(() => {
-      updateModelRotation();
-    }, 100);
+  
+  // Calculate fade progress (0 to 1)
+  let fadeProgress = 0;
+  if (scrollY >= fadeInStart && scrollY <= fadeOutStart) {
+    fadeProgress = (scrollY - fadeInStart) / (fadeOutStart - fadeInStart);
+    fadeProgress = Math.max(0, Math.min(1, fadeProgress));
+  } else if (scrollY > fadeOutStart) {
+    fadeProgress = 1 - Math.min(1, (scrollY - fadeOutStart) / (spinEnd - fadeOutStart) * 2);
+    fadeProgress = Math.max(0, fadeProgress);
   }
+  
+  return {
+    spinProgress: spinProgress,
+    fadeProgress: fadeProgress,
+    isSpinning: scrollY >= spinStart && scrollY <= spinEnd,
+    isFadingInOut: scrollY >= fadeInStart && scrollY <= spinEnd
+  };
+}
 
-  // Initialize with debounce
-  setTimeout(() => {
-    // Create model with adjusted scale for new container
-    createModel("model1", "./models/chanel_cushion_foundation.glb", 5);
+// Update model rotation and opacity (called on scroll)
+function updateModelRotation() {
+  if (!currentModel || !currentModel.model) return;
+  
+  const newProgress = calculateScrollProgress();
+  const { spinProgress, fadeProgress, isSpinning, isFadingInOut } = newProgress;
+  
+  // Only update if progress changed significantly
+  if (Math.abs(scrollProgress - spinProgress) > 0.001 || Math.abs(scrollProgress - fadeProgress) > 0.001) {
+    scrollProgress = spinProgress; // Track spin progress
     
-    // Set up scroll listener
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Apply rotation based on spin progress
+    // Start spinning earlier (spins before fading in)
+    const rotationAngle = spinProgress * Math.PI * 3; // 1.5 full rotations (increased from 2)
+    currentModel.model.rotation.y = rotationAngle;
+    currentModel.model.rotation.x = rotationAngle * 0.3;
     
-    // Initial calculation
-    updateModelRotation();
-  }, 1000);
-
-  // Clean up on page unload
-  window.addEventListener('beforeunload', () => {
+    // Apply opacity based on fade progress
+    // Fade in/out in a smaller window than spinning
+    const modelContainer = document.querySelector('.model-scroll-container');
+    if (modelContainer) {
+      if (isFadingInOut) {
+        // Smooth fade in/out curve
+        let opacity = 0;
+        if (fadeProgress <= 0.5) {
+          // Fade in: 0 to 1 in first half
+          opacity = fadeProgress * 2;
+        } else {
+          // Fade out: 1 to 0 in second half
+          opacity = 1 - ((fadeProgress - 0.5) * 2);
+        }
+        
+        opacity = Math.max(0, Math.min(1, opacity));
+        modelContainer.style.opacity = opacity;
+        
+        if (opacity > 0.05) {
+          modelContainer.classList.add('fade-in');
+          modelContainer.classList.remove('fade-out');
+        } else {
+          modelContainer.classList.remove('fade-in');
+          modelContainer.classList.add('fade-out');
+        }
+      } else {
+        // Not in fade range - hide
+        modelContainer.style.opacity = 0;
+        modelContainer.classList.remove('fade-in');
+        modelContainer.classList.add('fade-out');
+      }
+    }
+    
+    // Request animation frame for rendering
     if (animationFrameId) {
       cancelAnimationFrame(animationFrameId);
     }
-    if (currentModel && currentModel.renderer) {
-      currentModel.renderer.dispose();
-    }
-  });
-  </script>
+    animationFrameId = requestAnimationFrame(renderFrame);
+  }
+}
+
+// Optimized scroll handler with RAF throttling
+function handleScroll() {
+  if (!isScrolling) {
+    isScrolling = true;
+    requestAnimationFrame(() => {
+      updateModelRotation();
+      isScrolling = false;
+    });
+  }
+  
+  // Clear any existing timeout
+  if (scrollTimeout) {
+    clearTimeout(scrollTimeout);
+  }
+  
+  // Set a timeout to handle scroll end
+  scrollTimeout = setTimeout(() => {
+    updateModelRotation();
+  }, 100);
+}
+
+// Initialize with debounce
+setTimeout(() => {
+  // Create model with adjusted scale for new container
+  createModel("model1", "./models/chanel_cushion_foundation.glb", 5);
+  
+  // Set up scroll listener
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  
+  // Initial calculation
+  updateModelRotation();
+}, 1000);
+
+// Clean up on page unload
+window.addEventListener('beforeunload', () => {
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+  }
+  if (currentModel && currentModel.renderer) {
+    currentModel.renderer.dispose();
+  }
+});
+</script>
 
 
 
@@ -664,7 +860,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // EXTENDED animation range - starts earlier and goes further
     // Start animation when Foundation section is 40% in view
     // Continue animation until we're 80% through the section (or more)
-    const animationStart = sectionTop - (windowHeight * 0.6);
+    const animationStart = sectionTop - (windowHeight * 0.5);
     const animationEnd = sectionTop + (sectionHeight * 0.8); // Increased from 0.4 to 0.8
     
     // Calculate progress (0 to 1)
@@ -715,7 +911,7 @@ document.addEventListener('DOMContentLoaded', function() {
         tipsGrid.style.transform = `translateX(${currentX}px)`;
         
         // Fade out as tips slide off left side (optional)
-        const fadeOutStart = 0.6; // Start fading when 60% through animation
+        const fadeOutStart = 0.8; // Start fading when 60% through animation
         let tipsOpacity = 1;
         if (progress > fadeOutStart) {
           tipsOpacity = 1 - ((progress - fadeOutStart) / (1 - fadeOutStart));
@@ -751,7 +947,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Keep model visible during animation, fade out with tips
         if (modelContainer) {
-          if (progress < 0.7) { // Show model for first 70% of animation
+          if (progress < 0.8) { // Show model for first 70% of animation
             modelContainer.classList.add('fade-in');
             modelContainer.classList.remove('fade-out');
             modelContainer.style.opacity = Math.min(1, progress * 1.5);
