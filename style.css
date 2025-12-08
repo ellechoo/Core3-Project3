@@ -348,6 +348,10 @@ body {
 .intro h3 { line-height: 0.9; }
 .intro p  { line-height: 0.9; }
 
+
+
+
+
 /* 5. BACKGROUND IMAGES */
 /* ============================================== */
 .bg-images {
@@ -401,6 +405,47 @@ body {
   left: 58%;
   width: 180px;
 }
+
+.img7 {
+  bottom: -120px;
+  left: 10%;
+  width: 160px;
+}
+
+.img8 {
+  bottom: -70px;
+  left: 28%;
+  width: 190px;
+}
+
+.img9 {
+  bottom: -110px;
+  left: 46%;
+  width: 170px;
+}
+
+.img10 {
+  bottom: -100px;
+  left: 63%;
+  width: 210px;
+}
+
+.img11 {
+  bottom: -130px;
+  left: 78%;
+  width: 150px;
+}
+
+.img12 {
+  bottom: -50px;
+  left: 90%;
+  width: 180px;
+}
+
+
+
+
+
 
 /* 6. ABOUT SECTION */
 /* ============================================== */
