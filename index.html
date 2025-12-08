@@ -46,10 +46,7 @@
   <nav class="vertical-nav">
     <a href="#home">HOME</a>
     <a href="#about">ABOUT</a>
-    <div class="nav-dropdown">
-      <a href="#model-anchor" class="nav-dropdown-toggle">MAKEUP</a>
-      
-    </div>
+    <a href="#model-anchor">MAKEUP</a>
     <a href="#articles">ARTICLES</a>
   </nav>
 
@@ -433,174 +430,78 @@
 
 
 
-// Update your existing JavaScript to remove auto-open functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const sections = {
-    'home': document.getElementById('home'),
-    'about': document.getElementById('about'),
-    'object1': document.getElementById('object1'), // Foundation section
-    'articles': document.getElementById('articles')
-  };
-  
-  const navLinks = {
-    'home': document.querySelector('a[href="#home"]'),
-    'about': document.querySelector('a[href="#about"]'),
-    'makeup': document.querySelector('.nav-dropdown-toggle'),
-    'foundation': document.querySelector('.dropdown-item[data-section="foundation"]'),
-    'articles': document.querySelector('a[href="#articles"]')
-  };
-  
-  // Function to check if section is in view
-  function isSectionInView(section) {
-    if (!section) return false;
+  // Update your existing JavaScript to handle the simplified nav
+  document.addEventListener('DOMContentLoaded', function() {
+    const sections = {
+      'home': document.getElementById('home'),
+      'about': document.getElementById('about'),
+      'object1': document.getElementById('object1'), // Foundation section
+      'articles': document.getElementById('articles')
+    };
     
-    const rect = section.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
+    const navLinks = {
+      'home': document.querySelector('a[href="#home"]'),
+      'about': document.querySelector('a[href="#about"]'),
+      'makeup': document.querySelector('a[href="#model-anchor"]'), // Changed from .nav-dropdown-toggle
+      'articles': document.querySelector('a[href="#articles"]')
+    };
     
-    // Check if section is in view (at least 30% visible)
-    const isInView = (
-      rect.top <= windowHeight * 0.7 &&
-      rect.bottom >= windowHeight * 0.3
-    );
-    
-    return isInView;
-  }
-  
-  // Function to update all active states
-  function updateActiveStates() {
-    // Remove active class from all nav items
-    Object.values(navLinks).forEach(link => {
-      if (link) link.classList.remove('active');
-    });
-    
-    // Check which section is active
-    let activeSection = null;
-    
-    // Check each section
-    if (isSectionInView(sections.home)) {
-      activeSection = 'home';
-    } else if (isSectionInView(sections.about)) {
-      activeSection = 'about';
-    } else if (isSectionInView(sections.object1)) {
-      activeSection = 'makeup';
+    // Function to check if section is in view
+    function isSectionInView(section) {
+      if (!section) return false;
       
-      // When in makeup section, mark MAKEUP as active
-      if (navLinks.makeup) {
-        navLinks.makeup.classList.add('active');
-      }
+      const rect = section.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
       
-      // ALSO mark foundation as active if we're in foundation section
-      // You can expand this logic for other makeup products
-      if (navLinks.foundation) {
-        navLinks.foundation.classList.add('active');
-      }
+      // Check if section is in view (at least 30% visible)
+      const isInView = (
+        rect.top <= windowHeight * 0.7 &&
+        rect.bottom >= windowHeight * 0.3
+      );
       
-      // NO LONGER auto-open the dropdown when in makeup section
-      // Dropdown only opens on hover
-    } else if (isSectionInView(sections.articles)) {
-      activeSection = 'articles';
+      return isInView;
     }
     
-    // Add active class to corresponding nav item
-    if (activeSection && navLinks[activeSection]) {
-      navLinks[activeSection].classList.add('active');
-    }
-  }
-  
-  // Smooth scroll to foundation section
-  function scrollToFoundation() {
-    const modelAnchor = document.getElementById('model-anchor');
-    if (modelAnchor) {
-      modelAnchor.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
+    // Function to update all active states
+    function updateActiveStates() {
+      // Remove active class from all nav items
+      Object.values(navLinks).forEach(link => {
+        if (link) link.classList.remove('active');
       });
-    }
-  }
-  
-  // Event listeners for dropdown items
-  const dropdownItems = document.querySelectorAll('.dropdown-item');
-  dropdownItems.forEach(item => {
-    item.addEventListener('click', function(e) {
-      e.preventDefault();
-      const targetSection = this.getAttribute('data-section');
       
-      // Scroll to appropriate section based on data-section
-      if (targetSection === 'foundation') {
-        scrollToFoundation();
+      // Check which section is active
+      if (isSectionInView(sections.home)) {
+        // Home section
+        if (navLinks.home) navLinks.home.classList.add('active');
+      } else if (isSectionInView(sections.about)) {
+        // About section
+        if (navLinks.about) navLinks.about.classList.add('active');
+      } else if (isSectionInView(sections.object1)) {
+        // MAKEUP section (Foundation)
+        if (navLinks.makeup) navLinks.makeup.classList.add('active');
+      } else if (isSectionInView(sections.articles)) {
+        // Articles section
+        if (navLinks.articles) navLinks.articles.classList.add('active');
       }
-      // Add more conditions here for other makeup products
-      // Example: if (targetSection === 'blush') { scrollToBlush(); }
-    });
-  });
-  
-  // Update active states on scroll
-  let scrollTimeout;
-  function handleScroll() {
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(updateActiveStates, 100);
-  }
-  
-  // For makeup products: You'll need to add more sections
-  // Example: When you add blush, add it to the sections object
-  // and update the isSectionInView check
-  
-  // Initial setup
-  updateActiveStates();
-  
-  // Add scroll listener
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  
-  // Update on resize
-  window.addEventListener('resize', updateActiveStates);
-  
-  // If you add more makeup sections, you'll need to:
-  // 1. Add them to the HTML with proper href or data-section
-  // 2. Add them to the sections object above
-  // 3. Update the isSectionInView logic to check for them
-  // 4. Add corresponding scroll functions
-});
-
-// Keep your dropdown spacing JavaScript if you still need it
-// But remove any references to .in-section or force-open
-
-// Add this to your existing JavaScript
-function positionDropdownDotsByTextLength() {
-  const dropdownItems = document.querySelectorAll('.dropdown-item');
-  
-  dropdownItems.forEach(item => {
-    const text = item.textContent.trim();
-    const length = text.length;
-    
-    // Classify text length
-    if (length <= 6) {
-      item.setAttribute('data-text-length', 'short');
-    } else if (length <= 10) {
-      item.setAttribute('data-text-length', 'medium');
-    } else {
-      item.setAttribute('data-text-length', 'long');
     }
+    
+    // Optimized scroll handler
+    let scrollTimeout;
+    function handleScroll() {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(updateActiveStates, 100);
+    }
+    
+    // Initial setup
+    updateActiveStates();
+    
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Update on resize
+    window.addEventListener('resize', updateActiveStates);
   });
-}
 
-// Call this after DOM loads
-document.addEventListener('DOMContentLoaded', function() {
-  positionDropdownDotsByTextLength();
-  
-  // Also update when dropdown content changes
-  const observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-      if (mutation.type === 'childList') {
-        positionDropdownDotsByTextLength();
-      }
-    });
-  });
-  
-  const dropdownContent = document.querySelector('.nav-dropdown-content');
-  if (dropdownContent) {
-    observer.observe(dropdownContent, { childList: true });
-  }
-});
 </script>
 
 
