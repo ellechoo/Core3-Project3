@@ -161,6 +161,13 @@
   </section>
 
 
+  <!-- ADD THIS: Space after About section -->
+  <div class="space-after-about"></div>
+
+
+
+
+
 
 <!-- Foundation Section Title -->
     <div class="foundation-section-title">
@@ -316,197 +323,185 @@
 
 
 
-
-
-  <!-- Parallax Scrolling Script for background imgs-->
-  <script>
-    window.addEventListener("scroll", () => {
-      const scrolled = window.scrollY;
-
-      // Each image gets its own movement strength
-      document.querySelector(".img1").style.transform =
-        `translateY(${scrolled * -0.15}px)`;    // slow
-
-      document.querySelector(".img2").style.transform =
-        `translateY(${scrolled * -0.25}px)`;    // medium
-
-      document.querySelector(".img3").style.transform =
-        `translateY(${scrolled * -0.35}px)`;    // faster
-
-      document.querySelector(".img4").style.transform =
-        `translateY(${scrolled * -0.15}px)`;    // slow
-
-      document.querySelector(".img5").style.transform =
-        `translateY(${scrolled * -0.25}px)`;    // medium
-
-      document.querySelector(".img6").style.transform =
-        `translateY(${scrolled * -0.35}px)`;    // faster
+<script>
+// Title with Staggered Parallax Effect - WITH ABOUT SECTION
+(function() {
+  let ticking = false;
+  const bgImages = document.querySelectorAll('.bg-img');
+  
+  // Background image speeds
+  const imageSpeeds = {
+    'img1': 1.0,
+    'img2': 0.9,
+    'img3': 0.8,
+    'img4': 0.7,
+    'img5': 0.6,
+    'img6': 0.55,
+    'img7': 0.5,
+    'img8': 0.4,
+    'img9': 0.3,
+    'img10': 0.2,
+    'img11': 0.1
+  };
+  
+  function updateParallax() {
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    
+    // Update background images
+    bgImages.forEach(img => {
+      const imgClasses = img.className.split(' ');
+      const imgClass = imgClasses.find(cls => cls.startsWith('img'));
+      
+      if (imgClass && imageSpeeds[imgClass]) {
+        const speed = imageSpeeds[imgClass];
+        const parallaxY = scrollY * speed;
+        img.style.transform = `translate3d(0, ${-parallaxY}px, 0)`;
+      }
     });
-  </script>
-
-
-
-  <!-- Optimized Parallax Scrolling Script -->
-  <script>
-    // Debounce function for performance
-    function debounce(func, wait) {
-      let timeout;
-      return function executedFunction(...args) {
-        const later = () => {
-          clearTimeout(timeout);
-          func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-      };
-    }
-
-    // Throttle function for performance
-    function throttle(func, limit) {
-      let inThrottle;
-      return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-          func.apply(context, args);
-          inThrottle = true;
-          setTimeout(() => inThrottle = false, limit);
-        }
+    
+    // Update title with delayed scrolling
+    const titleContainer = document.querySelector('.title-container');
+    if (titleContainer) {
+      // Calculate how much of the staircase has passed
+      const delayDistance = windowHeight * 1.5; // Delay for 1.5 viewport heights
+      
+      // FIXED: Use NEGATIVE value to move UP when scrolling
+      let titleOffset = 0;
+      if (scrollY > delayDistance) {
+        titleOffset = -(scrollY - delayDistance); // NEGATIVE to move UP
       }
-    }
-
-    // Optimized parallax function
-    const updateParallax = throttle(() => {
-      const scrolled = window.scrollY;
-      const images = document.querySelectorAll('.bg-img');
       
-      // Use transform3d for hardware acceleration
-      images.forEach((img, index) => {
-        let speed;
-        switch(index) {
-          case 0: case 3: speed = 0.15; break;
-          case 1: case 4: speed = 0.25; break;
-          case 2: case 5: speed = 0.35; break;
-          default: speed = 0.2;
-        }
-        img.style.transform = `translate3d(0, ${scrolled * -speed}px, 0)`;
-      });
-    }, 16); // ~60fps
-
-    // Use passive scroll listener for better performance
-    window.addEventListener('scroll', updateParallax, { passive: true });
-
-    // Initial call
-    updateParallax();
-  </script>
-
-
-
-<!-- Highlighting Active Nav Section and other nav stuff-->
-
-  <script>
-  const sections = document.querySelectorAll("section");
-  const navLinks = document.querySelectorAll(".vertical-nav a");
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          let id = entry.target.id;
-
-          navLinks.forEach((link) => {
-            link.classList.remove("active");
-
-            if (link.getAttribute("href") === `#${id}`) {
-              link.classList.add("active");
-            }
-          });
-        }
-      });
-    },
-    {
-      threshold: 0.15, // section must be at least 15% visible
-    }
-  );
-
-  sections.forEach((section) => {
-    observer.observe(section);
-  });
-
-
-
-  // Update your existing JavaScript to handle the simplified nav
-  document.addEventListener('DOMContentLoaded', function() {
-    const sections = {
-      'home': document.getElementById('home'),
-      'about': document.getElementById('about'),
-      'object1': document.getElementById('object1'), // Foundation section
-      'articles': document.getElementById('articles')
-    };
-    
-    const navLinks = {
-      'home': document.querySelector('a[href="#home"]'),
-      'about': document.querySelector('a[href="#about"]'),
-      'makeup': document.querySelector('a[href="#model-anchor"]'), // Changed from .nav-dropdown-toggle
-      'articles': document.querySelector('a[href="#articles"]')
-    };
-    
-    // Function to check if section is in view
-    function isSectionInView(section) {
-      if (!section) return false;
+      // Apply the offset - title moves UP (negative) after delay
+      titleContainer.style.transform = `translate(-50%, calc(-50% + ${titleOffset}px))`;
       
-      const rect = section.getBoundingClientRect();
+      // While title is "stuck" (before delay), apply a tiny negative movement
+      if (scrollY < delayDistance) {
+        const visualOffset = -(scrollY * 0.0001); // Very small upward movement
+        titleContainer.style.transform = `translate(-50%, calc(-50% + ${visualOffset}px))`;
+      }
+      
+      // Fade out title as it starts to scroll
+      const fadeStart = delayDistance;
+      const fadeEnd = delayDistance + windowHeight;
+      let opacity = 1;
+      
+      if (scrollY > fadeStart) {
+        opacity = 1 - ((scrollY - fadeStart) / (fadeEnd - fadeStart));
+        opacity = Math.max(0, Math.min(1, opacity));
+      }
+      
+      titleContainer.style.opacity = opacity;
+    }
+    
+    // NEW: Update About section with its own delay (starts when title finishes fading)
+    const aboutSection = document.querySelector('#about');
+    if (aboutSection) {
       const windowHeight = window.innerHeight;
+      const titleDelayDistance = windowHeight * 1.5;
+      const titleFadeEnd = titleDelayDistance + windowHeight;
       
-      // Check if section is in view (at least 30% visible)
-      const isInView = (
-        rect.top <= windowHeight * 0.7 &&
-        rect.bottom >= windowHeight * 0.3
-      );
+      // About section starts moving when title is mostly faded out (80% faded)
+      const aboutStartDistance = titleDelayDistance + (windowHeight * 0.8);
       
-      return isInView;
-    }
-    
-    // Function to update all active states
-    function updateActiveStates() {
-      // Remove active class from all nav items
-      Object.values(navLinks).forEach(link => {
-        if (link) link.classList.remove('active');
-      });
-      
-      // Check which section is active
-      if (isSectionInView(sections.home)) {
-        // Home section
-        if (navLinks.home) navLinks.home.classList.add('active');
-      } else if (isSectionInView(sections.about)) {
-        // About section
-        if (navLinks.about) navLinks.about.classList.add('active');
-      } else if (isSectionInView(sections.object1)) {
-        // MAKEUP section (Foundation)
-        if (navLinks.makeup) navLinks.makeup.classList.add('active');
-      } else if (isSectionInView(sections.articles)) {
-        // Articles section
-        if (navLinks.articles) navLinks.articles.classList.add('active');
+      // About stays fixed until title is mostly gone, then starts scrolling
+      let aboutOffset = 0;
+      if (scrollY > aboutStartDistance) {
+        aboutOffset = -(scrollY - aboutStartDistance);
       }
+      
+      // Apply the offset to About section
+      aboutSection.style.transform = `translate3d(0, ${aboutOffset}px, 0)`;
+      
+      // Fade in About section as title fades out
+      let aboutOpacity = 0;
+      if (scrollY > titleDelayDistance) {
+        aboutOpacity = (scrollY - titleDelayDistance) / (windowHeight * 0.8);
+        aboutOpacity = Math.min(1, aboutOpacity);
+      }
+      
+      aboutSection.style.opacity = aboutOpacity;
+    }
+  }
+  
+  function onScroll() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateParallax();
+        ticking = false;
+      });
+    }
+  }
+  
+  window.addEventListener('scroll', onScroll, { passive: true });
+  updateParallax();
+  
+  // Add CSS for title and about positioning
+  const style = document.createElement('style');
+  style.textContent = `
+    .title-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      transition: opacity 0.3s ease;
+      will-change: transform, opacity;
+      pointer-events: none;
     }
     
-    // Optimized scroll handler
-    let scrollTimeout;
-    function handleScroll() {
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(updateActiveStates, 100);
+    /* NEW: About section fixed positioning */
+    #about {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9; /* Below title, above background */
+      pointer-events: none;
+      opacity: 0;
+      padding: 20vh 5vh;
     }
     
-    // Initial setup
-    updateActiveStates();
+    #about h2,
+    #about p {
+      pointer-events: auto;
+    }
     
-    // Add scroll listener
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    /* Add more space after intro section */
+    .section.intro {
+      height: 200vh; /* Increased from 100vh to give more scroll room */
+      position: relative;
+    }
     
-    // Update on resize
-    window.addEventListener('resize', updateActiveStates);
-  });
-
+    /* Ensure title stays on top of background images */
+    .title-container {
+      z-index: 15;
+    }
+    
+    .bg-images {
+      z-index: 5;
+    }
+    
+    /* Adjust the About section content styling */
+    #about .section.text {
+      padding-top: 0;
+      padding-bottom: 0;
+      min-height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+  `;
+  document.head.appendChild(style);
+})();
 </script>
 
 
