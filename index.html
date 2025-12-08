@@ -383,124 +383,6 @@
 
 
 
-  
-<!-- Simplified Tips & Context Visibility Control -->
-  <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const foundationSection = document.getElementById('object1');
-    const contextSection = document.querySelector('.context-scroll-section');
-    const tipsSection = document.querySelector('.tips-section');
-    const foundationTitle = document.querySelector('.foundation-section-title');
-    const modelContainer = document.querySelector('.model-scroll-container');
-    
-    if (!foundationSection || !tipsSection) return;
-    
-    let ticking = false;
-    
-    function updateVisibility() {
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      
-      // Get positions
-      const foundationRect = foundationSection.getBoundingClientRect();
-      const foundationTop = foundationRect.top + scrollY;
-      const foundationBottom = foundationTop + foundationRect.height;
-      
-      const contextRect = contextSection ? contextSection.getBoundingClientRect() : null;
-      const contextTop = contextRect ? contextRect.top + scrollY : foundationBottom;
-      const contextHeight = contextRect ? contextRect.height : 0;
-      const contextBottom = contextTop + contextHeight;
-      
-      // Calculate context visibility
-      let contextVisibility = 0;
-      if (contextRect) {
-        const contextVisibleTop = Math.max(scrollY, contextTop);
-        const contextVisibleBottom = Math.min(scrollY + windowHeight, contextBottom);
-        const contextVisibleHeight = Math.max(0, contextVisibleBottom - contextVisibleTop);
-        contextVisibility = contextVisibleHeight / windowHeight; // 0 to 1
-      }
-      
-      // Determine if tips should be visible
-      let showTips = false;
-      let tipsOpacity = 1;
-      
-      // Check if we're in Foundation section
-      const isInFoundation = scrollY >= foundationTop && scrollY < foundationBottom;
-      
-      if (isInFoundation) {
-        // In Foundation section
-        if (contextVisibility < 0.5) {
-          // Context is NOT taking over (less than 50% visible) - show tips
-          showTips = true;
-          tipsOpacity = 1 - (contextVisibility * 2); // Fade out as context becomes more visible
-        } else {
-          // Context IS taking over (more than 50% visible) - hide tips
-          showTips = false;
-          tipsOpacity = 0;
-        }
-      } else {
-        // Not in Foundation section at all
-        showTips = false;
-        tipsOpacity = 0;
-      }
-      
-      // Apply tips visibility
-      if (showTips) {
-        tipsSection.classList.add('visible');
-        tipsSection.style.opacity = Math.max(0.1, tipsOpacity);
-      } else {
-        tipsSection.classList.remove('visible');
-        tipsSection.style.opacity = 0;
-      }
-      
-      // Handle Foundation title and model
-      if (showTips && tipsOpacity > 0.1) {
-        foundationTitle.classList.add('visible');
-        foundationTitle.style.opacity = tipsOpacity;
-        
-        modelContainer.classList.remove('fade-out');
-        modelContainer.classList.add('fade-in');
-      } else {
-        foundationTitle.classList.remove('visible');
-        foundationTitle.style.opacity = 0;
-        
-        modelContainer.classList.remove('fade-in');
-        modelContainer.classList.add('fade-out');
-      }
-      
-      // Handle context section - FIXED: Always 100% opacity when visible
-      if (contextSection) {
-        const isContextInView = contextRect && 
-                                contextRect.top < windowHeight && 
-                                contextRect.bottom > 0;
-        
-        // Show context when it's in view AND we're in or past the Foundation section
-        if (isContextInView && scrollY >= foundationTop) {
-          contextSection.classList.add('visible');
-          contextSection.style.opacity = 1; // ALWAYS 100% opacity
-        } else {
-          contextSection.classList.remove('visible');
-          contextSection.style.opacity = 0;
-        }
-      }
-      
-      ticking = false;
-    }
-    
-    // Listen to scroll with throttling
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          updateVisibility();
-        });
-        ticking = true;
-      }
-    });
-    
-    // Initial update
-    updateVisibility();
-  });
-  </script>
 
 
 
@@ -716,153 +598,226 @@
 
 
 
-  <!-- Tips Scroll-Driven Horizontal Animation - UPDATED -->
-  <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const tipsSection = document.querySelector('.tips-section');
-    const tipsGrid = document.querySelector('.tips-grid');
-    const modelContainer = document.querySelector('.model-scroll-container');
-    const foundationSection = document.getElementById('object1');
+
+
+  <!-- Tips Horizontal Animation - Slide Off Left Side -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const tipsSection = document.querySelector('.tips-section');
+  const tipsGrid = document.querySelector('.tips-grid');
+  const modelContainer = document.querySelector('.model-scroll-container');
+  const foundationSection = document.getElementById('object1');
+  const foundationTitle = document.querySelector('.foundation-section-title');
+  const contextSection = document.querySelector('.context-scroll-section');
+  
+  if (!tipsSection || !tipsGrid || !foundationSection) return;
+  
+  let isAnimating = false;
+  
+  // Initial position - off screen right
+  tipsGrid.style.transform = 'translateX(100vw)';
+  
+  // Check if we should animate (only when in Foundation section)
+  function shouldAnimateTips() {
+    const rect = foundationSection.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
     
-    if (!tipsSection || !tipsGrid || !foundationSection) return;
+    // Check if Foundation section is significantly in view (at least 30%)
+    const isFoundationInView = (
+      rect.top <= windowHeight * 0.7 &&
+      rect.bottom >= windowHeight * 0.3
+    );
     
-    let isAnimating = false;
+    return isFoundationInView;
+  }
+  
+  // Check if context takes up half the screen
+  function isContextHalfScreen() {
+    if (!contextSection) return false;
     
-    // Initial position - off screen right
-    tipsGrid.style.transform = 'translateX(100vw)';
+    const contextRect = contextSection.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
     
-    // Check if we should animate (only when in Foundation section)
-    function shouldAnimateTips() {
-      const rect = foundationSection.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      
-      // Check if Foundation section is significantly in view (at least 30%)
-      const isFoundationInView = (
-        rect.top <= windowHeight * 0.7 &&
-        rect.bottom >= windowHeight * 0.3
-      );
-      
-      return isFoundationInView;
-    }
-    
-    // Calculate animation progress within Foundation section
-    function calculateAnimationProgress() {
-      if (!shouldAnimateTips()) {
-        return {
-          progress: 0,
-          isInRange: false
-        };
-      }
-      
-      const sectionRect = foundationSection.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const scrollY = window.scrollY;
-      
-      // Use Foundation section bounds
-      const sectionTop = sectionRect.top + scrollY;
-      const sectionHeight = sectionRect.height;
-      
-      // Define animation range within Foundation section
-      // Start animation when Foundation section is 40% in view
-      // End animation when we're 60% through the section
-      const animationStart = sectionTop - (windowHeight * 0.6);
-      const animationEnd = sectionTop + (sectionHeight * 0.4);
-      
-      // Calculate progress (0 to 1)
-      let progress = 0;
-      
-      if (scrollY >= animationStart && scrollY <= animationEnd) {
-        progress = (scrollY - animationStart) / (animationEnd - animationStart);
-        progress = Math.max(0, Math.min(1, progress));
-      }
-      
-      // Easing function for smoother animation
-      const easeProgress = easeInOutCubic(progress);
-      
+    // Check if context section covers at least 50% of viewport height
+    const contextVisibleHeight = Math.min(contextRect.bottom, windowHeight) - Math.max(contextRect.top, 0);
+    return contextVisibleHeight >= (windowHeight * 0.5);
+  }
+  
+  // Calculate animation progress within Foundation section
+  // We'll extend the animation range to continue sliding left
+  function calculateAnimationProgress() {
+    if (!shouldAnimateTips()) {
       return {
-        progress: easeProgress,
-        rawProgress: progress,
-        isInRange: scrollY >= animationStart && scrollY <= animationEnd
+        progress: 0,
+        isInRange: false
       };
     }
     
-    // Easing function
-    function easeInOutCubic(t) {
-      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    const sectionRect = foundationSection.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    const scrollY = window.scrollY;
+    
+    // Use Foundation section bounds
+    const sectionTop = sectionRect.top + scrollY;
+    const sectionHeight = sectionRect.height;
+    
+    // EXTENDED animation range - starts earlier and goes further
+    // Start animation when Foundation section is 40% in view
+    // Continue animation until we're 80% through the section (or more)
+    const animationStart = sectionTop - (windowHeight * 0.6);
+    const animationEnd = sectionTop + (sectionHeight * 0.8); // Increased from 0.4 to 0.8
+    
+    // Calculate progress (0 to 1)
+    let progress = 0;
+    
+    if (scrollY >= animationStart && scrollY <= animationEnd) {
+      progress = (scrollY - animationStart) / (animationEnd - animationStart);
+      progress = Math.max(0, Math.min(1, progress));
+    } else if (scrollY > animationEnd) {
+      progress = 1; // Stay at max progress
     }
     
-    // Update horizontal position based on scroll
-    function updateHorizontalPosition() {
-      const shouldAnimate = shouldAnimateTips();
-      const { progress, isInRange } = calculateAnimationProgress();
-      
-      if (shouldAnimate) {
-        // Only animate when Foundation section is active
-        if (isInRange) {
-          if (!isAnimating) {
-            isAnimating = true;
+    // Easing function for smoother animation
+    const easeProgress = easeInOutCubic(progress);
+    
+    return {
+      progress: easeProgress,
+      rawProgress: progress,
+      isInRange: scrollY >= animationStart && scrollY <= animationEnd
+    };
+  }
+  
+  // Easing function
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+  
+  // Update horizontal position based on scroll
+  function updateHorizontalPosition() {
+    const shouldAnimate = shouldAnimateTips();
+    const { progress, isInRange } = calculateAnimationProgress();
+    const contextHalfScreen = isContextHalfScreen();
+    
+    if (shouldAnimate) {
+      // Only animate when Foundation section is active
+      if (isInRange || progress > 0) {
+        if (!isAnimating) {
+          isAnimating = true;
+        }
+        
+        // Calculate horizontal position
+        // Start at 100vw (right edge), go to -100vw (left edge) to slide off screen
+        const startX = window.innerWidth;
+        const endX = -window.innerWidth; // Continue past center to left edge
+        const currentX = startX - (progress * (startX - endX));
+        
+        // Apply horizontal translation
+        tipsGrid.style.transform = `translateX(${currentX}px)`;
+        
+        // Fade out as tips slide off left side (optional)
+        const fadeOutStart = 0.6; // Start fading when 60% through animation
+        let tipsOpacity = 1;
+        if (progress > fadeOutStart) {
+          tipsOpacity = 1 - ((progress - fadeOutStart) / (1 - fadeOutStart));
+        }
+        
+        tipsSection.style.opacity = Math.max(0, tipsOpacity);
+        tipsSection.style.pointerEvents = tipsOpacity > 0.1 ? 'auto' : 'none';
+        
+        // Handle Foundation title
+        if (foundationTitle) {
+          let titleOpacity = 1;
+          
+          // If context takes up half screen, fade title faster
+          if (contextHalfScreen) {
+            // Rapid fade when context is half screen
+            titleOpacity = Math.max(0, 1 - (progress * 3)); // Faster fade (multiply by 3)
+          } else {
+            // Normal fade with tips
+            if (progress > fadeOutStart) {
+              titleOpacity = 1 - ((progress - fadeOutStart) / (1 - fadeOutStart));
+            }
           }
           
-          // Calculate horizontal position
-          const startX = window.innerWidth;
-          const currentX = startX - (progress * startX);
+          foundationTitle.style.opacity = Math.max(0, titleOpacity);
           
-          // Apply horizontal translation
-          tipsGrid.style.transform = `translateX(${currentX}px)`;
-          
-          // Keep model visible during animation
-          if (modelContainer) {
+          // Add/remove visible class based on opacity
+          if (titleOpacity > 0.1) {
+            foundationTitle.classList.add('visible');
+          } else {
+            foundationTitle.classList.remove('visible');
+          }
+        }
+        
+        // Keep model visible during animation, fade out with tips
+        if (modelContainer) {
+          if (progress < 0.7) { // Show model for first 70% of animation
             modelContainer.classList.add('fade-in');
             modelContainer.classList.remove('fade-out');
-            modelContainer.style.opacity = Math.min(1, progress * 2);
+            modelContainer.style.opacity = Math.min(1, progress * 1.5);
+          } else {
+            modelContainer.classList.remove('fade-in');
+            modelContainer.classList.add('fade-out');
+            modelContainer.style.opacity = Math.max(0, 1 - ((progress - 0.7) / 0.3));
           }
-          
-        } else if (scrollY > foundationSection.offsetTop + foundationSection.offsetHeight * 0.5) {
-          // Scrolled past animation range but still in section - keep tips visible
-          tipsGrid.style.transform = 'translateX(0)';
-          if (modelContainer) {
-            modelContainer.classList.add('fade-in');
-            modelContainer.style.opacity = 1;
-          }
-        } else {
-          // Before animation range - keep tips hidden
-          tipsGrid.style.transform = 'translateX(100vw)';
         }
         
       } else {
-        // Not in Foundation section - reset
+        // Before animation range - keep tips hidden
         tipsGrid.style.transform = 'translateX(100vw)';
-        isAnimating = false;
+        tipsSection.style.opacity = 0;
+        tipsSection.style.pointerEvents = 'none';
         
-        if (modelContainer) {
-          modelContainer.classList.remove('fade-in');
-          modelContainer.classList.add('fade-out');
-          modelContainer.style.opacity = 0;
+        // Hide foundation title
+        if (foundationTitle) {
+          foundationTitle.style.opacity = 0;
+          foundationTitle.classList.remove('visible');
         }
       }
-    }
-    
-    // Optimized scroll handler
-    let ticking = false;
-    function handleScroll() {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(() => {
-          updateHorizontalPosition();
-          ticking = false;
-        });
+      
+    } else {
+      // Not in Foundation section - reset
+      tipsGrid.style.transform = 'translateX(100vw)';
+      tipsSection.style.opacity = 0;
+      tipsSection.style.pointerEvents = 'none';
+      isAnimating = false;
+      
+      // Hide foundation title
+      if (foundationTitle) {
+        foundationTitle.style.opacity = 0;
+        foundationTitle.classList.remove('visible');
+      }
+      
+      if (modelContainer) {
+        modelContainer.classList.remove('fade-in');
+        modelContainer.classList.add('fade-out');
+        modelContainer.style.opacity = 0;
       }
     }
-    
-    // Initial setup
-    window.addEventListener('load', function() {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      updateHorizontalPosition();
-    });
-    
-    window.addEventListener('resize', updateHorizontalPosition);
+  }
+  
+  // Optimized scroll handler
+  let ticking = false;
+  function handleScroll() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateHorizontalPosition();
+        ticking = false;
+      });
+    }
+  }
+  
+  // Initial setup
+  window.addEventListener('load', function() {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    updateHorizontalPosition();
   });
-  </script>
+  
+  window.addEventListener('resize', updateHorizontalPosition);
+});
+</script>
+
 
 
 
