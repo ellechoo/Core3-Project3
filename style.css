@@ -415,22 +415,23 @@ body {
 }
 
 /* Tip cards */
+/* Tip cards - More transparent with stronger blur */
 .tip-card {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.7); /* Changed from 0.85 to 0.75 for more transparency */
   border-radius: 20px;
   padding: 40px 30px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
   opacity: 1;
   transform: translateX(0);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .tip-card:hover {
-  transform: translateY(-10px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.90); /* Slightly more opaque on hover */
 }
 
 .tip-number {
@@ -452,9 +453,11 @@ body {
 
 .tip-text {
   font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #333;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #a5226d;
+  text-align: justify; /* Changed from align-items to text-align */
+  text-align-last: left; /* Optional: controls alignment of last line */
 }
 
 
