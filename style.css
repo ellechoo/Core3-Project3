@@ -121,157 +121,7 @@ body {
   color: #e76eb3; /* Light pink on hover */
 }
 
-/* ============================================== */
-/* DROPDOWN SPECIFIC STYLES */
-/* ============================================== */
 
-.nav-dropdown {
-  position: relative;
-  display: block;
-  text-align: right;
-  margin-bottom: 0;
-}
-
-.nav-dropdown-toggle {
-  cursor: pointer;
-  display: block;
-  position: relative;
-}
-
-/* MAKEUP ACTIVE STATE - Light pink */
-.nav-dropdown-toggle.active {
-  color: #e76eb3; /* Light pink */
-}
-
-/* Active dot for MAKEUP (dropdown toggle) - SAME POSITION AS OTHER NAV ITEMS */
-.nav-dropdown-toggle.active::before {
-  content: "";
-  position: absolute;
-  left: -10px; /* Same as other nav items */
-  top: 50%;
-  transform: translateY(-50%);
-  width: 5px;
-  height: 5px;
-  background: #e76eb3; /* Light pink dot */
-  border-radius: 50%;
-  animation: fadeInDot 0.3s ease;
-}
-
-/* NARROWER DROPDOWN BOX WITH SHEER BACKGROUND */
-.nav-dropdown-content {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  min-width: auto; /* Auto width based on content */
-  width: max-content; /* Width matches longest item */
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-8px);
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  z-index: 1001;
-  padding: 10px 0; /* Less padding for narrower look */
-  margin: 6px 0 0 0;
-  white-space: nowrap;
-  pointer-events: none;
-  
-  /* SHEER BACKGROUND - NARROWER */
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(10px) saturate(180%);
-  -webkit-backdrop-filter: blur(10px) saturate(180%);
-  border-radius: 8px; /* Slightly smaller radius */
-  box-shadow: 
-    0 6px 20px rgba(169, 34, 109, 0.08),
-    0 2px 6px rgba(169, 34, 109, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-}
-
-/* Show dropdown ONLY on hover */
-.nav-dropdown:hover .nav-dropdown-content {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-/* Dropdown item - NARROWER, DOTS CLOSER TO TEXT */
-.dropdown-item {
-  display: block;
-  padding: 8px 20px 8px 25px; /* Left padding for dot, right padding for text */
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  color: #a5226d; /* Darker magenta for better contrast */
-  text-decoration: none;
-  text-align: right;
-  letter-spacing: 0.3px;
-  transition: all 0.25s ease;
-  background: transparent;
-  position: relative;
-  margin: 0;
-}
-
-/* Dropdown items active state */
-.dropdown-item.active {
-  color: #c9398b; /* Brighter magenta when active */
-}
-
-/* Active dot for dropdown items - POSITIONED BASED ON TEXT LENGTH */
-.dropdown-item.active::before {
-  content: "";
-  position: absolute;
-  right: calc(100% + 5px); /* 5px from the end of the text */
-  top: 50%;
-  transform: translateY(-50%);
-  width: 5px; /* Same size as other dots */
-  height: 5px;
-  background: #e76eb3; /* Light pink dot */
-  border-radius: 50%;
-  animation: fadeInDot 0.3s ease;
-}
-
-.dropdown-item:hover {
-  color: #e76eb3; /* Light pink on hover */
-  background: rgba(169, 34, 109, 0.05); /* Very subtle hover background */
-  padding-right: 22px; /* Slight shift on hover */
-}
-
-/* Add subtle separation between dropdown items */
-.dropdown-item + .dropdown-item {
-  border-top: 1px solid rgba(169, 34, 109, 0.05);
-}
-
-/* ============================================== */
-/* DOTS POSITIONED BY TEXT LENGTH - ALTERNATIVE APPROACH */
-/* ============================================== */
-
-/* For main nav items, we can't easily position by text length with CSS alone */
-/* But we can make them consistent */
-
-/* Make all main nav dots consistent distance */
-.vertical-nav > a[href="#home"].active::before,
-.vertical-nav > a[href="#about"].active::before,
-.vertical-nav > a[href="#articles"].active::before {
-  left: -8px; /* Consistent for all main nav */
-}
-
-/* MAKEUP gets same distance */
-.nav-dropdown-toggle.active::before {
-  left: -8px;
-}
-
-/* For dropdown items, we can use JavaScript to position dots based on text length */
-/* Add this data attribute via JavaScript */
-.dropdown-item[data-text-length="short"].active::before {
-  right: calc(100% + 3px); /* Closer for short text */
-}
-
-.dropdown-item[data-text-length="medium"].active::before {
-  right: calc(100% + 5px); /* Medium distance */
-}
-
-.dropdown-item[data-text-length="long"].active::before {
-  right: calc(100% + 7px); /* Further for long text */
-}
 
 /* ============================================== */
 /* RESPONSIVE STYLES */
@@ -282,33 +132,149 @@ body {
     right: 20px;
     top: 20px;
   }
-  
-  .nav-dropdown-content {
-    border-radius: 6px;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    padding: 8px 0;
-  }
-  
-  .dropdown-item {
-    padding: 6px 16px 6px 20px;
-    font-size: 0.85rem;
-  }
-  
-  /* Adjust dot positions for mobile */
-  .vertical-nav > a.active::before,
-  .nav-dropdown-toggle.active::before {
-    left: -6px; /* Closer on mobile */
-    width: 4px;
-    height: 4px;
-  }
-  
-  .dropdown-item.active::before {
-    right: calc(100% + 3px); /* Closer on mobile */
-    width: 4px;
-    height: 4px;
-  }
 }
+
+
+
+
+
+
+/* ============================================== */
+/* PRODUCT NAVIGATION BAR - FIXED BLUR */
+/* ============================================== */
+
+.product-nav {
+  position: fixed;
+  top: 25px;
+  left: 25px;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-15px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.product-nav.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+/* KEY FIX: Container needs to be transparent for backdrop-filter to work */
+.product-nav-container {
+  display: inline-block;
+  /* Background must be very transparent or none for blur to show */
+  background: rgba(255, 255, 255, 0.15); /* Reduced from 0.45 to 0.15 */
+  padding: 0px;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  /* Ensure these properties are applied correctly */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: none;
+  transition: all 0.2s ease;
+  
+  /* Add isolation for proper stacking context */
+  isolation: isolate;
+}
+
+.product-nav.visible .product-nav-container {
+  /* Still keep it very transparent */
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.product-nav-track {
+  display: flex;
+  gap: 0;
+  position: relative;
+}
+
+.product-link {
+  text-decoration: none;
+  position: relative;
+  display: block;
+  transition: all 0.2s ease;
+}
+
+.product-box {
+  padding: 8px 16px;
+  border: none;
+  /* Use a subtle background instead of backdrop-filter */
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+  position: relative;
+  min-width: 95px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+/* Remove the ::after connecting lines if they're interfering */
+.product-link:not(:last-child) .product-box::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 16px;
+  background: linear-gradient(to bottom, 
+    transparent 0%, 
+    rgba(165, 34, 109, 0.1) 50%, 
+    transparent 100%);
+  z-index: 1;
+  opacity: 0.4;
+}
+
+/* Active state - ensure it's visible over the blur */
+.product-link.active .product-box {
+  /* Solid color for active state - no blur needed here */
+  background: rgba(165, 34, 109, 0.9);
+  box-shadow: 0 2px 8px rgba(165, 34, 109, 0.3);
+  /* Remove backdrop-filter on active state for better performance */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-radius: 10px;
+}
+
+.product-text {
+  color: rgb(71, 5, 42);
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  /* Ensure text is above blur effects */
+  position: relative;
+  z-index: 2;
+}
+
+.product-link.active .product-text {
+  color: white;
+  font-weight: 600;
+}
+
+.product-link:hover .product-box {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+}
+
+.product-link:hover .product-text {
+  color: rgb(80, 6, 48);
+  border-radius: 10px;
+}
+
+.product-link.active:hover .product-box {
+  background: rgba(165, 34, 109, 0.95);
+  border-radius: 10px;
+}
+
 
 
 
@@ -644,13 +610,13 @@ body {
 /* Tip cards */
 /* Tip cards - More transparent with stronger blur */
 .tip-card {
-  background: rgba(255, 255, 255, 0.7); /* Changed from 0.85 to 0.75 for more transparency */
+  background: rgba(255, 255, 255, 0.75); /* Changed from 0.85 to 0.75 for more transparency */
   border-radius: 20px;
   padding: 40px 30px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(10px) saturate(180%);
-  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  backdrop-filter: blur(5px) saturate(180%);
+  -webkit-backdrop-filter: blur(5px) saturate(180%);
   opacity: 1;
   transform: translateX(0);
   transition: transform 0.3s ease, box-shadow 0.3s ease;

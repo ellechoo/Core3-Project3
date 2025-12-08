@@ -48,15 +48,84 @@
     <a href="#about">ABOUT</a>
     <div class="nav-dropdown">
       <a href="#model-anchor" class="nav-dropdown-toggle">MAKEUP</a>
-      <div class="nav-dropdown-content">
-        <a href="#model-anchor" class="dropdown-item" data-section="foundation">Foundation</a>
-        <a href="#section2" class="dropdown-item" data-section="blush">Blush</a>
-        <a href="#section3" class="dropdown-item" data-section="mascara">Mascara</a>
-        <a href="#section4" class="dropdown-item" data-section="lipstick">Lipstick</a>
-      </div>
+      
     </div>
     <a href="#articles">ARTICLES</a>
   </nav>
+
+
+
+
+
+  <!-- Product Navigation Bar (Only appears in makeup section) -->
+<nav class="product-nav" id="productNav">
+  <div class="product-nav-container">
+    <div class="product-nav-track">
+      <!-- Connected rectangle lines for each product -->
+      <a href="#foundation" class="product-link active" data-product="foundation">
+        <div class="product-box">
+          <span class="product-text">Foundation</span>
+        </div>
+      </a>
+      
+      <a href="#concealer" class="product-link" data-product="concealer">
+        <div class="product-box">
+          <span class="product-text">Concealer</span>
+        </div>
+      </a>
+      
+      <a href="#contouring" class="product-link" data-product="contouring">
+        <div class="product-box">
+          <span class="product-text">Contouring</span>
+        </div>
+      </a>
+      
+      <a href="#blush" class="product-link" data-product="blush">
+        <div class="product-box">
+          <span class="product-text">Blush</span>
+        </div>
+      </a>
+      
+      <a href="#eyeshadow" class="product-link" data-product="eyeshadow">
+        <div class="product-box">
+          <span class="product-text">Eyeshadow</span>
+        </div>
+      </a>
+      
+      <a href="#eyeliner" class="product-link" data-product="eyeliner">
+        <div class="product-box">
+          <span class="product-text">Eyeliner</span>
+        </div>
+      </a>
+      
+      <a href="#mascara" class="product-link" data-product="mascara">
+        <div class="product-box">
+          <span class="product-text">Mascara</span>
+        </div>
+      </a>
+      
+      <a href="#lipstick" class="product-link" data-product="lipstick">
+        <div class="product-box">
+          <span class="product-text">Lipstick</span>
+        </div>
+      </a>
+      
+      <a href="#lipgloss" class="product-link" data-product="lipgloss">
+        <div class="product-box">
+          <span class="product-text">Lipgloss</span>
+        </div>
+      </a>
+      
+      <a href="#micellar" class="product-link" data-product="micellar">
+        <div class="product-box">
+          <span class="product-text">Micellar</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</nav>
+
+
 
 
 
@@ -209,7 +278,7 @@
               <h3 class="featured-article-title">Beauty Practices Among Asian American College Students</h3>
               <p class="featured-article-author">by Itsuka Takamune</p>
               <div class="featured-article-cta">
-                <span>Read Full Article →</span>
+                <span>Read Full Article</span>
               </div>
             </div>
           </div>
@@ -230,7 +299,7 @@
               <h3 class="featured-article-title">Battling Western Beauty Standards as an Asian American</h3>
               <p class="featured-article-author">by Lea Yeo</p>
               <div class="featured-article-cta">
-                <span>Read Full Article →</span>
+                <span>Read Full Article</span>
               </div>
             </div>
           </div>
@@ -532,10 +601,135 @@ document.addEventListener('DOMContentLoaded', function() {
     observer.observe(dropdownContent, { childList: true });
   }
 });
-
 </script>
 
 
+
+
+
+<script>
+  // Product Navigation Control
+  document.addEventListener('DOMContentLoaded', function() {
+    const productNav = document.getElementById('productNav');
+    const productLinks = document.querySelectorAll('.product-link');
+    const makeupSection = document.getElementById('object1');
+    const makeupNavItem = document.querySelector('.nav-dropdown-toggle');
+    
+    // Product sections - add IDs to your product sections in HTML
+    const productSections = {
+      'foundation': document.getElementById('object1'),
+      // Add IDs for other product sections as you create them
+      // Example: 'concealer': document.getElementById('concealer-section')
+    };
+    
+    // Check if we're in makeup section
+    function isInMakeupSection() {
+      if (!makeupSection) return false;
+      
+      const rect = makeupSection.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // Check if makeup section is in view
+      return (
+        rect.top <= windowHeight * 0.8 &&
+        rect.bottom >= windowHeight * 0.2
+      );
+    }
+    
+    // Update active product based on scroll position
+    function updateActiveProduct() {
+      const isMakeup = isInMakeupSection();
+      
+      // Show/hide product nav
+      if (isMakeup) {
+        productNav.classList.add('visible');
+      } else {
+        productNav.classList.remove('visible');
+      }
+      
+      // Update active product (simple version - only for foundation currently)
+      if (isMakeup) {
+        // Remove active class from all
+        productLinks.forEach(link => {
+          link.classList.remove('active');
+        });
+        
+        // Add active to foundation (since that's the only product section)
+        const foundationLink = document.querySelector('.product-link[data-product="foundation"]');
+        if (foundationLink) {
+          foundationLink.classList.add('active');
+        }
+        
+        // You can expand this logic when you add more product sections:
+        // 1. Check which product section is currently in view
+        // 2. Add active class to corresponding product link
+      }
+    }
+    
+    // Smooth scroll to product sections
+    productLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const productId = this.getAttribute('data-product');
+        
+        // Scroll to corresponding product section
+        if (productSections[productId]) {
+          productSections[productId].scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+    
+    // Update on scroll
+    let scrollTimeout;
+    function handleScroll() {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(updateActiveProduct, 100);
+    }
+    
+    // Initial setup
+    updateActiveProduct();
+    
+    // Event listeners
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', updateActiveProduct);
+    
+    // Make sure makeup nav link shows product nav when clicked
+    if (makeupNavItem) {
+      makeupNavItem.addEventListener('click', function(e) {
+        setTimeout(() => {
+          if (isInMakeupSection()) {
+            productNav.classList.add('visible');
+          }
+        }, 100);
+      });
+    }
+    
+    // Sync with existing dropdown navigation
+    const dropdownItems = document.querySelectorAll('.dropdown-item');
+    dropdownItems.forEach(item => {
+      item.addEventListener('click', function(e) {
+        e.preventDefault();
+        const product = this.getAttribute('data-section');
+        
+        // Update active state in product nav
+        productLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('data-product') === product) {
+            link.classList.add('active');
+          }
+        });
+        
+        // Show product nav
+        setTimeout(() => {
+          productNav.classList.add('visible');
+        }, 300);
+      });
+    });
+  });
+</script>
 
 
 
