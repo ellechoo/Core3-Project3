@@ -352,7 +352,7 @@ body {
 
 
 
-/* 5. BACKGROUND IMAGES */
+/* 5. BACKGROUND IMAGES - STAIRCASE PATTERN */
 /* ============================================== */
 .bg-images {
   position: fixed;
@@ -370,75 +370,78 @@ body {
   object-fit: contain;
 }
 
+/* First staircase: Top-left to bottom-right (6 images) */
 .img1 {
-  top: 8%;
-  left: 8%;
-  width: 190px;
-}
-
-.img2 {
-  top: 20%;
-  right: 10%;
-  width: 260px;
-}
-
-.img3 {
-  bottom: 16%;
-  left: 28%;
-  width: 230px;
-}
-
-.img4 {
-  top: 6%;
-  right: 38%;
-  width: 150px;
-}
-
-.img5 {
-  bottom: 5%;
+  top: 5%;
   left: 5%;
-  width: 200px;
-}
-
-.img6 {
-  bottom: -5%;
-  left: 58%;
   width: 180px;
 }
 
+.img2 {
+  top: 15%;
+  left: 20%;
+  width: 180px;
+}
+
+.img3 {
+  top: 25%;
+  left: 35%;
+  width: 180px;
+}
+
+.img4 {
+  top: 35%;
+  left: 50%;
+  width: 180px;
+}
+
+.img5 {
+  top: 45%;
+  left: 65%;
+  width: 180px;
+}
+
+.img6 {
+  top: 55%;
+  left: 80%;
+  width: 180px;
+}
+
+/* Second staircase: Mirrored pattern starting from image 6 */
+/* Goes down and left from bottom-right corner */
 .img7 {
-  bottom: -120px;
-  left: 10%;
-  width: 160px;
+  top: 80%;  /* 15% below img6 */
+  left: 75%;  /* 15% left of img6 */
+  width: 180px;
 }
 
 .img8 {
-  bottom: -70px;
-  left: 28%;
-  width: 190px;
+  top: 90%;  /* 30% below img6 */
+  left: 60%;  /* 30% left of img6 */
+  width: 180px;
 }
 
 .img9 {
-  bottom: -110px;
-  left: 46%;
-  width: 170px;
+  top: 98%;  /* 45% below img6 */
+  left: 45%;  /* 45% left of img6 */
+  width: 180px;
 }
 
 .img10 {
-  bottom: -100px;
-  left: 63%;
-  width: 210px;
+  top: 110%;  /* 60% below img6 */
+  left: 30%;  /* 60% left of img6 */
+  width: 180px;
 }
 
 .img11 {
-  bottom: -130px;
-  left: 78%;
-  width: 150px;
+  top: 120%;  /* 75% below img6 */
+  left: 15%;   /* 75% left of img6 */
+  width: 180px;
 }
 
 .img12 {
-  bottom: -50px;
-  left: 90%;
+  top: 130%;  /* 90% below img6 */
+  left: 0%; /* 90% left of img6 (using negative to go off-screen) */
   width: 180px;
 }
 
