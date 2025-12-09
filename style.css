@@ -528,8 +528,6 @@ body {
 
 
 
-/* Add this new section for spacing */
-/* ============================================== */
 /* SPACE AFTER ABOUT SECTION */
 /* ============================================== */
 .space-after-about {
@@ -553,7 +551,6 @@ body {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.8s ease-in-out;
-
   z-index: 50000;
 }
 
@@ -565,13 +562,42 @@ body {
   font-family: "deseo-medium", sans-serif;
   font-weight: 700;
   font-size: 10rem;
-  font-weight: normal;
-  letter-spacing: 10px;
   color: rgba(255, 255, 255, 1);
   margin: 0;
   line-height: 1;
   text-align: right;
+  letter-spacing: 0; /* Remove letter-spacing from parent */
+  display: inline-block; /* Ensure it stays as one line */
 }
+
+/* The "F" part - deseo-medium font */
+.foundation-F {
+  font-family: "deseo-medium", sans-serif;
+  font-weight: 500;
+  font-size: 10rem;
+  letter-spacing: 0; /* No extra spacing */
+  display: inline; /* Keep inline */
+}
+
+/* The "oundation" part - Inter italic */
+.foundation-rest {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 8rem;
+  font-style: italic; /* Make it italic */
+  letter-spacing: 1px;
+  display: inline; /* Keep inline */
+  margin-left: 10px; /* Negative margin to bring them closer together */
+  position: relative;
+
+  top: 0.05em; /* Increased from -0.2em to 0.3em to move it DOWN */
+  /* Positive values move DOWN, negative values move UP */
+}
+
+
+
+
+
 
 /* 8. 3D MODEL SECTION */
 /* ============================================== */
