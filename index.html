@@ -224,7 +224,7 @@ For each product, I also share tips and tricks that may be especially helpful fo
 <div class="context-scroll-section">
   <div class="context-container">
     <div class="context-header">
-      <h3>Context</h3>
+      <h3>Foundation Context</h3>
       <div class="scroll-indicator">
       </div>
     </div>
@@ -571,9 +571,9 @@ For each product, I also share tips and tricks that may be especially helpful fo
         const windowHeight = window.innerHeight;
         const titleDelayDistance = windowHeight * 1.5;
         
-        // Scroll to About section position
-        // This position matches where About appears in the parallax logic
-        const scrollToPosition = titleDelayDistance + (windowHeight * 1.0); // Middle of fade-in phase
+        // Scroll to About section position - when it's at 100% opacity
+        // This is when About is fully visible in the middle
+        const scrollToPosition = titleDelayDistance + (windowHeight * 1.5); // Fully visible phase
         
         // Smooth scroll to calculated position
         window.scrollTo({
@@ -613,10 +613,10 @@ For each product, I also share tips and tricks that may be especially helpful fo
     // About section visibility range (from parallax logic)
     const titleDelayDistance = windowHeight * 1.5;
     const aboutFadeStart = titleDelayDistance + (windowHeight * 0.8);
-    const scrollOutEnd = titleDelayDistance + (windowHeight * 1.5) + (windowHeight * 2.0) + (windowHeight * 1.0);
-    
-    // Check if in About section range
-    const isInAboutRange = scrollY >= aboutFadeStart && scrollY <= scrollOutEnd;
+    const aboutFadeEnd = titleDelayDistance + (windowHeight * 1.5); // Fully visible
+    const stickyStart = aboutFadeEnd;
+    const stickyEnd = stickyStart + (windowHeight * 2.0);
+    const scrollOutEnd = stickyEnd + (windowHeight * 1.0);
     
     // Get all sections
     const sections = {
@@ -631,20 +631,60 @@ For each product, I also share tips and tricks that may be especially helpful fo
       link.classList.remove('active');
     });
     
-    // Set active state based on scroll position
-    if (scrollY < aboutFadeStart) {
-      // In Home section
-      document.querySelector('.vertical-nav a[href="#home"]').classList.add('active');
-    } else if (isInAboutRange) {
-      // In About section range
-      document.querySelector('.vertical-nav a[href="#about"]').classList.add('active');
-    } else if (sections.makeup && scrollY >= sections.makeup.offsetTop - 100) {
-      // In Makeup section
-      document.querySelector('.vertical-nav a[href="#model-anchor"]').classList.add('active');
-    } else if (sections.articles && scrollY >= sections.articles.offsetTop - 100) {
-      // In Articles section
-      document.querySelector('.vertical-nav a[href="#articles"]').classList.add('active');
+    // Calculate the visual position in the viewport (middle)
+    const viewportMiddle = scrollY + (windowHeight / 2);
+    
+    // 1. First check if we're past the About section completely
+    // If we're past scrollOutEnd, About is no longer visible
+    const isPastAboutSection = scrollY > scrollOutEnd;
+    
+    // 2. Check Articles section (bottom-most)
+    if (sections.articles && isPastAboutSection) {
+      const articlesRect = sections.articles.getBoundingClientRect();
+      const articlesTop = articlesRect.top + scrollY;
+      
+      // Check if we're at or past the Articles section
+      if (viewportMiddle >= articlesTop - 100) { // 100px buffer
+        document.querySelector('.vertical-nav a[href="#articles"]').classList.add('active');
+        return;
+      }
     }
+    
+    // 3. Check Makeup section (only check if we're past About section)
+    if (sections.makeup && isPastAboutSection) {
+      const makeupRect = sections.makeup.getBoundingClientRect();
+      const makeupTop = makeupRect.top + scrollY;
+      const makeupBottom = makeupRect.bottom + scrollY;
+      
+      // Check if viewport middle is within Makeup section
+      if (viewportMiddle >= makeupTop && viewportMiddle <= makeupBottom) {
+        document.querySelector('.vertical-nav a[href="#model-anchor"]').classList.add('active');
+        return;
+      }
+    }
+    
+    // 4. Check About section - when it's visible in the viewport
+    // About is visible from aboutFadeStart to scrollOutEnd
+    if (scrollY >= aboutFadeStart && scrollY <= scrollOutEnd) {
+      document.querySelector('.vertical-nav a[href="#about"]').classList.add('active');
+      return;
+    }
+    
+    // 5. Check Makeup section (if we're not past About yet, but might be in early Makeup)
+    // This handles the transition area
+    if (sections.makeup) {
+      const makeupRect = sections.makeup.getBoundingClientRect();
+      const makeupTop = makeupRect.top + scrollY;
+      
+      // If we're scrolled past About fade-out and into Makeup
+      if (scrollY > scrollOutEnd && viewportMiddle >= makeupTop) {
+        document.querySelector('.vertical-nav a[href="#model-anchor"]').classList.add('active');
+        return;
+      }
+    }
+    
+    // 6. Default to Home section
+    document.querySelector('.vertical-nav a[href="#home"]').classList.add('active');
   }
   
   // Update navigation on scroll
