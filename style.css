@@ -496,20 +496,25 @@ body {
 }
 
 #about h2 {
-  font-size: 2.5rem;
-  font-family: "RoleModel";
+  font-size: 2.1rem;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
   letter-spacing: 2px;
   margin-bottom: 1.5rem;
   line-height: 1.2;
 }
 
 #about p {
-  font-size: 1.2rem;
+  font-size: 1.0rem;
+  font-weight: 400;
   line-height: 1.6;
   max-width: 800px;
   margin: 0 auto;
   font-family: 'Inter', sans-serif;
-  opacity: 0.9;
+  opacity: 1.0;
+  padding-top: 10px;
+  text-align: justify;
+  text-align-last: left;
 }
 
 /* Override the .section class padding for #about */
@@ -742,7 +747,8 @@ body {
 }
 
 .tip-number {
-  font-family: "RoleModel", sans-serif;
+  font-family: "deseo-medium", sans-serif;
+  font-weight: 700;
   font-size: 3rem;
   color: rgba(169, 34, 109, 0.2);
   margin-bottom: 20px;
@@ -802,12 +808,12 @@ body {
 }
 
 .context-header h3 {
-  font-family: "RoleModel", sans-serif;
-  font-size: 3rem;
+  font-family: "deseo-medium", sans-serif;
+  font-weight: 700;
+  font-size: 4rem;
   font-weight: normal;
-  letter-spacing: 8px;
+  letter-spacing: 4px;
   color: #a5226d;
-  text-transform: uppercase;
   margin: 0;
 }
 
@@ -1149,9 +1155,10 @@ body {
 }
 
 .featured-articles-section h2 {
-  font-family: "RoleModel", sans-serif;
-  font-size: 4rem;
-  letter-spacing: 3px;
+  font-family: "deseo-medium", sans-serif;
+  font-weight: 500;
+  font-size: 6rem;
+  letter-spacing: 8px;
   margin-bottom: 20px;
   color: #ffffff;
   text-align: center;
@@ -1268,7 +1275,7 @@ body {
 
 /* Article Title */
 .featured-article-title {
-  font-family: "RoleModel", sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 2.5rem;
   letter-spacing: 1px;
   line-height: 1.2;
@@ -1290,14 +1297,15 @@ body {
 /* Call to Action */
 .featured-article-cta {
   font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 500;
   letter-spacing: 1px;
   color: white;
   display: flex;
   align-items: center;
-  gap: 10px;
+  text-align: center;
   opacity: 0.9;
+  padding-top: 25px;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
