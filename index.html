@@ -146,17 +146,19 @@
 
 
 
-    <!-- About -->
-  <section class="section text" id="about">
-    
-    <h2>A GUIDE TO MAKEUP FOR THE YOUNGER ME</h2>
-    <p>Second Gen Makeup focuses on the kind of makeup representation I needed growing up. As a second generation Korean-American, learning makeup meant years of trial and error because most tutorials were created for Eurocentric features that did not look like mine. Hooded lids, flatter nose bridges, rounder facial structures, and other East Asian were rarely acknowledged, which left people like me to figure things out on our own.
-
-In this website and matching publication, I walk through a hypothetical makeup routine step by step, explaining the context of each product and how its use has been shaped through an Asian American lens. I explore the cultural and historical layers behind common makeup techniques, showing how certain methods have evolved differently for East Asian features and why those differences matter.
-
-For each product, I also share tips and tricks that may be especially helpful for people who look like me. These are small insights I learned through experience that would have made a difference to my younger self. By centering these perspectives, I hope to offer the representation and guidance I once searched for and to celebrate the beauty that mainstream Western makeup spaces often overlooked.</p>
+<!-- About -->
+<section class="section text" id="about">
+  <h2>A GUIDE TO MAKEUP FOR THE YOUNGER ME</h2>
   
-  </section>
+  <!-- Add the blurred description box here -->
+  <div class="about-description-box">
+    <p>Second Gen Makeup focuses on the kind of makeup representation I needed growing up. As a second generation Korean-American, learning makeup meant years of trial and error because most tutorials were created for Eurocentric features that did not look like mine. Hooded lids, flatter nose bridges, rounder facial structures, and other East Asian were rarely acknowledged, which left people like me to figure things out on our own.
+    
+    In this website and matching publication, I walk through a hypothetical makeup routine step by step, explaining the context of each product and how its use has been shaped through an Asian American lens. I explore the cultural and historical layers behind common makeup techniques, showing how certain methods have evolved differently for East Asian features and why those differences matter.
+    
+    For each product, I also share tips and tricks that may be especially helpful for people who look like me. These are small insights I learned through experience that would have made a difference to my younger self. By centering these perspectives, I hope to offer the representation and guidance I once searched for and to celebrate the beauty that mainstream Western makeup spaces often overlooked.</p>
+  </div>
+</section>
 
 
   <!-- ADD THIS: Space after About section -->
@@ -275,12 +277,10 @@ For each product, I also share tips and tricks that may be especially helpful fo
       </div>
     </div>
 
-
-
     <div class="featured-articles-grid">
       
       <!-- Article 1 - Large image card -->
-      <a href="https://egrove.olemiss.edu/etd/1151/" class="featured-article-link">
+      <a href="https://egrove.olemiss.edu/etd/1151/" class="featured-article-link" target="_blank" rel="noopener noreferrer">
         <div class="featured-article-card" id="featured-article1">
           <div class="featured-article-image">
             <img src="images/yoonchae.png" 
@@ -301,7 +301,7 @@ For each product, I also share tips and tricks that may be especially helpful fo
       </a>
       
       <!-- Article 2 - Large image card -->
-      <a href="https://bodypositivealliance.org/blog/battling-western-beauty-standards-as-an-asian-american?utm_source=chatgpt.com" class="featured-article-link">
+      <a href="https://bodypositivealliance.org/blog/battling-western-beauty-standards-as-an-asian-american?utm_source=chatgpt.com" class="featured-article-link" target="_blank" rel="noopener noreferrer">
         <div class="featured-article-card" id="featured-article2">
           <div class="featured-article-image">
             <img src="images/cover.png" 
@@ -895,6 +895,39 @@ function createModel(containerId, modelPath, scale = 6) {
       }
     });
 
+
+
+  // === ADD THIS SECTION ===
+  // Apply subtle pink/magenta tint to match your site's color scheme
+  const tintColor = new THREE.Color(0xe76eb3); // Matches your light pink dot color (#e76eb3)
+  const tintAmount = 0.50; // 20% tint - subtle but noticeable
+  
+  model.traverse((child) => {
+    if (child.isMesh) {
+      child.castShadow = false;
+      child.receiveShadow = false;
+      child.material.side = THREE.FrontSide;
+      
+      if (child.material) {
+        // Store original color to preserve texture details
+        if (!child.material.userData.originalColor) {
+          child.material.userData.originalColor = child.material.color.clone();
+        }
+        
+        // Apply tint by blending with original color
+        child.material.color = child.material.userData.originalColor.clone()
+          .lerp(tintColor, tintAmount);
+        
+        // Optional: Add very subtle emissive glow for depth
+        child.material.emissive = tintColor.clone();
+        child.material.emissiveIntensity = 0.03; // Very subtle 3% glow
+      }
+    }
+  });
+  // === END ADDED SECTION ===
+
+
+
     // Store model reference
     currentModel = {
       model: model,
@@ -951,8 +984,8 @@ function calculateScrollProgress() {
   
   // Define SEPARATE ranges for spinning and fading
   const spinStart = foundationTop - (windowHeight * 0.7);  // Start spinning EARLIER
-  const fadeInStart = foundationTop - (windowHeight * 0.6); // Start fading in LATER
-  const fadeOutStart = contextTop - (windowHeight * 0.3);  // Start fading out EARLIER
+  const fadeInStart = foundationTop - (windowHeight * 0.5); // Start fading in LATER
+  const fadeOutStart = contextTop - (windowHeight * 0.8);  // Start fading out EARLIER
   const spinEnd = contextTop;                             // Stop spinning LATER
   
   // Calculate spin progress (0 to 1)
@@ -964,15 +997,16 @@ function calculateScrollProgress() {
     spinProgress = 1;
   }
   
-  // Calculate fade progress (0 to 1)
-  let fadeProgress = 0;
-  if (scrollY >= fadeInStart && scrollY <= fadeOutStart) {
-    fadeProgress = (scrollY - fadeInStart) / (fadeOutStart - fadeInStart);
-    fadeProgress = Math.max(0, Math.min(1, fadeProgress));
-  } else if (scrollY > fadeOutStart) {
-    fadeProgress = 1 - Math.min(1, (scrollY - fadeOutStart) / (spinEnd - fadeOutStart) * 2);
-    fadeProgress = Math.max(0, fadeProgress);
-  }
+// Calculate fade progress (0 to 1)
+let fadeProgress = 0;
+if (scrollY >= fadeInStart && scrollY <= fadeOutStart) {
+  fadeProgress = (scrollY - fadeInStart) / (fadeOutStart - fadeInStart);
+  fadeProgress = Math.max(0, Math.min(1, fadeProgress));
+} else if (scrollY > fadeOutStart) {
+  // When past fadeOutStart, keep at 1 until spinEnd
+  fadeProgress = Math.min(1, 1 + ((scrollY - fadeOutStart) / (spinEnd - fadeOutStart) * 0.5));
+  fadeProgress = Math.max(0, fadeProgress);
+}
   
   return {
     spinProgress: spinProgress,
@@ -994,24 +1028,24 @@ function updateModelRotation() {
     scrollProgress = spinProgress; // Track spin progress
     
     // Apply rotation based on spin progress
-    // Start spinning earlier (spins before fading in)
-    const rotationAngle = spinProgress * Math.PI * 3; // 1.5 full rotations (increased from 2)
+    const rotationAngle = spinProgress * Math.PI * 3;
     currentModel.model.rotation.y = rotationAngle;
     currentModel.model.rotation.x = rotationAngle * 0.3;
     
-    // Apply opacity based on fade progress
-    // Fade in/out in a smaller window than spinning
+    // Apply opacity based on fade progress - SIMPLE FADE IN/OUT
     const modelContainer = document.querySelector('.model-scroll-container');
     if (modelContainer) {
       if (isFadingInOut) {
-        // Smooth fade in/out curve
-        let opacity = 0;
-        if (fadeProgress <= 0.5) {
-          // Fade in: 0 to 1 in first half
-          opacity = fadeProgress * 2;
-        } else {
-          // Fade out: 1 to 0 in second half
-          opacity = 1 - ((fadeProgress - 0.5) * 2);
+        // NEW: Simple fade in, stay visible, fade out at the very end
+        let opacity = 1; // Default to visible
+        
+        // Fade in at the very beginning
+        if (fadeProgress < 0.1) {
+          opacity = fadeProgress * 10; // Quick fade in
+        }
+        // Fade out at the very end  
+        else if (fadeProgress > 0.9) {
+          opacity = 1 - ((fadeProgress - 0.9) * 10); // Quick fade out
         }
         
         opacity = Math.max(0, Math.min(1, opacity));
@@ -1093,7 +1127,6 @@ window.addEventListener('beforeunload', () => {
 document.addEventListener('DOMContentLoaded', function() {
   const tipsSection = document.querySelector('.tips-section');
   const tipsGrid = document.querySelector('.tips-grid');
-  const modelContainer = document.querySelector('.model-scroll-container');
   const foundationSection = document.getElementById('object1');
   const foundationTitle = document.querySelector('.foundation-section-title');
   const contextSection = document.querySelector('.context-scroll-section');
@@ -1237,19 +1270,6 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         }
         
-        // Keep model visible during animation, fade out with tips
-        if (modelContainer) {
-          if (progress < 0.8) { // Show model for first 70% of animation
-            modelContainer.classList.add('fade-in');
-            modelContainer.classList.remove('fade-out');
-            modelContainer.style.opacity = Math.min(1, progress * 1.5);
-          } else {
-            modelContainer.classList.remove('fade-in');
-            modelContainer.classList.add('fade-out');
-            modelContainer.style.opacity = Math.max(0, 1 - ((progress - 0.7) / 0.3));
-          }
-        }
-        
       } else {
         // Before animation range - keep tips hidden
         tipsGrid.style.transform = 'translateX(100vw)';
@@ -1274,12 +1294,6 @@ document.addEventListener('DOMContentLoaded', function() {
       if (foundationTitle) {
         foundationTitle.style.opacity = 0;
         foundationTitle.classList.remove('visible');
-      }
-      
-      if (modelContainer) {
-        modelContainer.classList.remove('fade-in');
-        modelContainer.classList.add('fade-out');
-        modelContainer.style.opacity = 0;
       }
     }
   }

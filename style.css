@@ -502,6 +502,8 @@ body {
   letter-spacing: 2px;
   margin-bottom: 1.5rem;
   line-height: 1.2;
+
+  margin-top: 20px; /* ADD THIS LINE to move it down */
 }
 
 #about p {
@@ -537,6 +539,38 @@ body {
   z-index: 8;
   pointer-events: none;
 }
+
+
+
+
+
+/* About Description Box - matching Articles style */
+.about-description-box {
+  background: rgba(255, 255, 255, 0.1); /* Semi-transparent white box */
+  border-radius: 12px;
+  padding: 30px 35px; /* Slightly more padding than Articles */
+  max-width: 900px; /* Wider for About content */
+  margin: 0 auto 40px auto; /* Center and add bottom margin */
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: justify;
+
+  margin-top: 20px; /* ADD THIS LINE to move it down */
+}
+
+.about-description-box p {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem; /* Slightly larger text for About */
+  line-height: 1.6;
+  color: #ffffff;
+  margin: 0;
+  text-align: justify;
+  text-align-last: left;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+
 
 
 
@@ -587,7 +621,7 @@ body {
   font-style: italic; /* Make it italic */
   letter-spacing: 1px;
   display: inline; /* Keep inline */
-  margin-left: 10px; /* Negative margin to bring them closer together */
+  margin-left: 8px; /* Negative margin to bring them closer together */
   position: relative;
 
   top: 0.05em; /* Increased from -0.2em to 0.3em to move it DOWN */
