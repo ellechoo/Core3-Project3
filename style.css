@@ -89,7 +89,7 @@ body {
 
 /* ACTIVE STATE - LIGHT PINK instead of white */
 .vertical-nav a.active {
-  color: #e76eb3; /* Light pink color */
+  color: #fb82c7; /* Light pink color */
 }
 
 /* Active dot for REGULAR nav links (HOME, ABOUT, ARTICLES) - BASED ON TEXT LENGTH */
@@ -547,7 +547,7 @@ body {
 /* ============================================== */
 .foundation-section-title {
   position: fixed;
-  bottom: 20px;
+  bottom: 12px;
   right: 40px;
   z-index: 5;
   pointer-events: none;
@@ -784,7 +784,7 @@ body {
   position: relative;
   z-index: 15;
   width: 100%;
-  padding-top: 150px;
+  padding-top: 100px;
   padding-bottom: 200px;
   min-height: 100vh;
   background: #ffffff;
@@ -803,7 +803,6 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 80px;
-  padding-bottom: 25px;
   border-bottom: 2px solid rgba(169, 34, 109, 0.15);
 }
 
@@ -875,7 +874,6 @@ body {
   text-align: justify; /* Justified text */
   text-align-last: left;
   font-weight: 400;
-  letter-spacing: 0.3px;
 }
 
 /* Remove all subtitle styles since we're removing subtitles */
@@ -1137,6 +1135,205 @@ body {
 
 
 
+/* ============================================== */
+/* ARTICLES SECTION - MATCHING CONTEXT SECTION STYLE */
+/* ============================================== */
+
+.featured-articles-section {
+  background-color: transparent;
+  color: none;
+  padding: 120px 0;
+  min-height: auto;
+  margin-top: 0;
+  width: 100%;
+}
+
+/* Use the same container as context section */
+.featured-articles-section .context-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 120px;
+}
+
+/* Articles header - same as context header */
+.featured-articles-section .context-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 60px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  padding-bottom: 20px;
+}
+
+.featured-articles-section .context-header h3 {
+  font-family: "deseo-medium", sans-serif;
+  font-weight: 700;
+  font-size: 4rem;
+  font-weight: normal;
+  letter-spacing: 4px;
+  color: #ffffff;
+  margin: 0;
+  flex-shrink: 0; /* Prevent "Articles" from shrinking */
+}
+
+/* NEW: Description box on the right side */
+.articles-description-box {
+  background: rgba(255, 255, 255, 0.1); /* Semi-transparent white box */
+  border-radius: 12px;
+  padding: 20px 25px;
+  max-width: 600px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-left: 20px; /* Space between "Articles" and the box */
+}
+
+.articles-description-box p {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #ffffff;
+  margin: 0;
+  text-align: justify;
+  text-align-last: left;
+  font-weight: 400;
+  opacity: 0.9;
+  
+}
+
+/* Remove the old subtitle styling */
+.articles-subtitle {
+  display: none; /* Hide the old subtitle */
+}
+
+/* Featured Articles Grid - Two large cards */
+.featured-articles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 60px;
+  margin: 0 auto;
+  max-width: 1400px;
+  margin-top: 80px; /* Add space below the header */
+}
+
+/* Responsive Design for Articles Section */
+@media (max-width: 1400px) {
+  .featured-articles-section .context-container {
+    padding: 0 80px;
+  }
+  
+  .articles-description-box {
+    max-width: 450px;
+    padding: 18px 22px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .featured-articles-section .context-container {
+    padding: 0 60px;
+  }
+  
+  .featured-articles-section .context-header h3 {
+    font-size: 3.5rem;
+  }
+  
+  .articles-description-box {
+    max-width: 400px;
+    padding: 16px 20px;
+  }
+  
+  .articles-description-box p {
+    font-size: 0.95rem;
+  }
+  
+  .featured-articles-grid {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .featured-articles-section .context-header h3 {
+    font-size: 3rem;
+  }
+  
+  .articles-description-box {
+    max-width: 350px;
+    padding: 14px 18px;
+    margin-left: 30px;
+  }
+  
+  .articles-description-box p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  
+  .featured-articles-grid {
+    grid-template-columns: 1fr;
+    gap: 50px;
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 768px) {
+  .featured-articles-section {
+    padding: 100px 0;
+  }
+  
+  .featured-articles-section .context-container {
+    padding: 0 40px;
+  }
+  
+  .featured-articles-section .context-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    margin-bottom: 50px;
+  }
+  
+  .featured-articles-section .context-header h3 {
+    font-size: 2.5rem;
+    letter-spacing: 4px;
+  }
+  
+  .articles-description-box {
+    max-width: 100%;
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .articles-description-box p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    text-align: justify;
+    text-align-last: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .featured-articles-section {
+    padding: 80px 0;
+  }
+  
+  .featured-articles-section .context-container {
+    padding: 0 30px;
+  }
+  
+  .featured-articles-section .context-header h3 {
+    font-size: 2rem;
+    letter-spacing: 3px;
+  }
+  
+  .articles-description-box {
+    padding: 12px 16px;
+  }
+  
+  .articles-description-box p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+}
+
+
+
 
 
 /* ============================================== */
@@ -1190,10 +1387,6 @@ body {
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.featured-article-link:hover {
-  transform: translateY(-15px);
-}
-
 .featured-article-link:hover .featured-article-card {
   box-shadow: 0 40px 80px rgba(169, 34, 109, 0.25);
 }
@@ -1231,7 +1424,7 @@ body {
 }
 
 .featured-article-link:hover .featured-article-img {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
 /* Overlay with gradient and content */
