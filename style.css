@@ -138,6 +138,29 @@ body {
 
 
 
+/* Navigation Fixes */
+.vertical-nav a {
+  cursor: pointer; /* Ensure cursor shows as clickable */
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.vertical-nav a:hover {
+  transform: translateX(-5px); /* Visual feedback on hover */
+}
+
+/* Ensure About section can be targeted */
+#about:target {
+  animation: highlightAbout 1s ease;
+}
+
+@keyframes highlightAbout {
+  0% { background-color: rgba(169, 34, 109, 0.1); }
+  100% { background-color: transparent; }
+}
+
+
+
+
 
 /* ============================================== */
 /* PRODUCT NAVIGATION BAR - FIXED BLUR */
@@ -517,7 +540,7 @@ body {
 /* ============================================== */
 .space-after-about {
   position: relative;
-  height: 4000px; /* Keep your 4000px space */
+  height: 2500px; /* Keep your 4000px space */
   background: transparent;
   z-index: 8;
   pointer-events: none;

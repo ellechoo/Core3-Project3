@@ -338,10 +338,10 @@
     'img5': 0.6,
     'img6': 0.55,
     'img7': 0.5,
-    'img8': 0.4,
-    'img9': 0.3,
-    'img10': 0.2,
-    'img11': 0.1
+    'img8': 0.45,
+    'img9': 0.4,
+    'img10': 0.35,
+    'img11': 0.3
   };
   
   function updateParallax() {
@@ -531,7 +531,130 @@
     }
   `;
   document.head.appendChild(style);
+
+})();
+</script>
+
+
+
+
+
+<script>
+// Navigation Scroll Handler - FIXED
+(function() {
+  // Get navigation links
+  const navLinks = document.querySelectorAll('.vertical-nav a');
   
+  // Handle navigation clicks
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href');
+      
+      // Special handling for About section
+      if (targetId === '#about') {
+        e.preventDefault();
+        
+        // Get the About section
+        const aboutSection = document.querySelector('#about');
+        if (!aboutSection) return;
+        
+        // Temporarily make About section visible and positioned correctly
+        aboutSection.style.position = 'relative';
+        aboutSection.style.opacity = '1';
+        aboutSection.style.transform = 'none';
+        aboutSection.style.zIndex = '20';
+        
+        // Calculate scroll position for About section
+        const windowHeight = window.innerHeight;
+        const titleDelayDistance = windowHeight * 1.5;
+        
+        // Scroll to About section position
+        // This position matches where About appears in the parallax logic
+        const scrollToPosition = titleDelayDistance + (windowHeight * 1.0); // Middle of fade-in phase
+        
+        // Smooth scroll to calculated position
+        window.scrollTo({
+          top: scrollToPosition,
+          behavior: 'smooth'
+        });
+        
+        // After scroll completes, restore About to fixed position
+        setTimeout(() => {
+          aboutSection.style.position = 'fixed';
+          aboutSection.style.opacity = '1'; // Keep visible
+          aboutSection.style.transform = 'translate3d(0, 0, 0)';
+          aboutSection.style.zIndex = '15';
+        }, 800);
+        
+      } else if (targetId === '#home') {
+        e.preventDefault();
+        
+        // Smooth scroll to top for Home
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+        
+      } else {
+        // For other sections (MAKEUP, ARTICLES), let default behavior work
+        // They're not fixed positioned
+      }
+    });
+  });
+  
+  // Update active navigation based on scroll
+  function updateActiveNav() {
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    
+    // About section visibility range (from parallax logic)
+    const titleDelayDistance = windowHeight * 1.5;
+    const aboutFadeStart = titleDelayDistance + (windowHeight * 0.8);
+    const scrollOutEnd = titleDelayDistance + (windowHeight * 1.5) + (windowHeight * 2.0) + (windowHeight * 1.0);
+    
+    // Check if in About section range
+    const isInAboutRange = scrollY >= aboutFadeStart && scrollY <= scrollOutEnd;
+    
+    // Get all sections
+    const sections = {
+      home: document.querySelector('#home'),
+      about: document.querySelector('#about'),
+      makeup: document.querySelector('#model-anchor'),
+      articles: document.querySelector('#articles')
+    };
+    
+    // Reset all active states
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+    });
+    
+    // Set active state based on scroll position
+    if (scrollY < aboutFadeStart) {
+      // In Home section
+      document.querySelector('.vertical-nav a[href="#home"]').classList.add('active');
+    } else if (isInAboutRange) {
+      // In About section range
+      document.querySelector('.vertical-nav a[href="#about"]').classList.add('active');
+    } else if (sections.makeup && scrollY >= sections.makeup.offsetTop - 100) {
+      // In Makeup section
+      document.querySelector('.vertical-nav a[href="#model-anchor"]').classList.add('active');
+    } else if (sections.articles && scrollY >= sections.articles.offsetTop - 100) {
+      // In Articles section
+      document.querySelector('.vertical-nav a[href="#articles"]').classList.add('active');
+    }
+  }
+  
+  // Update navigation on scroll
+  let navScrollTimeout;
+  function handleNavScroll() {
+    clearTimeout(navScrollTimeout);
+    navScrollTimeout = setTimeout(updateActiveNav, 50);
+  }
+  
+  window.addEventListener('scroll', handleNavScroll, { passive: true });
+  
+  // Initial update
+  updateActiveNav();
 })();
 </script>
 
