@@ -452,27 +452,61 @@ body {
 
 
 
-/* 6. ABOUT SECTION */
+/* 6. ABOUT SECTION - FIXED CENTERING */
 /* ============================================== */
 #about {
   background-color: transparent;
   color: white;
-  padding-top: 200px;
-  padding-bottom: 4000px;
+  position: relative;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0 !important; /* Remove all padding */
+  margin: 0;
+}
+
+/* Target the actual content container */
+#about .text {
+  background-color: transparent;
+  color: white;
+  padding: 20px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 16;
 }
 
 #about h2 {
   font-size: 2.5rem;
   font-family: "RoleModel";
   letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
 }
 
 #about p {
   font-size: 1.2rem;
   line-height: 1.6;
   max-width: 800px;
-  margin: 20px auto 0 auto;
+  margin: 0 auto;
   font-family: 'Inter', sans-serif;
+  opacity: 0.9;
+}
+
+/* Override the .section class padding for #about */
+.section#about {
+  padding: 0 !important;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 
@@ -483,7 +517,7 @@ body {
 /* ============================================== */
 .space-after-about {
   position: relative;
-  height: 1500px; /* Add 1500px of empty space */
+  height: 4000px; /* Keep your 4000px space */
   background: transparent;
   z-index: 8;
   pointer-events: none;

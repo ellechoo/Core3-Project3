@@ -324,7 +324,7 @@
 
 
 <script>
-// Title with Staggered Parallax Effect - WITH ABOUT SECTION
+// Title with Staggered Parallax Effect - WITH LONGER ABOUT SECTION STICKINESS
 (function() {
   let ticking = false;
   const bgImages = document.querySelectorAll('.bg-img');
@@ -383,7 +383,7 @@
       
       // Fade out title as it starts to scroll
       const fadeStart = delayDistance;
-      const fadeEnd = delayDistance + windowHeight;
+      const fadeEnd = delayDistance + windowHeight * 1.2; // Increased fade duration
       let opacity = 1;
       
       if (scrollY > fadeStart) {
@@ -394,33 +394,70 @@
       titleContainer.style.opacity = opacity;
     }
     
-    // NEW: Update About section with its own delay (starts when title finishes fading)
+    // IMPROVED: About section - STICKS LONGER IN THE MIDDLE
     const aboutSection = document.querySelector('#about');
     if (aboutSection) {
       const windowHeight = window.innerHeight;
       const titleDelayDistance = windowHeight * 1.5;
-      const titleFadeEnd = titleDelayDistance + windowHeight;
       
-      // About section starts moving when title is mostly faded out (80% faded)
-      const aboutStartDistance = titleDelayDistance + (windowHeight * 0.8);
+      // NEW LOGIC: Three-phase About section behavior
       
-      // About stays fixed until title is mostly gone, then starts scrolling
+      // 1. FADE IN PHASE: About section appears as title fades
+      const aboutFadeStart = titleDelayDistance + (windowHeight * 0.8); // Start fading in
+      const aboutFadeEnd = titleDelayDistance + (windowHeight * 1.5); // Fully visible
+      
+      // 2. STICKY PHASE: About stays fixed in the middle for a long time
+      const stickyStart = aboutFadeEnd; // Start sticking when fully visible
+      const stickyEnd = stickyStart + (windowHeight * 2.0); // Stay stuck for 2 viewport heights!
+      
+      // 3. SCROLL OUT PHASE: About starts scrolling away
+      const scrollOutStart = stickyEnd; // Start scrolling away after sticky phase
+      const scrollOutEnd = scrollOutStart + (windowHeight * 1.0); // Fade out over 1 viewport height
+      
       let aboutOffset = 0;
-      if (scrollY > aboutStartDistance) {
-        aboutOffset = -(scrollY - aboutStartDistance);
-      }
-      
-      // Apply the offset to About section
-      aboutSection.style.transform = `translate3d(0, ${aboutOffset}px, 0)`;
-      
-      // Fade in About section as title fades out
       let aboutOpacity = 0;
-      if (scrollY > titleDelayDistance) {
-        aboutOpacity = (scrollY - titleDelayDistance) / (windowHeight * 0.8);
+      
+      // Phase 1: Fade In (scrollY between aboutFadeStart and aboutFadeEnd)
+      if (scrollY >= aboutFadeStart && scrollY < aboutFadeEnd) {
+        // Fade in gradually
+        aboutOpacity = (scrollY - aboutFadeStart) / (aboutFadeEnd - aboutFadeStart);
         aboutOpacity = Math.min(1, aboutOpacity);
+        
+        // Keep fixed in the middle
+        aboutOffset = 0;
       }
       
+      // Phase 2: Sticky in the middle (scrollY between stickyStart and stickyEnd)
+      else if (scrollY >= stickyStart && scrollY < stickyEnd) {
+        // Stay at full opacity
+        aboutOpacity = 1;
+        
+        // Stay fixed in the middle
+        aboutOffset = 0;
+      }
+      
+      // Phase 3: Scroll away (scrollY between scrollOutStart and scrollOutEnd)
+      else if (scrollY >= scrollOutStart && scrollY < scrollOutEnd) {
+        // Start moving up slowly
+        aboutOffset = -(scrollY - scrollOutStart) * 0.5; // Move up at 50% scroll speed
+        
+        // Fade out gradually
+        aboutOpacity = 1 - ((scrollY - scrollOutStart) / (scrollOutEnd - scrollOutStart));
+        aboutOpacity = Math.max(0, aboutOpacity);
+      }
+      
+      // Phase 4: Completely gone (scrollY >= scrollOutEnd)
+      else if (scrollY >= scrollOutEnd) {
+        aboutOpacity = 0;
+        aboutOffset = -(scrollY - scrollOutStart) * 0.5; // Continue moving up
+      }
+      
+      // Apply transformations
+      aboutSection.style.transform = `translate3d(0, ${aboutOffset}px, 0)`;
       aboutSection.style.opacity = aboutOpacity;
+      
+      // Debug: Uncomment to see values in console
+      // console.log('Scroll:', scrollY, 'About Opacity:', aboutOpacity, 'Offset:', aboutOffset);
     }
   }
   
@@ -445,13 +482,13 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      z-index: 10;
-      transition: opacity 0.3s ease;
+      z-index: 20;
+      transition: opacity 0.5s ease-out;
       will-change: transform, opacity;
       pointer-events: none;
     }
     
-    /* NEW: About section fixed positioning */
+    /* IMPROVED: About section - STICKS LONGER IN THE MIDDLE */
     #about {
       position: fixed;
       top: 0;
@@ -461,10 +498,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 9; /* Below title, above background */
+      z-index: 15;
       pointer-events: none;
       opacity: 0;
-      padding: 20vh 5vh;
+      /* REMOVE padding from here - let CSS handle it */
+    }
+    
+    #about .text {
+      padding: 20px;
+      max-width: 800px;
+      text-align: center;
     }
     
     #about h2,
@@ -472,35 +515,23 @@
       pointer-events: auto;
     }
     
-    /* Add more space after intro section */
+    /* Add MUCH more space to allow About to stick longer */
     .section.intro {
-      height: 200vh; /* Increased from 100vh to give more scroll room */
+      height: 400vh;
       position: relative;
     }
     
     /* Ensure title stays on top of background images */
     .title-container {
-      z-index: 15;
+      z-index: 20;
     }
     
     .bg-images {
       z-index: 5;
     }
-    
-    /* Adjust the About section content styling */
-    #about .section.text {
-      padding-top: 0;
-      padding-bottom: 0;
-      min-height: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      max-width: 800px;
-      margin: 0 auto;
-    }
   `;
   document.head.appendChild(style);
+  
 })();
 </script>
 
