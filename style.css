@@ -542,12 +542,14 @@ body {
 /* ============================================== */
 .foundation-section-title {
   position: fixed;
-  bottom: 40px;
+  bottom: 20px;
   right: 40px;
   z-index: 5;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.8s ease-in-out;
+
+  z-index: 50000;
 }
 
 .foundation-section-title.visible {
@@ -555,16 +557,15 @@ body {
 }
 
 .foundation-title-text {
-  font-family: "RoleModel", sans-serif;
-  font-size: 8rem;
+  font-family: "deseo-medium", sans-serif;
+  font-weight: 700;
+  font-size: 10rem;
   font-weight: normal;
-  letter-spacing: 15px;
+  letter-spacing: 10px;
   color: rgba(255, 255, 255, 1);
-  text-transform: uppercase;
   margin: 0;
   line-height: 1;
   text-align: right;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* 8. 3D MODEL SECTION */

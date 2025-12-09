@@ -1313,5 +1313,336 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
+
+<script>
+// Random background PNGs fading in/out with consistent density
+(function() {
+  // Create container for random PNGs - place it behind existing bg-images
+  const randomBgContainer = document.createElement('div');
+  randomBgContainer.className = 'random-bg-container';
+  
+  // Insert before the existing .bg-images container (so it's behind)
+  const bgImagesContainer = document.querySelector('.bg-images');
+  document.body.insertBefore(randomBgContainer, bgImagesContainer);
+  
+  // Add CSS for the container and PNGs with smoother transitions
+  const style = document.createElement('style');
+  style.textContent = `
+    .random-bg-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 4; /* Behind existing .bg-images (which likely have higher z-index) */
+      overflow: hidden;
+    }
+    
+    .random-bg-png {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+      will-change: transform, opacity;
+      filter: brightness(1.1) contrast(0.9);
+      mix-blend-mode: overlay;
+      transition: opacity 3s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth cubic-bezier easing */
+    }
+  `;
+  document.head.appendChild(style);
+  
+  // Your actual PNG filenames (only light patterns)
+  const pngFiles = [
+    'bgpattern1(light).png','bgpattern2(light).png',
+    'bgpattern3(light).png','bgpattern4(light).png'
+  ];
+  
+  // Update the path to match your folder structure
+  const actualPngFiles = pngFiles.map(file => `images/bg/${file}`);
+  
+  // Array to track active PNG elements
+  const activePngs = [];
+  const minActivePngs = 3; // Minimum PNGs to maintain
+  const maxActivePngs = 6; // Maximum PNGs to maintain
+  
+  // Track occupied areas to prevent overlap
+  const occupiedAreas = [];
+  const minSpacing = 100; // Minimum distance between PNGs in pixels
+  
+  // Function to get random number between min and max
+  function random(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+  
+  // Function to get random integer between min and max
+  function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  
+  // Calculate distance between two points
+  function distance(x1, y1, x2, y2) {
+    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+  }
+  
+  // Check if position is too close to existing PNGs
+  function isPositionTooClose(x, y, width, height) {
+    const centerX = x + width / 2;
+    const centerY = y + height / 2;
+    const minDistance = minSpacing + (width + height) / 4;
+    
+    for (const area of occupiedAreas) {
+      const areaCenterX = area.x + area.width / 2;
+      const areaCenterY = area.y + area.height / 2;
+      const dist = distance(centerX, centerY, areaCenterX, areaCenterY);
+      
+      if (dist < minDistance) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  // Find a good position that doesn't overlap too much
+  function findGoodPosition(width, height) {
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const maxAttempts = 30;
+    
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      // Calculate position in pixels first
+      const x = random(-width * 0.2, viewportWidth - width * 0.8);
+      const y = random(-height * 0.2, viewportHeight - height * 0.8);
+      
+      // Check if this position is OK
+      if (!isPositionTooClose(x, y, width, height)) {
+        return {
+          x: x,
+          y: y,
+          xPercent: (x / viewportWidth) * 100,
+          yPercent: (y / viewportHeight) * 100,
+          success: true
+        };
+      }
+    }
+    
+    // If no good position found, return a random one
+    const x = random(-width * 0.2, viewportWidth - width * 0.8);
+    const y = random(-height * 0.2, viewportHeight - height * 0.8);
+    return {
+      x: x,
+      y: y,
+      xPercent: (x / viewportWidth) * 100,
+      yPercent: (y / viewportHeight) * 100,
+      success: false
+    };
+  }
+  
+  // Function to create a new PNG
+  function createPNG() {
+    const png = document.createElement('img');
+    
+    // Get random PNG file
+    const randomFile = actualPngFiles[randomInt(0, actualPngFiles.length - 1)];
+    png.src = randomFile;
+    png.className = 'random-bg-png';
+    png.alt = '';
+    
+    // Size
+    const width = randomInt(80, 400);
+    const aspectVariation = random(0.8, 1.2);
+    const height = width * aspectVariation;
+    
+    png.style.width = `${width}px`;
+    png.style.height = `${height}px`;
+    png.style.objectFit = 'contain';
+    
+    // Find position
+    const position = findGoodPosition(width, height);
+    
+    png.style.left = `${position.xPercent}%`;
+    png.style.top = `${position.yPercent}%`;
+    
+    // Random rotation
+    png.style.transform = `rotate(${random(0, 360)}deg)`;
+    
+    // Random z-index
+    png.style.zIndex = randomInt(1, 10);
+    
+    // Opacity
+    const maxOpacity = random(0.1, 0.25);
+    
+    // Store area if position was good
+    if (position.success) {
+      occupiedAreas.push({
+        x: position.x,
+        y: position.y,
+        width: width,
+        height: height
+      });
+    }
+    
+    randomBgContainer.appendChild(png);
+    
+    // Animation timeline
+    const fadeInDuration = 2000;
+    const stayDuration = random(3000, 6000);
+    const fadeOutDuration = 2000;
+    const totalDuration = fadeInDuration + stayDuration + fadeOutDuration;
+    
+    // Create PNG data object
+    const pngData = {
+      element: png,
+      position: position,
+      width: width,
+      height: height,
+      maxOpacity: maxOpacity,
+      fadeInDuration: fadeInDuration,
+      stayDuration: stayDuration,
+      fadeOutDuration: fadeOutDuration,
+      totalDuration: totalDuration
+    };
+    
+    activePngs.push(pngData);
+    
+    // Start fade in
+    setTimeout(() => {
+      png.style.opacity = maxOpacity;
+    }, 10);
+    
+    // Start fade out
+    setTimeout(() => {
+      png.style.opacity = 0;
+    }, fadeInDuration + stayDuration);
+    
+    // Schedule removal
+    setTimeout(() => {
+      removePNG(pngData);
+    }, totalDuration);
+    
+    return pngData;
+  }
+  
+  // Function to remove a PNG
+  function removePNG(pngData) {
+    if (pngData.element.parentNode) {
+      pngData.element.parentNode.removeChild(pngData.element);
+      
+      // Remove from occupied areas if it was marked
+      if (pngData.position.success) {
+        const index = occupiedAreas.findIndex(area => 
+          Math.abs(area.x - pngData.position.x) < 1 &&
+          Math.abs(area.y - pngData.position.y) < 1
+        );
+        if (index > -1) {
+          occupiedAreas.splice(index, 1);
+        }
+      }
+      
+      // Remove from active PNGs
+      const pngIndex = activePngs.indexOf(pngData);
+      if (pngIndex > -1) {
+        activePngs.splice(pngIndex, 1);
+      }
+    }
+  }
+  
+  // Main loop to maintain consistent number of PNGs
+  function maintainPNGs() {
+    const currentCount = activePngs.length;
+    
+    // If we have too few PNGs, create more
+    if (currentCount < minActivePngs) {
+      const needed = minActivePngs - currentCount;
+      for (let i = 0; i < needed; i++) {
+        setTimeout(() => {
+          if (activePngs.length < maxActivePngs) {
+            createPNG();
+          }
+        }, i * 500); // Stagger creation
+      }
+    }
+    // If we have too many PNGs, remove the oldest one
+    else if (currentCount > maxActivePngs) {
+      const excess = currentCount - maxActivePngs;
+      for (let i = 0; i < excess; i++) {
+        if (activePngs.length > 0) {
+          const oldestPNG = activePngs[0];
+          // Fade out quickly instead of immediate removal
+          oldestPNG.element.style.transition = 'opacity 1s ease';
+          oldestPNG.element.style.opacity = 0;
+          setTimeout(() => removePNG(oldestPNG), 1000);
+        }
+      }
+    }
+    
+    // Schedule next check
+    setTimeout(maintainPNGs, 2000);
+  }
+  
+  // Create initial PNGs
+  function createInitialPNGs() {
+    const initialCount = randomInt(minActivePngs, maxActivePngs);
+    for (let i = 0; i < initialCount; i++) {
+      setTimeout(() => createPNG(), i * 800);
+    }
+  }
+  
+  // Preload images
+  function preloadImages() {
+    actualPngFiles.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  }
+  
+  // Handle window resize - clear occupied areas
+  let resizeTimeout;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      // Clear occupied areas on resize since positions change
+      occupiedAreas.length = 0;
+      
+      // Recalculate positions for existing PNGs
+      activePngs.forEach(pngData => {
+        const rect = pngData.element.getBoundingClientRect();
+        pngData.position.x = rect.left;
+        pngData.position.y = rect.top;
+        pngData.position.xPercent = (rect.left / window.innerWidth) * 100;
+        pngData.position.yPercent = (rect.top / window.innerHeight) * 100;
+        
+        // Mark as occupied again
+        occupiedAreas.push({
+          x: rect.left,
+          y: rect.top,
+          width: rect.width,
+          height: rect.height
+        });
+      });
+    }, 250);
+  });
+  
+  // Initialize
+  setTimeout(() => {
+    preloadImages();
+    createInitialPNGs();
+    maintainPNGs(); // Start maintenance loop
+  }, 1000);
+  
+  // Clean up
+  window.addEventListener('beforeunload', function() {
+    while (randomBgContainer.firstChild) {
+      randomBgContainer.removeChild(randomBgContainer.firstChild);
+    }
+    activePngs.length = 0;
+    occupiedAreas.length = 0;
+  });
+})();
+</script>
+
+
+
+
 </body>
 </html>
